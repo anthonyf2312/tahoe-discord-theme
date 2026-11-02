@@ -60,6 +60,18 @@ Set in the `:root` block of the theme file; every option is `on` or `off`.
 |---|---|
 | ![SF Symbols on](docs/screenshots/option-sf-tahoe-on.webp) | ![SF Symbols off](docs/screenshots/option-sf-tahoe-off.webp) |
 
+| `--vg-compact: off` | `--vg-compact: on` |
+|---|---|
+| ![compact off](docs/screenshots/option-compact-tahoe-off.webp) | ![compact on](docs/screenshots/option-compact-tahoe-on.webp) |
+
+| `--vg-panel-art: on` | `--vg-panel-art: off` |
+|---|---|
+| ![panel art on](docs/screenshots/option-panel-art-tahoe-on.webp) | ![panel art off](docs/screenshots/option-panel-art-tahoe-off.webp) |
+
+**`--vg-background-image: on`**: your image as the window background; menus and popouts become real blurred glass.
+
+![background image](docs/screenshots/option-background-tahoe-on.webp)
+
 Colours (`--vg-accent`, `--vg-tint`, `--vg-window`, `--vg-panel`…), geometry and fonts are below the
 options in the same block; [`src/tokens.css`](src/tokens.css) lists every token with its default.
 Options are style container queries (`@container style(--vg-x: off)`), see

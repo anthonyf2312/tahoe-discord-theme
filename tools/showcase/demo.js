@@ -79,7 +79,8 @@
     $$("[class*=hoverRoll_] [class*=hovered_]", panel).forEach(el => { el.textContent = me.name.toLowerCase(); });
     const av = $("img[class*=avatar_]", panel);
     if (av) { av.srcset = ""; av.src = me.avatar + "?size=96"; }
-    $$("video, [class*=avatarDecoration]", panel).forEach(el => el.style.setProperty("display", "none", "important"));
+    // The panel artwork is the owner's own; kept only for the --vg-panel-art comparison.
+    if (!window.__vgKeepPanelArt) $$("video, [class*=avatarDecoration]", panel).forEach(el => el.style.setProperty("display", "none", "important"));
   }
 
   // --- message texts ----------------------------------------------------------------------

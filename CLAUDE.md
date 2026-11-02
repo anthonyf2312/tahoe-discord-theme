@@ -14,7 +14,8 @@ Which screenshots to redo:
   every "More screens" shot.
 - one module only: the shots that show it (floating, forms → option-sf; threads → forum and thread;
   calls → none yet).
-- `src/options.css` or an option's default: the matching option comparison.
+- `src/options.css` or an option's default: the matching option comparison (vibrancy, SF Symbols,
+  compact, panel art, background image).
 
 ## Rendering screenshots
 
@@ -31,6 +32,10 @@ running it twice reshuffles an already shuffled page. Reload again when done, so
 | Vibrancy off | same, after the one above | `node tools/showcase/shoot.mjs --no-demo --only Tahoe --wallpaper vivid --name option-vibrancy --suffix off --set "--vg-vibrancy: off" --no-gallery` |
 | SF Symbols on | same | `node tools/showcase/shoot.mjs --no-demo --only Tahoe --menu --crop menu --name option-sf --suffix on --no-gallery` |
 | SF Symbols off | same | `node tools/showcase/shoot.mjs --no-demo --only Tahoe --menu --crop menu --name option-sf --suffix off --set "--vg-sf-symbols: off" --no-gallery` |
+| Panel art on | AtlasOS `#programming` (fresh reload) | `node tools/showcase/shoot.mjs --keep-panel-art --only Tahoe --crop "section[class*=panels_]" --name option-panel-art --suffix on --no-gallery` |
+| Panel art off | same, after the one above | `node tools/showcase/shoot.mjs --no-demo --only Tahoe --crop "section[class*=panels_]" --name option-panel-art --suffix off --set "--vg-panel-art: off" --no-gallery` |
+| Compact off / on | same | `node tools/showcase/shoot.mjs --no-demo --only Tahoe --crop "[class*=base_] > [class*=content_] > [class*=sidebar_]" --name option-compact --suffix off --no-gallery`, then `--suffix on --set "--vg-compact: on"` |
+| Background image | same | `node tools/showcase/shoot.mjs --no-demo --only Tahoe --menu --name option-background --suffix on --set "--vg-background-image: on; --vg-background-image-url: url(https://skopevoj.github.io/discord-theme/tools/showcase/assets/wallpaper-vivid.jpg)" --no-gallery` |
 | Forum | AtlasOS `#atlas-support` forum with the "cannot download minecraft" post open beside the list | `node tools/showcase/shoot.mjs tools/showcase/scenes/atlas-support.json --only Tahoe --name forum --no-gallery` |
 | Thread | chroma.pw `#sneak-peeks`, the "Your files" thread open in the side panel, the channel scrolled to its post | `node tools/showcase/shoot.mjs tools/showcase/scenes/chroma-thread.json --only Tahoe --name thread --no-gallery` |
 

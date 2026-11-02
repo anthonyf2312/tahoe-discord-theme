@@ -63,7 +63,7 @@ const flavors = [["Tahoe", ROOT + "theme/Tahoe.theme.css"],
     .map(f => [f.replace(/^Tahoe-|\.theme\.css$/g, "").replace(/-/g, " "), ROOT + "theme/flavors/" + f])]
   .filter(([n]) => !only || n.toLowerCase() === only.toLowerCase());
 
-if (!args.includes("--no-demo")) console.log(run("node", [HERE + "demo.mjs", scene]));
+if (!args.includes("--no-demo")) console.log(run("node", [HERE + "demo.mjs", scene, ...args.filter(a => a === "--keep-panel-art")]));
 // The context menu of the newest message, opened the way a right click would.
 if (args.includes("--menu")) cdp("eval", `(() => { const m = [...document.querySelectorAll("li[id^=chat-messages-] [class*=contents_]")].pop();
   const r = m.getBoundingClientRect(); m.dispatchEvent(new MouseEvent("contextmenu", { bubbles: true, clientX: r.x + 220, clientY: r.y + 10 })); return 1 })()`);
