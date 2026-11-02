@@ -52,7 +52,6 @@ article[class*="embed_"] {
 [class*="visualMediaItemContainer_"] {
   border-radius: 10px !important;
 }
-[class*="fileAttachment_"],
 [class*="wrapperAudio_"],
 [class*="attachment_"][class*="container_"] {
   background: var(--vg-fill-1) !important;
@@ -70,18 +69,18 @@ article[class*="embed_"] {
 }
 [class*="reaction_"][class*="reactionMe_"] {
   background: var(--vg-accent-soft) !important;
-  border-color: rgba(10, 132, 255, 0.55) !important;
+  border-color: rgb(from var(--vg-accent) r g b / 0.55) !important;
 }
 
 [class*="markup_"] code.inline,
 [class*="markup_"] code:not(pre code) {
-  background: rgba(255, 255, 255, 0.07) !important;
+  background: rgba(var(--vg-ink), 0.07) !important;
   border: 0 !important;
   border-radius: 5px !important;
 }
 [class*="markup_"] pre code,
 [class*="codeContainer_"] code {
-  background: rgba(0, 0, 0, 0.28) !important;
+  background: rgba(var(--vg-shade), 0.28) !important;
   border: 0.5px solid var(--vg-line) !important;
   border-radius: 10px !important;
 }
@@ -103,8 +102,8 @@ article[class*="embed_"] {
   border-color: var(--vg-danger) !important;
 }
 [class*="divider_"][class*="isUnread_"] > [class*="content_"] {
-  background: rgb(42, 24, 26);
-  box-shadow: inset 0 0 0 0.5px rgba(255, 69, 58, 0.5);
+  background: var(--vg-danger-chip);
+  box-shadow: inset 0 0 0 0.5px rgb(from var(--vg-danger) r g b / 0.5);
 }
 /* "NEW" tag: the same chip as the unread date, instead of an arrow-shaped label. Without a
    date it moves to the middle of the line, where the date would sit. */
@@ -112,9 +111,9 @@ article[class*="embed_"] {
   height: auto !important;
   padding: 2px 10px !important;
   border-radius: var(--vg-r-pill) !important;
-  background: rgb(42, 24, 26) !important;
-  box-shadow: inset 0 0 0 0.5px rgba(255, 69, 58, 0.5);
-  color: #ff6961 !important;
+  background: var(--vg-danger-chip) !important;
+  box-shadow: inset 0 0 0 0.5px rgb(from var(--vg-danger) r g b / 0.5);
+  color: var(--vg-danger-text) !important;
   font-size: 12px !important;
   font-weight: 600 !important;
   line-height: 16px !important;
@@ -136,7 +135,7 @@ article[class*="embed_"] {
   backdrop-filter: var(--vg-glass-blur);
   border: 0.5px solid var(--vg-glass-line) !important;
   border-radius: var(--vg-r-pill) !important;
-  box-shadow: var(--vg-specular), 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: var(--vg-specular), 0 6px 20px rgba(var(--vg-shadow), 0.3) !important;
 }
 
 /* Hover actions on a message: a small glass capsule. */
@@ -148,7 +147,7 @@ article[class*="embed_"] {
   background: var(--vg-glass-strong) !important;
   backdrop-filter: var(--vg-glass-blur);
   border: 0.5px solid var(--vg-glass-line) !important;
-  box-shadow: var(--vg-specular), 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+  box-shadow: var(--vg-specular), 0 4px 14px rgba(var(--vg-shadow), 0.3) !important;
   padding: 2px !important;
 }
 /* Each button's hover highlight is a pill inset 2px, so at the bar's ends it follows the
@@ -178,7 +177,7 @@ form[class*="form_"] {
   backdrop-filter: var(--vg-glass-blur);
   border: 0.5px solid var(--vg-glass-line) !important;
   border-radius: 22px !important;
-  box-shadow: var(--vg-specular), 0 6px 24px rgba(0, 0, 0, 0.22) !important;
+  box-shadow: var(--vg-specular), 0 6px 24px rgba(var(--vg-shadow), 0.22) !important;
 }
 [class*="channelTextArea_"] [class*="inner_"],
 [class*="channelTextArea_"] [class*="attachWrapper_"],
@@ -190,7 +189,6 @@ form[class*="form_"] {
   border-radius: var(--vg-r-pill) !important;
 }
 /* Reply / typing bars that dock on top of the input. */
-[class*="channelTextArea_"] [class*="attachedBars_"],
 [class*="stackedBars_"] {
   background: var(--vg-fill-1) !important;
   border-radius: 22px 22px 0 0 !important;

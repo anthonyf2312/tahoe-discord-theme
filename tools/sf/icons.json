@@ -124,7 +124,8 @@
         "[class*=\"toolbar_\"] [aria-label=\"Show Member List\"]": "person.2",
         "[class*=\"toolbar_\"] [aria-label=\"Hide User Profile\"]": "person.crop.circle.fill",
         "[class*=\"toolbar_\"] [aria-label=\"Show User Profile\"]": "person.crop.circle",
-        "[class*=\"toolbar_\"] [aria-label=\"New Group DM\"]": "plus.bubble"
+        "[class*=\"toolbar_\"] [aria-label=\"New Group DM\"]": "plus.bubble",
+        "[class*=\"title_\"] [class*=\"toolbar_\"] > [aria-label=\"More\"]": "ellipsis"
       }
     },
     {
@@ -179,6 +180,144 @@
       "scope": "[class*=\"layer_\"] [role=\"listbox\"] {item}",
       "items": {
         "[class*=\"clearSearchHistory_\"]": "trash"
+      }
+    },
+    {
+      "box": 30,
+      "scope": "nav[class*=\"guilds_\"] {item}",
+      "items": {
+        "[data-list-item-id$=\"create-join-button\"]": "plus",
+        "[data-list-item-id$=\"guild-discover-button\"]": "safari"
+      }
+    },
+    {
+      "box": 28,
+      "scope": "[class*=\"carouselModal_\"] [class*=\"actionButtons_\"] {item}",
+      "items": {
+        "button[aria-label=\"Zoom In\"]": "plus.magnifyingglass",
+        "button[aria-label=\"Zoom Out\"]": "minus.magnifyingglass",
+        "button[aria-label=\"Forward\"]": "arrowshape.turn.up.right",
+        "button[aria-label=\"Open in Browser\"]": "safari",
+        "button[aria-label=\"Download\"]": "square.and.arrow.down",
+        "button[aria-label=\"More\"]": "ellipsis"
+      }
+    },
+    {
+      "box": 30,
+      "scope": "[class*=\"carouselModal_\"] {item}",
+      "items": {
+        "[class*=\"closeButton_\"][role=\"button\"]": "xmark",
+        "[class*=\"navPrev_\"][role=\"button\"]": "chevron.left",
+        "[class*=\"navNext_\"][role=\"button\"]": "chevron.right"
+      }
+    },
+    {
+      "box": 26,
+      "scope": "[class*=\"scrollerInner_\"] > [class*=\"container_\"] {item}",
+      "items": {
+        "[class*=\"addReactButton_\"]": "face.smiling",
+        "button[aria-label=\"Copy Link\"]": "link",
+        "button[aria-label=\"Jump To Top\"]": "arrow.up"
+      }
+    },
+    {
+      "box": 27,
+      "scope": "[class*=\"chatLayerWrapper_\"] section [class*=\"toolbar_\"] {item}",
+      "items": {
+        "[aria-label^=\"Close\"]": "xmark",
+        "[aria-label*=\"Full View\"], [aria-label*=\"Expand\"]": "arrow.up.left.and.arrow.down.right",
+        "[aria-label=\"More\"]": "ellipsis"
+      }
+    },
+    {
+      "box": 44,
+      "scope": "[class*=\"scrollerInner_\"] > [class*=\"container_\"] {item}",
+      "items": {
+        "[class*=\"iconWrapper_\"]:has(> svg > path[d^=\"M12 2.81a1 1 0 0 1 0-1.41\"])": "bubble.left.and.text.bubble.right"
+      }
+    },
+    {
+      "box": 27,
+      "scope": "[aria-label=\"Create Post\"] {item}",
+      "items": {
+        "button[aria-label=\"Post Guidelines\"]": "list.bullet.clipboard"
+      }
+    },
+    {
+      "box": 26,
+      "anchor": "left",
+      "x": "20px",
+      "hide": "svg",
+      "scope": "[aria-label=\"Create Post\"] {item}",
+      "items": {
+        "button[type=\"submit\"]": "square.and.pencil"
+      }
+    },
+    {
+      "box": 22,
+      "scope": "li[class*=\"card_\"] {item}",
+      "items": {
+        "[class*=\"messageCountIcon_\"]": "bubble.left"
+      }
+    },
+    {
+      "box": 22,
+      "scope": "{item}",
+      "items": {
+        "[class*=\"selectFieldContainer__\"] [class*=\"chevronIcon__\"], [aria-haspopup=\"listbox\"] > [class*=\"select_\"] > [class*=\"icons_\"]": "chevron.up.chevron.down"
+      }
+    },
+    {
+      "box": 30,
+      "scope": "section[class*=\"panels_\"] {item}",
+      "items": {
+        "[class*=\"clickablePing_\"]": "antenna.radiowaves.left.and.right",
+        "[class*=\"voiceButtonsContainer_\"] > [aria-label^=\"Noise Suppression\"]": "waveform",
+        "[class*=\"voiceButtonsContainer_\"] > [aria-label=\"Disconnect\"]": "phone.down.fill",
+        "[class*=\"actionButtons_\"] > button[aria-expanded]:not([aria-pressed=\"true\"])": "video.slash",
+        "[class*=\"actionButtons_\"] > button[aria-expanded][aria-pressed=\"true\"]": "video",
+        "[class*=\"actionButtons_\"] > button[aria-pressed]:not([aria-expanded])": "display",
+        "[class*=\"actionButtons_\"] > button:not([aria-pressed]):not([aria-label])": "gamecontroller",
+        "[class*=\"actionButtons_\"] button[aria-label=\"Open Soundboard\"]": "speaker.wave.2"
+      }
+    },
+    {
+      "box": 34,
+      "scope": "[class*=\"callContainer_\"] {item}",
+      "items": {
+        "[class*=\"centerButton_\"][aria-label=\"Mute\"]": "mic",
+        "[class*=\"centerButton_\"][aria-label=\"Unmute\"]": "mic.slash",
+        "[class*=\"centerButton_\"][aria-label=\"Turn On Camera\"]": "video.slash",
+        "[class*=\"centerButton_\"][aria-label=\"Turn Off Camera\"]": "video",
+        "[class*=\"centerButton_\"][aria-label=\"Share Your Screen\"]": "display",
+        "[class*=\"centerButton_\"][aria-label=\"Start An Activity\"]": "gamecontroller",
+        "[class*=\"centerButton_\"][aria-label=\"Open Soundboard\"]": "speaker.wave.2",
+        "[class*=\"centerButton_\"][aria-label=\"More Options\"]": "ellipsis",
+        "[class*=\"centerButton_\"][aria-label=\"Disconnect\"]": "phone.down.fill"
+      }
+    },
+    {
+      "box": 30,
+      "scope": "[class*=\"callContainer_\"] {item}",
+      "items": {
+        "[class*=\"leftTrayIcon_\"][aria-label=\"Invite\"]": "person.badge.plus",
+        "[class*=\"rightTrayIcon_\"][aria-label=\"Pop Out\"]": "macwindow.on.rectangle",
+        "[class*=\"rightTrayIcon_\"][aria-label=\"Full Screen\"]": "arrow.up.left.and.arrow.down.right",
+        "[class*=\"rightTrayIcon_\"][aria-label=\"Exit Full Screen\"]": "arrow.down.right.and.arrow.up.left",
+        "[class*=\"upperContainer_\"] [class*=\"toolbar_\"] [aria-label=\"Show Chat\"]": "message",
+        "[class*=\"upperContainer_\"] [class*=\"toolbar_\"] [aria-label=\"Hide Chat\"]": "message.fill",
+        "[class*=\"overlayButton_\"] button[aria-label=\"Options\"]": "ellipsis"
+      }
+    },
+    {
+      "box": 26,
+      "anchor": "left",
+      "x": "24px",
+      "hide": "svg",
+      "scope": "[class*=\"callContainer_\"] [class*=\"singleUserRoot_\"] [class*=\"stack_\"] > {item}",
+      "items": {
+        "button:nth-child(1 of button)": "person.badge.plus",
+        "button:nth-child(2 of button)": "gamecontroller"
       }
     }
   ]

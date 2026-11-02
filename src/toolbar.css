@@ -15,33 +15,33 @@ section[class*="title_"][class*="container_"] {
 /* Tahoe toolbar: the header buttons sit in one glass capsule (each button is a segment, the
    ends are rounded), hover and toggled states are rounded highlights inside it. Search is a
    separate capsule with the magnifier first, like NSSearchField. */
-[class*="title_"] [class*="toolbar_"] {
+:is([class*="title_"], [class*="upperContainer_"]) [class*="toolbar_"] {
   align-items: center;
   gap: 0 !important;
 }
-[class*="title_"] [class*="toolbar_"] > [class*="iconWrapper_"] {
+:is([class*="title_"], [class*="upperContainer_"]) [class*="toolbar_"] > [class*="iconWrapper_"] {
   width: 36px !important;
   height: 32px !important;
   padding: 0 !important;
   margin: 0 !important;
   border-radius: 0 !important;
   background: var(--vg-fill-2) !important;
-  box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.16), inset 0 -0.5px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.16), inset 0 -0.5px 0 rgba(var(--vg-highlight), 0.05);
 }
-[class*="title_"] [class*="toolbar_"] > [class*="iconWrapper_"]:nth-child(1 of [class*="iconWrapper_"]) {
+:is([class*="title_"], [class*="upperContainer_"]) [class*="toolbar_"] > [class*="iconWrapper_"]:nth-child(1 of [class*="iconWrapper_"]) {
   border-radius: 16px 0 0 16px !important;
-  box-shadow: inset 0.5px 0.5px 0 rgba(255, 255, 255, 0.16), inset 0 -0.5px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0.5px 0.5px 0 rgba(var(--vg-highlight), 0.16), inset 0 -0.5px 0 rgba(var(--vg-highlight), 0.05);
 }
-[class*="title_"] [class*="toolbar_"] > [class*="iconWrapper_"]:nth-last-child(1 of [class*="iconWrapper_"]) {
+:is([class*="title_"], [class*="upperContainer_"]) [class*="toolbar_"] > [class*="iconWrapper_"]:nth-last-child(1 of [class*="iconWrapper_"]) {
   border-radius: 0 16px 16px 0 !important;
-  box-shadow: inset -0.5px 0.5px 0 rgba(255, 255, 255, 0.16), inset 0 -0.5px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: inset -0.5px 0.5px 0 rgba(var(--vg-highlight), 0.16), inset 0 -0.5px 0 rgba(var(--vg-highlight), 0.05);
 }
-[class*="title_"] [class*="toolbar_"] > [class*="iconWrapper_"]:only-of-type {
+:is([class*="title_"], [class*="upperContainer_"]) [class*="toolbar_"] > [class*="iconWrapper_"]:only-of-type {
   border-radius: 16px !important;
 }
 /* Every segment is the same width so the icons sit on an even rhythm; the highlight is inset
    2px with a radius concentric to the capsule ends (16 - 2). */
-[class*="title_"] [class*="toolbar_"] > [class*="iconWrapper_"]::before {
+:is([class*="title_"], [class*="upperContainer_"]) [class*="toolbar_"] > [class*="iconWrapper_"]::before {
   content: "";
   position: absolute;
   inset: 2px;
@@ -49,14 +49,14 @@ section[class*="title_"][class*="container_"] {
   background: transparent;
   transition: background-color 0.12s;
 }
-[class*="title_"] [class*="toolbar_"] > [class*="iconWrapper_"]:hover::before {
+:is([class*="title_"], [class*="upperContainer_"]) [class*="toolbar_"] > [class*="iconWrapper_"]:hover::before {
   background: var(--vg-fill-3);
 }
-[class*="title_"] [class*="toolbar_"] > [class*="iconWrapper_"][class*="selected_"]::before {
+:is([class*="title_"], [class*="upperContainer_"]) [class*="toolbar_"] > [class*="iconWrapper_"][class*="selected_"]::before {
   background: var(--vg-fill-4);
 }
-[class*="title_"] [class*="toolbar_"] > [class*="iconWrapper_"],
-[class*="title_"] [class*="toolbar_"] > [class*="iconWrapper_"][class*="selected_"] {
+:is([class*="title_"], [class*="upperContainer_"]) [class*="toolbar_"] > [class*="iconWrapper_"],
+:is([class*="title_"], [class*="upperContainer_"]) [class*="toolbar_"] > [class*="iconWrapper_"][class*="selected_"] {
   color: var(--vg-text) !important;
 }
 
@@ -68,7 +68,7 @@ section[class*="title_"][class*="container_"] {
   background: var(--vg-fill-2) !important;
   border: 0 !important;
   border-radius: var(--vg-r-pill) !important;
-  box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.16), inset 0 -0.5px 0 rgba(255, 255, 255, 0.05), inset 0 0 0 0.5px rgba(255, 255, 255, 0.06) !important;
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.16), inset 0 -0.5px 0 rgba(var(--vg-highlight), 0.05), inset 0 0 0 0.5px rgba(var(--vg-ink), 0.06) !important;
   align-items: center;
 }
 [class*="toolbar_"] > [class*="search_"] > [class*="search_"] {
@@ -91,7 +91,7 @@ section[class*="title_"][class*="container_"] {
   padding: 0 4px;
   border-radius: var(--vg-r-pill);
   background: var(--vg-fill-1);
-  box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.12);
 }
 
 /* Notice bar under the header ("not on your channel list" and similar): a floating glass
@@ -103,5 +103,5 @@ section[class*="title_"][class*="container_"] {
   border: 0 !important;
   border-radius: var(--vg-r-pill) !important;
   background: var(--vg-fill-2) !important;
-  box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.16), inset 0 0 0 0.5px rgba(255, 255, 255, 0.06) !important;
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.16), inset 0 0 0 0.5px rgba(var(--vg-ink), 0.06) !important;
 }

@@ -1,3 +1,307 @@
 /* ==========================================================================
    STORE PAGES: Nitro home, shop, app directory
+   Discord's marketing art stays; the theme only frames it. Page chrome becomes window glass,
+   cards light fills with hairlines, tabs the segmented control, headings SF.
    ========================================================================== */
+
+/* Scroll-edge fades that only appear once the page has scrolled, so a hero touching the top
+   edge is not dissolved at rest. --vg-store-scrolled runs 0 -> 1 over the first 48px. */
+@property --vg-store-scrolled {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+@keyframes vg-store-scrolled {
+  to {
+    --vg-store-scrolled: 1;
+  }
+}
+[class*="applicationStore_"] [class*="mainPageScroller_"],
+[class*="page_"] > [class*="shop_"] [class*="shop_"][class*="scrollerBase_"],
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="scroller_"][class*="scrollerBase_"] {
+  --vg-store-fade-top: 0px;
+  animation: vg-store-scrolled linear both;
+  animation-timeline: scroll(self);
+  animation-range: 0 48px;
+  mask-image: linear-gradient(to bottom,
+    rgb(0 0 0 / calc(1 - var(--vg-store-scrolled))) var(--vg-store-fade-top),
+    #000 calc(var(--vg-store-fade-top) + 28px),
+    #000 calc(100% - 28px),
+    transparent 100%);
+}
+/* App directory: the header floats over the scroller, so content fades out beneath it. */
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="scroller_"][class*="scrollerBase_"] {
+  --vg-store-fade-top: 44px;
+}
+@container style(--vg-scroll-fade: off) {
+  [class*="applicationStore_"] [class*="mainPageScroller_"],
+  [class*="page_"] > [class*="shop_"] [class*="shop_"][class*="scrollerBase_"],
+  section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="scroller_"][class*="scrollerBase_"] {
+    mask-image: none !important;
+  }
+}
+
+/* Buttons laid over marketing art ("Take me there", "Unlock Reward") are the primary action:
+   accent pills. The palette fills their background but leaves Discord's black label. Set on
+   the button, as the cards re-declare the theme variables on their own theme-dark class. */
+:is([class*="applicationStore_"], [class*="page_"] > [class*="shop_"], section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"])) button[class*="overlay-primary_"] {
+  --control-overlay-primary-background-default: var(--vg-accent) !important;
+  --control-overlay-primary-background-hover: var(--vg-accent-hover) !important;
+  --control-overlay-primary-background-active: var(--vg-accent) !important;
+  --control-overlay-primary-border-default: transparent !important;
+  --control-overlay-primary-border-hover: transparent !important;
+  --control-overlay-primary-border-active: transparent !important;
+  --control-overlay-primary-text-default: var(--vg-on-accent) !important;
+  --control-overlay-primary-text-hover: var(--vg-on-accent) !important;
+  --control-overlay-primary-text-active: var(--vg-on-accent) !important;
+  --control-overlay-primary-icon-default: var(--vg-on-accent) !important;
+  --control-overlay-primary-icon-hover: var(--vg-on-accent) !important;
+  --control-overlay-primary-icon-active: var(--vg-on-accent) !important;
+}
+
+/* Shared: section headings in SF instead of Discord's italic display caps. */
+[class*="applicationStore_"] :is(h1, h2)[class*="nitro-"],
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) h2[class*="display-lg"] {
+  font-family: var(--vg-font-display) !important;
+  font-style: normal !important;
+  text-transform: none !important;
+  letter-spacing: -0.01em !important;
+}
+[class*="applicationStore_"] h2[class*="nitro-"],
+[class*="page_"] > [class*="shop_"] h2[class*="heading-lg"],
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) h3[class*="sectionTitle_"] {
+  font-family: var(--vg-font-display) !important;
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  line-height: 28px !important;
+}
+[class*="applicationStore_"] h1[class*="nitro-"],
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) h2[class*="display-lg"] {
+  font-weight: 700 !important;
+}
+
+/* ==========================================================================
+   NITRO HOME
+   ========================================================================== */
+/* The hero glow, redrawn without the opaque #121214 slab Discord bakes under it, so the
+   window glass shows through between the gradients. */
+[class*="applicationStore_"] img[class*="gradient_"] {
+  content: url("data:image/svg+xml,%3Csvg width='1597' height='984' viewBox='0 0 1597 984' fill='none' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3E%3Cg clip-path='url(%23clip0)'%3E%3Cg opacity='0.6' filter='url(%23filter0_f)'%3E%3Cpath d='M1152.2 -1012.8C1442.1 -443.0 1290.5 260.8 785.0 652.3C784.9 652.3 784.8 652.4 784.6 652.5C170.6 830.5 -487.5 538.5 -777.4 -31.1C-777.7 -31.8 -777.4 -32.5 -776.8 -32.9L1150.5 -1013.4C1151.1 -1013.7 1151.9 -1013.4 1152.2 -1012.8Z' fill='%2319175C'/%3E%3C/g%3E%3Cg filter='url(%23filter1_f)'%3E%3Cpath d='M1039.9 -1013.4C1196.0 -706.5 1095.0 -331.3 805.9 -144.3L400.9 117.6C400.8 117.6 400.8 117.6 400.7 117.7L-49.4 290.8C-370.8 414.3 -733.6 275.0 -889.7 -31.7C-889.8 -32.0 -889.7 -32.4 -889.4 -32.6L1039.0 -1013.7C1039.4 -1013.8 1039.7 -1013.7 1039.9 -1013.4Z' fill='%2319175C'/%3E%3C/g%3E%3Cg filter='url(%23filter2_f)'%3E%3Cpath d='M439.2 -1049.3C618.9 -696.0 516.3 -264.6 196.8 -30.0L183.6 -20.3C111.0 32.9 30.2 74.0 -55.5 101.3L-71.1 106.2C-448.8 226.3 -857.9 55.2 -1037.6 -298C-1037.8 -298.3 -1037.7 -298.8 -1037.3 -299.0L438.1 -1049.6C438.5 -1049.8 439.0 -1049.7 439.2 -1049.3Z' fill='%23FF4CD2'/%3E%3C/g%3E%3C/g%3E%3Cdefs%3E%3Cfilter id='filter0_f' x='-1042.3' y='-1278.3' width='2605.4' height='2247.7' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E%3CfeGaussianBlur stdDeviation='132.4'/%3E%3C/filter%3E%3Cfilter id='filter1_f' x='-1034.6' y='-1158.6' width='2292.5' height='1639.1' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E%3CfeGaussianBlur stdDeviation='72.4'/%3E%3C/filter%3E%3Cfilter id='filter2_f' x='-1212.5' y='-1224.5' width='1914.6' height='1543.8' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E%3CfeGaussianBlur stdDeviation='87.4'/%3E%3C/filter%3E%3CclipPath id='clip0'%3E%3Crect width='1597' height='984' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E ");
+}
+/* A sticky bar inside the scroller would be masked by the scroll fade and its backdrop blur
+   smears over the transparent window, so it scrolls away with the page instead. */
+[class*="applicationStore_"] section[class*="navBar_"] {
+  position: relative !important;
+  backdrop-filter: none !important;
+  background: transparent !important;
+}
+
+/* Cards: a light fill with a hairline, the art inside clipped to the same corner. */
+[class*="applicationStore_"] [class*="cardContainer_"][class*="container_"],
+[class*="applicationStore_"] [class*="cardContainer_"] > [class*="card_"][class*="cardPrimary_"] {
+  border-radius: var(--vg-r-card) !important;
+}
+[class*="applicationStore_"] [class*="card_"][class*="cardPrimary_"] {
+  background-color: var(--vg-fill-1) !important;
+  box-shadow: inset 0 0 0 0.5px var(--vg-line) !important;
+  overflow: hidden;
+}
+[class*="applicationStore_"] [class*="hasBackgroundAsset_"] > [class*="card_"][class*="cardPrimary_"] {
+  box-shadow: inset 0 0 0 0.5px var(--vg-glass-line) !important;
+}
+[class*="applicationStore_"] [class*="primaryAssetImage_"] {
+  border-radius: var(--vg-r-row) !important;
+}
+/* Wide banners (share, featured reward, gift) take the larger popover radius. */
+[class*="applicationStore_"] [class*="heroHeading_"] [class*="treatmentContent_"] > * > [class*="container_"]:has([class*="progressCircle_"]),
+[class*="applicationStore_"] [class*="bannerRow_"] [class*="cardContainer_"],
+[class*="applicationStore_"] [class*="bannerRow_"] [class*="card_"][class*="cardPrimary_"],
+[class*="applicationStore_"] [class*="giftNitro_"] {
+  border-radius: var(--vg-r-pop) !important;
+}
+[class*="applicationStore_"] [class*="heroHeading_"] [class*="treatmentContent_"] > * > [class*="container_"]:has([class*="progressCircle_"]),
+[class*="applicationStore_"] [class*="giftNitro_"] {
+  border: 0.5px solid var(--vg-line) !important;
+  overflow: hidden;
+}
+
+/* Small badges ("Beta", "Reward"): compact capsules in SF semibold. */
+[class*="applicationStore_"] [class*="pill_"],
+[class*="applicationStore_"] [class*="betaBadge_"] > [class*="badge_"] {
+  border-radius: var(--vg-r-pill) !important;
+  padding: 2px 8px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em;
+}
+
+/* Favourites filter: the theme's segmented control, a capsule well with the chosen
+   segment raised instead of an accent outline. */
+[class*="applicationStore_"] [class*="filterTabs_"] {
+  display: inline-flex !important;
+  width: auto !important;
+  align-self: flex-start;
+  gap: 0 !important;
+  padding: 2px !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: var(--vg-fill-2) !important;
+  box-shadow: inset 0 0 0 0.5px var(--vg-line);
+}
+[class*="applicationStore_"] [class*="filterTab_"] {
+  margin: 0 !important;
+  padding: 4px 14px !important;
+  height: auto !important;
+  border: 0 !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: transparent !important;
+  color: var(--vg-text-2) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  transition: background-color 0.15s, color 0.15s;
+}
+[class*="applicationStore_"] [class*="filterTab_"]:hover:not([class*="selected_"]) {
+  color: var(--vg-text) !important;
+}
+[class*="applicationStore_"] [class*="filterTab_"][class*="selected_"] {
+  background: rgba(var(--vg-ink), 0.2) !important;
+  color: var(--vg-text) !important;
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.18), 0 1px 2px rgba(var(--vg-shadow), 0.25);
+}
+
+/* ==========================================================================
+   SHOP
+   ========================================================================== */
+[class*="page_"] > [class*="shop_"] [class*="productCardContainer_"] {
+  border: 0 !important;
+  border-radius: var(--vg-r-card) !important;
+  background: var(--vg-fill-1) !important;
+  box-shadow: inset 0 0 0 0.5px var(--vg-line);
+}
+[class*="page_"] > [class*="shop_"] [class*="productCardContainer_"] > :is([class*="productCardContentContainer_"], [class*="focusTarget_"]) {
+  border-radius: calc(var(--vg-r-card) - 0.5px) !important;
+  overflow: hidden;
+}
+/* Prices sit in a small capsule like App Store price buttons; badges match Nitro's. */
+[class*="page_"] > [class*="shop_"] [class*="footerInfoShrinkOnHover_"] > [class*="container_"] {
+  display: inline-flex !important;
+  align-items: center;
+  width: fit-content !important;
+  margin-top: 4px;
+  padding: 1px 8px 1px 6px !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: rgba(var(--vg-ink), 0.14);
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.12);
+}
+[class*="page_"] > [class*="shop_"] [class*="footerInfoShrinkOnHover_"] > [class*="container_"] [class*="text-md/"] {
+  font-size: 13px !important;
+}
+[class*="page_"] > [class*="shop_"] [class*="productCardBadge_"] > [class*="badge_"] {
+  padding: 2px 8px !important;
+  font-size: 11px !important;
+}
+[class*="page_"] > [class*="shop_"] [class*="productCardBadge_"] [class*="label_"] {
+  font-size: inherit !important;
+}
+
+/* Square header buttons (wishlist, Orbs balance) become round and capsule. */
+[class*="page_"] > [class*="shop_"] [class*="toolbar_"] [class*="wishlistButton_"] {
+  border-radius: 50% !important;
+}
+[class*="page_"] > [class*="shop_"] [class*="toolbar_"] [class*="clickable_"] > span {
+  border-radius: var(--vg-r-pill) !important;
+}
+
+/* Header navigation: pill segments like the Friends tabs instead of an underline. The gap
+   shrinks by the pill padding in the hidden measuring row too, so overflow into "More" is
+   still computed from the same widths. */
+[class*="page_"] > [class*="shop_"] [class*="navigationMenuItemsContainer_"] {
+  gap: 8px !important;
+}
+[class*="page_"] > [class*="shop_"] [class*="navigationMenuItemsContainer_"] > li > [class*="navigationMenuButton_"] {
+  height: 28px !important;
+  border: 0 !important;
+  margin: 10px 0 !important;
+  padding: 0 12px !important;
+  border-radius: var(--vg-r-pill) !important;
+  align-items: center;
+  transition: background-color 0.15s;
+}
+[class*="page_"] > [class*="shop_"] [class*="navigationMenuItemsContainer_"] > li > [class*="navigationMenuButton_"]:hover {
+  background: var(--vg-fill-2) !important;
+}
+[class*="page_"] > [class*="shop_"] [class*="navigationMenuItemsContainer_"] > li > [class*="navigationMenuButton_"][class*="selected_"] {
+  background: var(--vg-fill-3) !important;
+}
+[class*="page_"] > [class*="shop_"] [class*="navigationMenuItemsContainer_"] [class*="navigationMenuButton_"]::after {
+  display: none !important;
+}
+
+/* ==========================================================================
+   DISCOVER: servers and the app directory
+   ========================================================================== */
+/* The hero glow sits on black in Discord; without it the glow lies on the window glass,
+   framed as a rounded banner below the floating header instead of a full-bleed band. */
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="gradientBackground_"] {
+  width: auto !important;
+  height: auto !important;
+  place-self: stretch;
+  margin: 57px 28px 8px;
+  border-radius: var(--vg-r-pop);
+  overflow: hidden;
+  box-shadow: inset 0 0 0 0.5px var(--vg-glass-line);
+}
+/* The headline keeps 32px of air inside the banner, which now starts 28px in. */
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="gradientBackground_"] ~ [class*="content_"] [class*="textContainer_"],
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="content_"]:has(~ [class*="gradientBackground_"]) [class*="textContainer_"] {
+  padding-left: 47px !important;
+}
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="gradientBackground_"] > [class*="gradient_"] {
+  height: 100% !important;
+  background-color: transparent !important;
+}
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="card_"][class*="clickable_"] {
+  border: 0 !important;
+  border-radius: var(--vg-r-card) !important;
+  background: var(--vg-fill-1) !important;
+  box-shadow: inset 0 0 0 0.5px var(--vg-line) !important;
+  overflow: hidden;
+}
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="card_"][class*="clickable_"]:hover {
+  background: var(--vg-fill-2) !important;
+}
+/* Underlined category tabs become pill segments. */
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="tabs_"][class*="top_"] {
+  align-items: center;
+  gap: 4px;
+}
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="tabs_"] > [class*="tab_"][class*="item_"] {
+  height: 28px !important;
+  margin: 0 !important;
+  padding: 0 12px !important;
+  display: flex;
+  align-items: center;
+  border: 0 !important;
+  border-radius: var(--vg-r-pill) !important;
+  transition: background-color 0.15s;
+}
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="tabs_"] > [class*="tab_"][class*="item_"]::after {
+  display: none !important;
+}
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="tabs_"] > [class*="tab_"][class*="item_"]:hover {
+  background: var(--vg-fill-2) !important;
+}
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="tabs_"] > [class*="tab_"][class*="selected_"] {
+  background: var(--vg-fill-3) !important;
+}
+
+/* Carousels (Nitro favourites, shop shelves): the row dissolves on the side that has more
+   to scroll to, under the arrow button, instead of a card cut at the container edge. */
+:is([class*="applicationStore_"], [class*="page_"] > [class*="shop_"]) [class*="actions_"] + [class*="children_"][class*="scrollRight_"] {
+  mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent);
+}
+:is([class*="applicationStore_"], [class*="page_"] > [class*="shop_"]) [class*="actions_"] + [class*="children_"][class*="scrollLeft_"] {
+  mask-image: linear-gradient(to left, #000 calc(100% - 64px), transparent);
+}
+:is([class*="applicationStore_"], [class*="page_"] > [class*="shop_"]) [class*="actions_"] + [class*="children_"][class*="scrollBoth_"] {
+  mask-image: linear-gradient(to right, transparent, #000 64px, #000 calc(100% - 64px), transparent);
+}

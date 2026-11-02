@@ -25,7 +25,7 @@ label[class*="container_"]:has(> span > input:checked) > [class*="switchIndicato
 }
 label[class*="container_"]:has(> span > input:not(:checked)) > [class*="switchIndicator_"],
 .vc-switch-container:not(.vc-switch-checked) {
-  background: rgba(120, 120, 128, 0.36) !important;
+  background: rgba(var(--vg-track), 0.36) !important;
   border-color: transparent !important;
 }
 [class*="switchIndicator_"],
@@ -40,7 +40,7 @@ label[class*="container_"]:has(> span > input:not(:checked)) > [class*="switchIn
 .vc-switch-slider rect,
 [class*="switchIndicator_"] [class*="thumb_"] rect,
 [class*="switchIndicator_"] [class*="thumb_"] {
-  filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 1px 1.5px rgba(var(--vg-shadow), 0.3));
 }
 /* Apple's knob fills the track height, Discord's leaves a wide margin. */
 [class*="switchIndicator_"] [class*="thumb_"] rect {

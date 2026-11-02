@@ -12,10 +12,21 @@
 /* Settings. Everything here overrides the defaults in src/tokens.css; delete a line to go back
    to the default. Vesktop needs "transparent" on and macOS vibrancy set (sidebar recommended). */
 :root {
+    /* options: on or off */
+    --vg-animations: on; /* off: no transitions or motion, things jump to their end state */
+    --vg-sf-symbols: on; /* off: Discord's own icons instead of SF Symbols */
+    --vg-vibrancy: on; /* off: solid window and sidebar, no desktop showing through */
+    --vg-background-image: off; /* on: the image below as the window background, menus turn to glass */
+    --vg-background-image-url: none; /* url("https://..."), from a host Vencord lets load images */
+    --vg-panel-art: on; /* off: hides Nitro artwork and avatar decoration in the user panel */
+    --vg-compact: off; /* on: shorter rows in the channel list, member list and menus */
+    --vg-scroll-fade: on; /* off: lists end in a hard edge instead of fading under the bars */
+
     /* colour */
     --vg-accent: #0a84ff; /* links, buttons, switches, menu highlight */
     --vg-accent-hover: #3b9bff;
     --vg-accent-text: #4aa3ff; /* accent used as text (links, mentions) */
+    --vg-on-accent: #fff; /* text on accent fills (buttons, menu highlight); dark for a pale accent */
     --vg-tint: 11, 12, 22; /* r, g, b of the dark tint laid over the desktop blur */
     --vg-window: rgba(var(--vg-tint), 0.62); /* chat, header and member list; higher = darker, less glass */
     --vg-panel: linear-gradient(rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.045)), rgba(var(--vg-tint), 0.46); /* floating sidebar */

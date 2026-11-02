@@ -1,3 +1,51 @@
 /* ==========================================================================
    COMPOSER STATES: reply bar, typing indicator, ephemeral messages
    ========================================================================== */
+/* Bars docked on the input (reply, thread suggestion, new-member actions): one card that floats
+   just above the capsule, in the capsule's own fill and edge, rather than a tab fused to it. */
+[class*="channelTextArea_"] [class*="stackedBars_"] {
+  margin: 0 6px 6px !important;
+  overflow: hidden;
+  background: var(--vg-fill-2) !important;
+  border: 0.5px solid var(--vg-glass-line) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--vg-specular), 0 6px 24px rgba(var(--vg-shadow), 0.22) !important;
+}
+[class*="channelTextArea_"] [class*="stackedBars_"] > :not(:last-child) {
+  border-bottom: 0.5px solid var(--vg-line) !important;
+}
+[class*="channelTextArea_"] [class*="replyBar_"],
+[class*="channelTextArea_"] [class*="threadSuggestionBar_"] {
+  min-height: 36px;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-family: var(--vg-font);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--vg-text-2);
+}
+[class*="channelTextArea_"] [class*="replyBar_"] [class*="name_"] {
+  color: var(--vg-text);
+  font-weight: 600;
+}
+/* "@ On": sentence case and an accent tint, like a toggle label. */
+[class*="channelTextArea_"] [class*="replyBar_"] [class*="mentionButton_"] {
+  padding: 4px 10px !important;
+  border-radius: var(--vg-r-pill);
+  text-transform: none !important;
+  font-weight: 600;
+}
+[class*="channelTextArea_"] [class*="replyBar_"] [class*="mentionButton_"]:hover {
+  background: var(--vg-fill-2);
+}
+[class*="channelTextArea_"] [class*="replyBar_"] [class*="separator_"] {
+  width: 0.5px !important;
+  height: 16px !important;
+  background: var(--vg-line-strong, rgba(var(--vg-ink), 0.15)) !important;
+}
+[class*="channelTextArea_"] [class*="replyBar_"] [class*="actions_"] [role="button"],
+[class*="channelTextArea_"] [class*="replyBar_"] [class*="actions_"] button {
+  border-radius: var(--vg-r-pill) !important;
+}

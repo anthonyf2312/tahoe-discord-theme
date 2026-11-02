@@ -1,0 +1,44 @@
+/**
+ * @name Tahoe Midnight
+ * @description macOS Tahoe glass for Vesktop in near-black for OLED-like contrast colours: a floating sidebar over native vibrancy, SF Symbols, liquid glass controls.
+ * @author skopevoj
+ * @version 0.3.0
+ * @source https://github.com/skopevoj/discord-theme
+ */
+
+/* the theme itself, rebuilt from src/ and served by GitHub Pages */
+@import url('https://skopevoj.github.io/discord-theme/build/tahoe.css');
+
+/* Settings. Everything here overrides the defaults in src/tokens.css; delete a line to go back
+   to the default. Vesktop needs "transparent" on and macOS vibrancy set (sidebar recommended). */
+:root {
+    /* colour: near-black for OLED-like contrast */
+    --vg-accent: #0a84ff; /* links, buttons, switches, menu highlight */
+    --vg-accent-hover: #369aff;
+    --vg-accent-text: #4aa3ff; /* accent used as text (links, mentions) */
+    --vg-accent-soft: rgba(10, 132, 255, 0.2);
+    --vg-danger: #ff453a;
+    --vg-success: #30d158;
+    --vg-warning: #ffd60a;
+    --vg-tint: 0, 0, 0; /* r, g, b of the dark tint laid over the desktop blur */
+    /* near-opaque so the desktop barely shows through */
+    --vg-window: rgba(var(--vg-tint), 0.86); /* chat, header and member list; higher = darker, less glass */
+    --vg-panel: linear-gradient(rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.03)), rgba(var(--vg-tint), 0.74); /* floating sidebar */
+
+    /* menus, popouts and modals: solid, see src/tokens.css */
+    --vg-glass: rgb(22, 22, 24);
+    --vg-glass-strong: rgb(17, 17, 19);
+    --vg-sheet: rgb(12, 12, 14);
+
+    --vg-text: #e6e6e6;
+    --vg-text-2: rgba(235, 235, 245, 0.6);
+    --vg-text-3: rgba(235, 235, 245, 0.38);
+
+    /* geometry: inner radii follow the window corner, keep win-radius matched to macOS */
+    --vg-win-radius: 15px; /* macOS window corner */
+    --vg-gap: 5px; /* inset of the floating panels */
+
+    /* text */
+    --vg-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+    --vg-mono: ui-monospace, "SF Mono", Menlo, monospace;
+}

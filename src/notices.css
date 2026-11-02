@@ -1,3 +1,95 @@
 /* ==========================================================================
    NOTICES: app notice bar, invite toolbar, search results panel
    ========================================================================== */
+/* The app notice bar (update available, connection, Nitro, streamer mode). Discord runs it
+   across the whole window under the titlebar, cutting through the sidebar panel; here it is a
+   solid glass capsule over the page column only, tinted by its kind. */
+[class*="base_"] > [class*="notice_"][class*="color"] {
+  --vg-notice-tint: var(--vg-success);
+  --custom-notice-text: var(--vg-text);
+  grid-column: channelsEnd / end !important;
+  position: relative;
+  height: 34px;
+  margin: 3px var(--vg-gap) 2px !important;
+  padding: 0 44px !important;
+  border: 0.5px solid var(--vg-glass-line) !important;
+  border-radius: var(--vg-r-pill) !important;
+  background:
+    linear-gradient(color-mix(in srgb, var(--vg-notice-tint) 16%, transparent), color-mix(in srgb, var(--vg-notice-tint) 16%, transparent)),
+    var(--vg-glass) !important;
+  box-shadow: var(--vg-specular), 0 6px 20px rgba(var(--vg-shadow), 0.3) !important;
+  color: var(--vg-text) !important;
+  font: 400 13px/34px var(--vg-font) !important;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+[class*="base_"] > [class*="notice_"][class*="colorInfo_"],
+[class*="base_"] > [class*="notice_"][class*="colorBrand_"],
+[class*="base_"] > [class*="notice_"][class*="colorPremium"],
+[class*="base_"] > [class*="notice_"][class*="colorNeutral_"],
+[class*="base_"] > [class*="notice_"][class*="colorCustom_"] {
+  --vg-notice-tint: var(--vg-accent);
+}
+[class*="base_"] > [class*="notice_"][class*="colorWarning_"] {
+  --vg-notice-tint: var(--vg-warning);
+}
+[class*="base_"] > [class*="notice_"][class*="colorDanger_"] {
+  --vg-notice-tint: var(--vg-danger);
+}
+[class*="base_"] > [class*="notice_"][class*="colorStreamerMode_"] {
+  --vg-notice-tint: #bf5af2;
+}
+[class*="base_"] > [class*="notice_"][class*="colorSpotify_"],
+[class*="base_"] > [class*="notice_"][class*="colorPlayStation_"] {
+  justify-content: center;
+}
+[class*="base_"] > [class*="notice_"][class*="color"] strong {
+  font-weight: 600;
+}
+/* Actions are small filled pills in the notice's tint; the minor one stays a plain link. */
+[class*="base_"] > [class*="notice_"] [class*="button_"]:not([class*="buttonMinor_"]) {
+  top: 0 !important;
+  height: 22px !important;
+  margin-inline-start: 12px !important;
+  padding: 0 11px !important;
+  border: 0 !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: var(--vg-notice-tint) !important;
+  color: #fff !important;
+  font: 500 12px/22px var(--vg-font) !important;
+  vertical-align: middle;
+}
+[class*="base_"] > [class*="notice_"][class*="colorWarning_"] [class*="button_"]:not([class*="buttonMinor_"]) {
+  color: rgba(0, 0, 0, 0.85) !important;
+}
+[class*="base_"] > [class*="notice_"] [class*="button_"]:not([class*="buttonMinor_"]):hover {
+  filter: brightness(1.12);
+}
+[class*="base_"] > [class*="notice_"] [class*="buttonMinor_"] {
+  top: 0 !important;
+  color: var(--vg-text-2) !important;
+  font-size: 12px !important;
+}
+[class*="base_"] > [class*="notice_"] [class*="closeButton_"] {
+  top: 50% !important;
+  inset-inline-end: 5px !important;
+  width: 24px !important;
+  height: 24px !important;
+  justify-content: center;
+  border-radius: var(--vg-r-pill);
+  transform: translateY(-50%);
+  color: var(--vg-text-2);
+  transition: background-color 0.12s;
+}
+[class*="base_"] > [class*="notice_"] [class*="closeButton_"]:hover {
+  background: var(--vg-fill-3);
+}
+[class*="base_"] > [class*="notice_"] [class*="closeIcon_"] {
+  width: 14px !important;
+  height: 14px !important;
+}
+[class*="base_"] > [class*="notice_"] [class*="closeIcon_"] path {
+  fill: currentColor !important;
+}

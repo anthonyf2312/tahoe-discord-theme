@@ -1,3 +1,147 @@
 /* ==========================================================================
    SERVER LIST EXTRAS: unread and mention badges, selected pill, folders
    ========================================================================== */
+/* Badges are Apple's red capsules laid over the icon. Discord punches a hole for them into the
+   icon's mask, which reads as a dark ring on the glass, so the cut-outs go and a soft shadow
+   separates the badge instead. */
+nav[class*="guilds_"] mask use[href$="_badge_masks"] {
+  display: none;
+}
+nav[class*="guilds_"] [class*="lowerBadge_"],
+nav[class*="guilds_"] [class*="upperBadge_"] {
+  transform: translate(3px, 3px);
+}
+nav[class*="guilds_"] [class*="upperBadge_"] {
+  transform: translate(3px, -3px);
+}
+nav[class*="guilds_"] [class*="numberBadge_"] {
+  min-width: 18px;
+  height: 18px !important;
+  padding: 0 5px !important;
+  box-sizing: border-box;
+  width: auto !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: var(--vg-danger) !important;
+  color: var(--vg-on-danger) !important;
+  font: 600 11.5px/18px var(--vg-font) !important;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.1px;
+  box-shadow: 0 1px 3px rgba(var(--vg-shadow), 0.4);
+}
+/* Event and voice markers: a small solid glass disc, like the menus. */
+nav[class*="guilds_"] [class*="iconBadge_"] {
+  background: var(--vg-glass) !important;
+  color: var(--vg-text) !important;
+  box-shadow: inset 0 0 0 0.5px var(--vg-glass-line), 0 1px 3px rgba(var(--vg-shadow), 0.4);
+}
+
+/* Left-edge indicator: a half capsule against the panel edge. White when selected, dimmer for
+   unread, so it reads like a focused sidebar row against an inactive one. */
+nav[class*="guilds_"] [class*="item_"][class*="visible_"] {
+  background: var(--vg-text-2) !important;
+  border-radius: 0 var(--vg-r-pill) var(--vg-r-pill) 0 !important;
+}
+nav[class*="guilds_"] [class*="item_"][class*="hovered_"] {
+  background: var(--vg-text) !important;
+}
+nav[class*="guilds_"] [class*="item_"][class*="selected_"] {
+  background: var(--vg-text-strong) !important;
+}
+
+/* Folders: an open folder is a fill-2 tray whose corners follow the icons inside it; the
+   closed tile uses the same fill, and its preview icons get radii concentric with it. */
+nav[class*="guilds_"] [class*="folderButtonInner_"],
+nav[class*="guilds_"] [class*="folderGroupBackground_"] {
+  background: var(--vg-fill-2) !important;
+}
+nav[class*="guilds_"] [class*="folderGroupBackground_"] {
+  border-radius: 16px !important;
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.1);
+}
+/* Open, the header sits on the tray and would double its fill. */
+nav[class*="guilds_"] [aria-expanded="true"] [class*="folderButtonInner_"] {
+  background: transparent !important;
+}
+nav[class*="guilds_"] [class*="folderPreviewGuildIcon_"],
+nav[class*="guilds_"] [class*="folderPreview_"] [class*="icon_"] {
+  border-radius: 5px !important;
+}
+nav[class*="guilds_"] [class*="folderIconWrapper_"] {
+  background: transparent !important;
+}
+
+/* Home, add-server and discover tiles: the same quiet fill as a closed folder, with the accent
+   only for the selected home tile. */
+nav[class*="guilds_"] [class*="childWrapper_"],
+nav[class*="guilds_"] [class*="circleIconButton_"] {
+  background: var(--vg-fill-2) !important;
+  color: var(--vg-text) !important;
+  transition: background-color 0.12s, color 0.12s;
+}
+nav[class*="guilds_"] [class*="childWrapper_"]:hover,
+nav[class*="guilds_"] [class*="circleIconButton_"]:hover {
+  background: var(--vg-fill-4) !important;
+}
+nav[class*="guilds_"] [class*="childWrapper_"][class*="selected_"],
+nav[class*="guilds_"] [class*="circleIconButton_"][class*="selected_"] {
+  background: var(--vg-accent) !important;
+  color: var(--vg-on-accent) !important;
+}
+nav[class*="guilds_"] [class*="circleIconButton_"] {
+  color: var(--vg-text-2) !important;
+}
+
+nav[class*="guilds_"] [class*="guildSeparator_"] {
+  width: 24px !important;
+  height: 1px !important;
+  margin-inline: auto;
+  transform: scaleY(0.5);
+  background: rgba(var(--vg-ink), 0.2) !important;
+  border-radius: var(--vg-r-pill);
+}
+
+/* "New unreads / mentions" bars at the ends of the list: the capsules from sidebar.css, sized
+   to the 64px column. */
+nav[class*="guilds_"] [class*="unreadMentionsBar_"] {
+  height: 22px !important;
+  padding: 0 8px !important;
+  font: 600 11px/22px var(--vg-font) !important;
+}
+nav[class*="guilds_"] [class*="unreadMentionsBar_"] [class*="text_"] {
+  text-transform: capitalize !important;
+  letter-spacing: 0 !important;
+}
+
+/* The scroll-edge fade belongs to the column, not the scroller: the scroller is only as tall as
+   its content, so fading its own end dimmed the last icons even with free space below them. */
+nav[class*="guilds_"] [class*="scroller_"] {
+  mask-image: none !important;
+}
+nav[class*="guilds_"] > [class*="tree_"] {
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 72px), transparent calc(100% - 16px));
+}
+
+/* Sidebar resize handle: Discord fills the 4px strip next to the panel with a square grey bar
+   on hover. Here it stays clear and shows a thin capsule in the gap instead. */
+[class*="sidebarResizeHandle_"],
+[class*="sidebarResizeHandle_"]:hover,
+[class*="sidebarResizeHandle_"]:active,
+[class*="sidebarResizeHandle_"]:focus-visible {
+  background: transparent !important;
+}
+[class*="sidebarResizeHandle_"]::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--vg-panel-radius) + 8px);
+  bottom: calc(var(--vg-panel-radius) + 8px);
+  left: 1px;
+  width: 2px;
+  border-radius: var(--vg-r-pill);
+  background: var(--vg-fill-4);
+  opacity: 0;
+  transition: opacity 0.2s 0.1s;
+}
+[class*="sidebarResizeHandle_"]:hover::after,
+[class*="sidebarResizeHandle_"]:active::after {
+  opacity: 1;
+}

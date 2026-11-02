@@ -2,13 +2,35 @@
    TUNABLES
    ========================================================================== */
 :root {
+  /* Options, read by @container style() queries in options.css, floating.css and icons.css.
+     on/off keywords; the defaults are the theme as designed. */
+  --vg-animations: on;
+  --vg-sf-symbols: on;
+  --vg-vibrancy: on;
+  --vg-background-image: off;
+  --vg-background-image-url: none;
+  --vg-panel-art: on;
+  --vg-compact: off;
+  --vg-scroll-fade: on;
+
   --vg-accent: #0a84ff;
   --vg-accent-hover: #3b9bff;
   --vg-accent-text: #4aa3ff;
-  --vg-accent-soft: rgba(10, 132, 255, 0.2);
+  --vg-accent-soft: rgb(from var(--vg-accent) r g b / 0.2);
   --vg-danger: #ff453a;
+  --vg-danger-text: color-mix(in srgb, var(--vg-danger) 80%, rgb(var(--vg-ink))); /* danger used as text */
   --vg-success: #30d158;
   --vg-warning: #ffd60a;
+  /* Success and warning used as text; a light flavor darkens them to stay readable. */
+  --vg-success-text: var(--vg-success);
+  --vg-warning-text: var(--vg-warning);
+  /* Text and symbols laid on a solid accent, danger or success fill. White suits saturated
+     fills; a pale accent needs dark text to stay readable. */
+  --vg-on-accent: #fff;
+  --vg-on-danger: #fff;
+  --vg-on-success: #fff;
+  /* Opaque danger-toned chip (the unread divider), solid so the line behind it stays hidden. */
+  --vg-danger-chip: color-mix(in srgb, var(--vg-danger) 12%, rgb(var(--vg-tint)));
 
   /* Geometry. Inner radii are the window radius minus the gap, so every curve stays concentric
      with the macOS window corner. */
@@ -22,8 +44,9 @@
      lightly plus a touch of white, so it still reads as the raised layer. */
   --vg-tint: 11, 12, 22;
   --vg-window: rgba(var(--vg-tint), 0.62);
-  --vg-panel: linear-gradient(rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.045)), rgba(var(--vg-tint), 0.46);
-  --vg-panel-edge: rgba(255, 255, 255, 0.11);
+  --vg-panel: linear-gradient(rgba(var(--vg-highlight), 0.045), rgba(var(--vg-highlight), 0.045)), rgba(var(--vg-tint), 0.46);
+  --vg-panel-edge: rgba(var(--vg-highlight), 0.11);
+  --vg-panel-outline: rgba(var(--vg-shadow), 0.45); /* hairline around the floating panels */
 
   /* Floating layers are solid. Over the transparent window Chromium cannot blur what is
      behind them (it draws the blurred copy on top of the sharp original), so any translucency
@@ -31,22 +54,40 @@
   --vg-glass: rgb(38, 38, 43);
   --vg-glass-strong: rgb(33, 33, 38);
   --vg-sheet: rgb(30, 30, 35);
+  /* The same layers see-through, for when a background image makes real blur possible
+     (options.css). Resolved here so they follow a flavor's solid colours. */
+  --vg-glass-clear: rgb(from var(--vg-glass) r g b / 0.6);
+  --vg-glass-strong-clear: rgb(from var(--vg-glass-strong) r g b / 0.7);
+  --vg-sheet-clear: rgb(from var(--vg-sheet) r g b / 0.78);
   --vg-glass-blur: none;
-  --vg-sheen: linear-gradient(rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0) 48px);
-  --vg-glass-line: rgba(255, 255, 255, 0.13);
-  --vg-specular: inset 0 0.5px 0 rgba(255, 255, 255, 0.24), inset 0 -0.5px 0 rgba(255, 255, 255, 0.05);
-  --vg-float-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.5), 0 14px 44px rgba(0, 0, 0, 0.45);
+  --vg-sheen: linear-gradient(rgba(var(--vg-highlight), 0.04), rgba(var(--vg-highlight), 0) 48px);
+  --vg-glass-line: rgba(var(--vg-ink), 0.13);
+  --vg-specular: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.24), inset 0 -0.5px 0 rgba(var(--vg-highlight), 0.05);
+  --vg-float-shadow: 0 0 0 0.5px rgba(var(--vg-shadow), 0.5), 0 14px 44px rgba(var(--vg-shadow), 0.45);
 
-  --vg-fill-1: rgba(255, 255, 255, 0.04);
-  --vg-fill-2: rgba(255, 255, 255, 0.07);
-  --vg-fill-3: rgba(255, 255, 255, 0.1);
-  --vg-fill-4: rgba(255, 255, 255, 0.15);
-  --vg-line: rgba(255, 255, 255, 0.075);
-  --vg-select: rgba(255, 255, 255, 0.1);
+  /* Neutral overlays are one colour at many alphas, given as r, g, b like the tint. Ink is
+     what fills, hairlines and hovers are made of (white on a dark theme, black on a light one);
+     highlight is the specular top edge; shadow, scrims; shade, what recessed wells darken to. */
+  --vg-ink: 255, 255, 255;
+  --vg-highlight: 255, 255, 255;
+  --vg-shadow: 0, 0, 0;
+  --vg-shade: 0, 0, 0;
+  --vg-scrim: rgba(var(--vg-shadow), 0.32);
+  --vg-track: 120, 120, 128; /* switch and radio track when off, macOS systemFill */
+
+  --vg-fill-1: rgba(var(--vg-ink), 0.04);
+  --vg-fill-2: rgba(var(--vg-ink), 0.07);
+  --vg-fill-3: rgba(var(--vg-ink), 0.1);
+  --vg-fill-4: rgba(var(--vg-ink), 0.15);
+  --vg-line: rgba(var(--vg-ink), 0.075);
+  --vg-select: rgba(var(--vg-ink), 0.1);
 
   --vg-text: rgba(255, 255, 255, 0.9);
+  --vg-text-strong: #fff; /* headings, active rows and icons */
   --vg-text-2: rgba(235, 235, 245, 0.58);
   --vg-text-3: rgba(235, 235, 245, 0.36);
+  /* Text on the dark scrims laid over video and artwork, which stay dark in every flavor. */
+  --vg-on-media: var(--vg-text);
 
   --vg-r-row: 8px;
   --vg-r-card: 12px;

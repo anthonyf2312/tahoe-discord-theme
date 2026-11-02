@@ -9,7 +9,6 @@
 [class*="contentWrapper_"][class*="drawer"],
 [class*="drawerSizingWrapper_"] > [class*="contentWrapper_"],
 [class*="messagesPopoutWrap_"],
-[class*="recentMentionsPopout_"],
 [class*="searchResultsWrap_"],
 [class*="tooltip_"]:not([class*="tooltipPointer"]) {
   background: var(--vg-sheen), var(--vg-glass) !important;
@@ -50,22 +49,27 @@
 :root {
   --vg-menu-icon-x: 19px;
 }
-:is(#message, #message-actions, #channel-context, #guild-context, #user-context, #guild-header-popout) [class*="labelContainer_"] {
-  position: relative;
-  padding-left: 36px !important;
-}
-:is(#message, #message-actions, #channel-context, #guild-context, #user-context, #guild-header-popout) [class*="iconContainerLeft_"] {
-  display: none !important;
+@container not style(--vg-sf-symbols: off) {
+  :is(#message, #message-actions, #channel-context, #guild-context, #user-context, #guild-header-popout) [class*="labelContainer_"] {
+    position: relative;
+    padding-left: 36px !important;
+  }
+  :is(#message, #message-actions, #channel-context, #guild-context, #user-context, #guild-header-popout) [class*="iconContainerLeft_"] {
+    display: none !important;
+  }
 }
 /* Menu symbols take the label colour like on macOS: white, red on destructive rows. */
 [role="menu"] [class*="labelContainer_"]::before {
   color: var(--vg-text);
 }
 [role="menu"] [class*="colorDanger_"]::before {
-  color: #ff6961;
+  color: var(--vg-danger-text);
 }
 [role="menu"] [class*="focused_"]::before {
-  color: #fff;
+  color: var(--vg-on-accent);
+}
+[role="menu"] [class*="colorDanger_"][class*="focused_"]::before {
+  color: var(--vg-on-danger);
 }
 [class*="menu_"][role="menu"] [class*="subtext_"] {
   font-size: 12px !important;
@@ -81,23 +85,27 @@
 }
 [class*="menu_"][role="menu"] [class*="item_"][class*="focused_"] {
   background: var(--vg-accent) !important;
-  color: #fff !important;
+  color: var(--vg-on-accent) !important;
 }
 [class*="menu_"][role="menu"] [class*="item_"][class*="focused_"] *,
 [class*="menu_"][role="menu"] [class*="item_"][class*="focused_"] [class*="iconContainer_"] {
-  color: #fff !important;
+  color: var(--vg-on-accent) !important;
 }
 [class*="menu_"][role="menu"] [class*="colorDanger_"] {
-  color: #ff6961 !important;
+  color: var(--vg-danger-text) !important;
 }
 [class*="menu_"][role="menu"] [class*="item_"][class*="colorDanger_"][class*="focused_"] {
   background: var(--vg-danger) !important;
+  color: var(--vg-on-danger) !important;
+}
+[class*="menu_"][role="menu"] [class*="item_"][class*="colorDanger_"][class*="focused_"] * {
+  color: var(--vg-on-danger) !important;
 }
 [class*="menu_"][role="menu"] [role="separator"],
 [class*="menu_"][role="menu"] [class*="separator_"] {
   border: 0 !important;
   height: 1px !important;
-  background: rgba(255, 255, 255, 0.09) !important;
+  background: rgba(var(--vg-ink), 0.09) !important;
   margin: 5px 9px !important;
 }
 /* Quick reactions: round tapback-style buttons instead of square tiles. */
@@ -164,11 +172,11 @@
 }
 [class*="layer_"] [role="listbox"] [role="option"]:hover *,
 [class*="layer_"] [role="listbox"] [role="option"][aria-selected="true"] * {
-  color: #fff !important;
+  color: var(--vg-on-accent) !important;
 }
 [class*="layer_"] [role="listbox"] > [class*="divider_"] {
   margin: 5px 9px !important;
-  background: rgba(255, 255, 255, 0.09) !important;
+  background: rgba(var(--vg-ink), 0.09) !important;
 }
 /* "from: user" chips in the history read as one capsule. */
 [class*="layer_"] [role="listbox"] [class*="filterPill_"] {
@@ -183,7 +191,7 @@
 [class*="slider_"] [class*="bar_"] {
   height: 4px !important;
   border-radius: var(--vg-r-pill) !important;
-  background: rgba(255, 255, 255, 0.16) !important;
+  background: rgba(var(--vg-ink), 0.16) !important;
 }
 [class*="slider_"] [class*="barFill_"] {
   background: var(--vg-accent) !important;
@@ -191,7 +199,7 @@
 [class*="slider_"] [class*="grabber_"] {
   background: #fff !important;
   border: 0 !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 0 0 0.5px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 1px 3px rgba(var(--vg-shadow), 0.4), 0 0 0 0.5px rgba(var(--vg-shadow), 0.15) !important;
 }
 
 [class*="popout_"][role="dialog"],
@@ -201,7 +209,6 @@
 [class*="contentWrapper_"][class*="drawer"],
 [class*="drawerSizingWrapper_"] > [class*="contentWrapper_"],
 [class*="messagesPopoutWrap_"],
-[class*="recentMentionsPopout_"],
 [class*="searchResultsWrap_"],
 [class*="tooltip_"]:not([class*="tooltipPointer"]) {
   background: var(--vg-glass) !important;
@@ -224,13 +231,17 @@
 }
 [class*="menu_"][role="menu"] [class*="item_"][class*="focused_"] {
   background: var(--vg-accent) !important;
-  color: #fff !important;
+  color: var(--vg-on-accent) !important;
 }
 [class*="menu_"][role="menu"] [class*="item_"][class*="focused_"] * {
-  color: #fff !important;
+  color: var(--vg-on-accent) !important;
 }
 [class*="menu_"][role="menu"] [class*="item_"][class*="colorDanger_"][class*="focused_"] {
   background: var(--vg-danger) !important;
+  color: var(--vg-on-danger) !important;
+}
+[class*="menu_"][role="menu"] [class*="item_"][class*="colorDanger_"][class*="focused_"] * {
+  color: var(--vg-on-danger) !important;
 }
 [class*="menu_"][role="menu"] [role="separator"],
 [class*="menu_"][role="menu"] [class*="separator_"] {
@@ -309,7 +320,7 @@
   backdrop-filter: var(--vg-glass-blur);
   border: 0.5px solid var(--vg-glass-line) !important;
   border-radius: var(--vg-r-modal) !important;
-  box-shadow: var(--vg-specular), 0 30px 80px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: var(--vg-specular), 0 30px 80px rgba(var(--vg-shadow), 0.5) !important;
   overflow: hidden;
 }
 [class*="modal_"] [class*="modalContentInner_"] > [class*="container_"] > aside[class*="sidebar_"] {
@@ -317,7 +328,7 @@
   height: auto !important;
   border-radius: calc(var(--vg-r-modal) - 8px);
   background: var(--vg-fill-1) !important;
-  box-shadow: inset 0 0 0 0.5px var(--vg-panel-edge), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  box-shadow: inset 0 0 0 0.5px var(--vg-panel-edge), inset 0 1px 0 rgba(var(--vg-highlight), 0.07);
 }
 [class*="modal_"] [class*="contentHeader_"] {
   background: transparent !important;
@@ -327,7 +338,7 @@
   border-radius: var(--vg-r-row) !important;
 }
 [class*="scrim_"] {
-  background: rgba(0, 0, 0, 0.32) !important;
+  background: var(--vg-scrim) !important;
 }
 
 /* Settings pages (the settings sheet and the full-window server/channel settings) sit on the

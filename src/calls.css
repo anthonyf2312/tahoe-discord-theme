@@ -1,3 +1,523 @@
 /* ==========================================================================
    CALLS: voice and video call view, voice connected panel, voice channel users
    ========================================================================== */
+
+/* ==========================================================================
+   VOICE CONNECTED: the top half of the sidebar footer, above the user panel
+   ========================================================================== */
+/* Same 9px inset as the user panel below, so the status glyph sits over the avatar and both
+   capsules end on one edge. A hairline splits it from the user panel like the panel's own top. */
+section[class*="panels_"] > [class*="wrapper_"] {
+  margin: 0 !important;
+}
+section[class*="panels_"] > [class*="wrapper_"] > [class*="container_"] {
+  gap: 8px !important;
+  padding: 9px 9px 8px !important;
+  border: 0 !important;
+  border-bottom: 0.5px solid var(--vg-line) !important;
+  border-radius: 0 !important;
+}
+section[class*="panels_"] [class*="connection_"] {
+  align-items: center !important;
+  gap: 8px;
+}
+section[class*="panels_"] [class*="rtcConnectionStatus_"] {
+  gap: 8px;
+}
+
+/* Connection quality: a round tinted disc with an antenna, green, yellow or red with the
+   link. Discord's square plate lives on the svg the symbol replaces. */
+section[class*="panels_"] [class*="clickablePing_"] {
+  flex: 0 0 auto;
+  width: 32px !important;
+  height: 32px !important;
+  margin: 0 !important;
+  border-radius: var(--vg-r-pill);
+  --vg-quality: var(--vg-success-text);
+  background: rgb(from var(--vg-quality) r g b / 0.18);
+  color: var(--vg-quality);
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.12);
+  transition: background-color 0.12s;
+}
+section[class*="panels_"] [class*="clickablePing_"]:hover {
+  background: rgb(from var(--vg-quality) r g b / 0.28);
+}
+section[class*="panels_"] [class*="rtcConnectionQualityAverage_"] [class*="clickablePing_"] {
+  --vg-quality: var(--vg-warning-text);
+}
+section[class*="panels_"] [class*="rtcConnectionQualityBad_"] [class*="clickablePing_"] {
+  --vg-quality: var(--vg-danger);
+}
+
+section[class*="panels_"] [class*="rtcConnectionStatusLabel_"] {
+  height: 18px !important;
+  margin: 0 !important;
+}
+section[class*="panels_"] [class*="rtcConnectionStatusLabel_"] [class*="text_"] {
+  font: 400 13.5px/18px var(--vg-font) !important;
+  letter-spacing: -0.1px;
+}
+section[class*="panels_"] [class*="rtcConnectionStatusConnected_"] {
+  color: var(--vg-success-text) !important;
+}
+section[class*="panels_"] [class*="rtcConnectionStatusConnecting_"] {
+  color: var(--vg-warning-text) !important;
+}
+section[class*="panels_"] [class*="rtcConnectionStatusError_"] {
+  color: var(--vg-danger-text) !important;
+}
+section[class*="panels_"] [class*="rtcConnectionStatus_"] [class*="channel_"] {
+  font: 400 12px/15px var(--vg-font) !important;
+  color: var(--vg-text-2) !important;
+}
+
+/* Noise suppression and disconnect: one capsule like the user panel's, with disconnect as
+   its red end. Each control is a pill inset 2px, concentric with the capsule. */
+section[class*="panels_"] [class*="voiceButtonsContainer_"] {
+  align-items: center !important;
+  gap: 2px !important;
+  padding: 2px;
+  border-radius: var(--vg-r-pill);
+  background: var(--vg-fill-2);
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.16), inset 0 -0.5px 0 rgba(var(--vg-highlight), 0.05);
+}
+section[class*="panels_"] [class*="voiceButtonsContainer_"] > button {
+  width: 32px !important;
+  height: 30px !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  border-radius: var(--vg-r-pill) !important;
+  color: var(--vg-text) !important;
+  transition: background-color 0.12s;
+}
+section[class*="panels_"] [class*="voiceButtonsContainer_"] > button:hover {
+  background: var(--vg-fill-3) !important;
+}
+section[class*="panels_"] [class*="voiceButtonsContainer_"] > button[aria-label="Disconnect"] {
+  width: 40px !important;
+  background: var(--vg-danger) !important;
+  color: var(--vg-on-danger) !important;
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.3);
+}
+section[class*="panels_"] [class*="voiceButtonsContainer_"] > button[aria-label="Disconnect"]:hover {
+  background: color-mix(in srgb, var(--vg-danger) 86%, white) !important;
+}
+
+/* Camera, screen, activities and soundboard: one full-width capsule of equal segments. */
+section[class*="panels_"] [class*="actionButtons_"] {
+  gap: 2px !important;
+  padding: 2px;
+  border-radius: var(--vg-r-pill);
+  background: var(--vg-fill-2);
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.16), inset 0 -0.5px 0 rgba(var(--vg-highlight), 0.05);
+}
+section[class*="panels_"] [class*="actionButtons_"] button {
+  height: 30px !important;
+  min-height: 0 !important;
+  border: 0 !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: transparent !important;
+  color: var(--vg-text) !important;
+  transition: background-color 0.12s;
+}
+section[class*="panels_"] [class*="actionButtons_"] button:hover {
+  background: var(--vg-fill-3) !important;
+}
+/* Camera on or screen shared: an accent pill, like an active toggle in Control Center. */
+section[class*="panels_"] [class*="actionButtons_"] button[class*="buttonActive_"],
+section[class*="panels_"] [class*="actionButtons_"] button[aria-pressed="true"] {
+  background: var(--vg-accent) !important;
+  color: var(--vg-on-accent) !important;
+}
+section[class*="panels_"] [class*="actionButtons_"] button[class*="buttonActive_"]:hover,
+section[class*="panels_"] [class*="actionButtons_"] button[aria-pressed="true"]:hover {
+  background: var(--vg-accent-hover) !important;
+}
+
+/* ==========================================================================
+   VOICE CHANNEL USERS: the people under a voice channel in the channel list
+   ========================================================================== */
+/* Rows share the channel rows' radius and hover; the avatar lines up with channel names. */
+[class*="sidebarList_"] [class*="voiceUser_"] [class*="content_"] {
+  gap: 8px !important;
+  border-radius: var(--vg-r-row) !important;
+  transition: background-color 0.12s;
+}
+[class*="sidebarList_"] [class*="voiceUser_"][class*="clickable_"]:hover [class*="content_"] {
+  background: var(--vg-fill-2) !important;
+}
+[class*="sidebarList_"] [class*="voiceUser_"][class*="selected_"] [class*="content_"] {
+  background: var(--vg-select) !important;
+}
+[class*="sidebarList_"] [class*="voiceUser_"] [class*="username_"] {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: var(--vg-text-2) !important;
+}
+[class*="sidebarList_"] [class*="voiceUser_"]:hover [class*="username_"],
+[class*="sidebarList_"] [class*="voiceUser_"] [class*="usernameSpeaking_"] {
+  color: var(--vg-text) !important;
+}
+/* Server tag chip: a quiet capsule instead of a square plate. */
+[class*="sidebarList_"] [class*="voiceUser_"] [class*="chipletContainerInner_"] {
+  border-radius: var(--vg-r-pill) !important;
+  background: var(--vg-fill-2) !important;
+  padding: 0 6px !important;
+}
+/* Mute, deafen and video glyphs in the secondary text colour, server-side ones in red. */
+[class*="sidebarList_"] [class*="voiceUser_"] [class*="icons_"] {
+  gap: 4px !important;
+  color: var(--vg-text-3);
+}
+[class*="sidebarList_"] [class*="voiceUser_"] [class*="icon__"] {
+  width: 15px !important;
+  height: 15px !important;
+  color: var(--vg-text-3) !important;
+}
+[class*="sidebarList_"] [class*="voiceUser_"] [class*="iconServer_"] {
+  color: var(--vg-danger-text) !important;
+}
+/* LIVE: Apple's red capsule in sentence case. */
+[class*="voiceUser_"] [class*="liveIcon_"] {
+  height: 16px;
+  padding: 0 6px !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: var(--vg-danger) !important;
+  color: var(--vg-on-danger) !important;
+  font: 600 10.5px/16px var(--vg-font) !important;
+  letter-spacing: 0 !important;
+  text-transform: capitalize !important;
+}
+
+/* ==========================================================================
+   CALL VIEW
+   ========================================================================== */
+/* Tiles are cards with a 20px radius: the name pill (28px) sits 6px in, concentric. */
+[class*="callContainer_"] {
+  --custom-base-tile-border-radius: 20px;
+  --vg-tile-inset: 6px;
+  background: transparent !important;
+  border: 0 !important;
+}
+[class*="wrapper_"][class*="video_"]:has(> [class*="callContainer_"]),
+[class*="callContainer_"] > [class*="root_"],
+[class*="callContainer_"] [class*="videoControls_"],
+[class*="callContainer_"] [class*="videoGrid_"] {
+  background: transparent !important;
+}
+/* The black scrims only existed to lift white controls off video; the header and the glass
+   control bar no longer need them. */
+[class*="callContainer_"] [class*="gradientContainer_"] {
+  display: none !important;
+}
+
+/* Header: the same Tahoe toolbar capsule as the chat header. */
+[class*="callContainer_"] [class*="upperContainer_"] [class*="title_"] [class*="channelIcon_"] {
+  color: var(--vg-text-2) !important;
+}
+[class*="callContainer_"] [class*="upperContainer_"] [class*="toolbar_"] {
+  align-items: center;
+  gap: 0 !important;
+}
+[class*="callContainer_"] [class*="upperContainer_"] [class*="toolbar_"] > div {
+  position: relative;
+  display: flex;
+  width: 36px;
+  height: 32px;
+  background: var(--vg-fill-2);
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.16), inset 0 -0.5px 0 rgba(var(--vg-highlight), 0.05);
+}
+[class*="callContainer_"] [class*="upperContainer_"] [class*="toolbar_"] > div:first-child {
+  border-radius: 16px 0 0 16px;
+}
+[class*="callContainer_"] [class*="upperContainer_"] [class*="toolbar_"] > div:last-child {
+  border-radius: 0 16px 16px 0;
+}
+[class*="callContainer_"] [class*="upperContainer_"] [class*="toolbar_"] > div:only-child {
+  border-radius: 16px;
+}
+[class*="callContainer_"] [class*="upperContainer_"] [class*="toolbar_"] > div > button {
+  width: auto !important;
+  height: auto !important;
+  flex: 1;
+  margin: 2px;
+  border-radius: 14px !important;
+  color: var(--vg-text) !important;
+  transition: background-color 0.12s;
+}
+[class*="callContainer_"] [class*="upperContainer_"] [class*="toolbar_"] > div > button:hover {
+  background: var(--vg-fill-3) !important;
+}
+[class*="callContainer_"] [class*="upperContainer_"] [class*="toolbar_"] [class*="controlIcon_"] {
+  color: inherit !important;
+}
+
+/* Participant tiles: cards with a hairline edge. :where keeps the hairline weaker than
+   Discord's speaking and effect rings, which draw on the same element. */
+[class*="callContainer_"] [class*="tile__"] {
+  border-radius: var(--custom-base-tile-border-radius) !important;
+}
+[class*="callContainer_"] :where([class*="tileChild_"]) > [class*="border__"] {
+  box-shadow: inset 0 0 0 0.5px var(--vg-glass-line);
+}
+[class*="callContainer_"] [class*="tile__"]:not([class*="singleUserRoot_"]),
+[class*="callContainer_"] [class*="videoWrapper_"],
+[class*="callContainer_"] [class*="streamPreview_"] {
+  background-color: var(--vg-fill-2) !important;
+}
+[class*="callContainer_"] [class*="tile__"] video {
+  border-radius: inherit;
+}
+[class*="callContainer_"] [class*="border__"][class*="voiceChannelEffect_"] {
+  box-shadow: inset 0 0 0 2px var(--vg-accent), inset 0 0 0 3px rgba(var(--vg-shadow), 0.6) !important;
+}
+
+/* Name pill and tile buttons: dark media glass. Inside a tile there is opaque video or art
+   behind them, so a real backdrop blur works here. */
+[class*="callContainer_"] [class*="overlayContainer_"] {
+  margin: var(--vg-tile-inset) !important;
+}
+[class*="callContainer_"] :is([class*="experimentOverlayTitle_"], [class*="overlayTitle_"]),
+[class*="callContainer_"] [class*="overlayButton_"] button,
+[class*="callContainer_"] [class*="status__"] {
+  border: 0 !important;
+  background: rgba(30, 30, 35, 0.55) !important;
+  backdrop-filter: blur(18px) saturate(1.6);
+  box-shadow: inset 0 0 0 0.5px rgba(var(--vg-highlight), 0.14), inset 0 0.5px 0 rgba(var(--vg-highlight), 0.2) !important;
+  color: var(--vg-on-media) !important;
+}
+[class*="callContainer_"] :is([class*="experimentOverlayTitle_"], [class*="overlayTitle_"]) {
+  box-sizing: border-box;
+  height: 28px;
+  gap: 5px !important;
+  padding: 0 11px 0 9px !important;
+  border-radius: var(--vg-r-pill) !important;
+  font: 400 13px/28px var(--vg-font) !important;
+}
+[class*="callContainer_"] [class*="overlayTitleText_"] {
+  font: inherit !important;
+}
+[class*="callContainer_"] [class*="titleIcon_"] {
+  width: 14px !important;
+  height: 14px !important;
+}
+/* A muted participant's slashed mic stays readable as state: red, like the panel. */
+[class*="callContainer_"] [class*="experimentOverlayTitle_"] [class*="titleIcon_"] {
+  color: var(--vg-danger-text);
+}
+[class*="callContainer_"] [class*="overlayButton_"] button {
+  width: 28px !important;
+  min-width: 0 !important;
+  height: 28px !important;
+  max-height: none !important;
+  border-radius: var(--vg-r-pill) !important;
+}
+[class*="callContainer_"] [class*="overlayButton_"] button [class*="buttonChildrenWrapper_"] {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  border-radius: inherit !important;
+}
+[class*="callContainer_"] [class*="overlayButton_"] button:hover {
+  background: rgba(60, 60, 67, 0.7) !important;
+}
+[class*="callContainer_"] [class*="indicators_"] {
+  top: calc(var(--vg-tile-inset) + 2px) !important;
+  inset-inline-end: calc(var(--vg-tile-inset) + 2px) !important;
+}
+
+/* Screen-share and video LIVE tags: red capsules. */
+[class*="callContainer_"] [class*="liveIndicator_"] > *,
+[class*="callContainer_"] [class*="liveIcon_"] {
+  border-radius: var(--vg-r-pill) !important;
+  background: var(--vg-danger) !important;
+  color: var(--vg-on-danger) !important;
+  text-transform: capitalize !important;
+  letter-spacing: 0 !important;
+}
+
+/* Alone in the channel: the invite card is a quiet glass card instead of Discord's pink
+   gradient, with the art and two glass pills. */
+[class*="callContainer_"] [class*="singleUserRoot_"] {
+  background: var(--vg-fill-1) !important;
+  box-shadow: inset 0 0 0 0.5px var(--vg-line), inset 0 0.5px 0 rgba(var(--vg-highlight), 0.08);
+  border-radius: var(--custom-base-tile-border-radius) !important;
+}
+[class*="callContainer_"] [class*="singleUserRoot_"] [class*="stack_"] {
+  gap: 8px !important;
+}
+[class*="callContainer_"] [class*="singleUserRoot_"] button {
+  border: 0 !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: var(--vg-fill-3) !important;
+  color: var(--vg-text) !important;
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.16);
+  transition: background-color 0.12s;
+}
+[class*="callContainer_"] [class*="singleUserRoot_"] button:hover {
+  background: var(--vg-fill-4) !important;
+}
+[class*="callContainer_"] [class*="singleUserRoot_"] button [class*="lineClamp1_"] {
+  font-weight: 400 !important;
+  font-size: 14px !important;
+}
+[class*="callContainer_"] [class*="singleUserRoot_"] button [class*="buttonChildrenWrapper_"] {
+  min-height: 34px !important;
+  padding: 0 16px 0 14px !important;
+}
+
+/* Control bar: one floating glass capsule. Buttons are 40px circles inset 4px (radius 24 - 4),
+   sections are split by hairlines, and leave is the red pill at the end. */
+[class*="callContainer_"] [class*="centerControls_"] > [class*="wrapper_"] {
+  align-items: center;
+  gap: 0 !important;
+  padding: 4px;
+  border-radius: var(--vg-r-pill);
+  background: var(--vg-sheen), var(--vg-glass) !important;
+  border: 0.5px solid var(--vg-glass-line);
+  box-shadow: var(--vg-specular), var(--vg-float-shadow);
+}
+[class*="callContainer_"] [class*="centerControls_"] [class*="buttonSection_"] {
+  position: relative;
+  align-items: center;
+  gap: 4px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+[class*="callContainer_"] [class*="centerControls_"] [class*="buttonSection_"] + [class*="buttonSection_"] {
+  margin-inline-start: 13px;
+}
+[class*="callContainer_"] [class*="centerControls_"] [class*="buttonSection_"] + [class*="buttonSection_"]::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 10px;
+  bottom: 10px;
+  width: 1px;
+  transform: scaleX(0.5);
+  background: var(--vg-glass-line);
+}
+[class*="callContainer_"] [class*="centerControls_"] > [class*="wrapper_"] > :last-child:not([class*="buttonSection_"]) {
+  margin-inline-start: 8px;
+}
+[class*="callContainer_"] [class*="centerButton_"] {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0 !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: transparent !important;
+  color: var(--vg-text) !important;
+}
+[class*="callContainer_"] [class*="centerButton_"] [class*="centerIcon_"] {
+  color: inherit !important;
+}
+[class*="callContainer_"] [class*="attachedCaretButtonContainer_"] {
+  border-radius: var(--vg-r-pill);
+  transition: background-color 0.12s;
+}
+[class*="callContainer_"] [class*="attachedCaretButtonContainer_"]:hover,
+[class*="callContainer_"] [class*="attachedCaretButtonContainer_"][class*="popoutOpen_"] {
+  background: var(--vg-fill-3);
+}
+/* Button and caret are one pill: the button takes the left cap, the caret the right one. */
+[class*="callContainer_"] [class*="centerButton_"][class*="attachedButton_"] {
+  width: 36px !important;
+  border-radius: var(--vg-r-pill) 0 0 var(--vg-r-pill) !important;
+  padding-inline-start: 4px !important;
+}
+[class*="callContainer_"] [class*="contextMenuNub_"] {
+  width: 20px !important;
+  height: 40px !important;
+  box-sizing: border-box;
+  margin: 0 !important;
+  padding: 0 4px 0 0 !important;
+  border-radius: 0 var(--vg-r-pill) var(--vg-r-pill) 0 !important;
+  background: transparent !important;
+  color: var(--vg-text-2) !important;
+}
+[class*="callContainer_"] [class*="contextMenuCaret_"] {
+  width: 14px !important;
+  height: 14px !important;
+}
+/* On a muted mic both halves turn red together, the same tint as the user panel. */
+[class*="callContainer_"] [class*="attachedCaretButtonContainer_"]:has([class*="redGlow_"]),
+[class*="callContainer_"] [class*="centerButton_"][class*="redGlow_"]:not([class*="attachedButton_"]) {
+  background: rgb(from var(--vg-danger) r g b / 0.22) !important;
+}
+[class*="callContainer_"] [class*="attachedCaretButtonContainer_"]:has([class*="redGlow_"]):hover {
+  background: rgb(from var(--vg-danger) r g b / 0.3) !important;
+}
+[class*="callContainer_"] [class*="redGlow_"],
+[class*="callContainer_"] [class*="redGlow_"] [class*="contextMenuCaret_"] {
+  color: var(--vg-danger-text) !important;
+}
+/* Camera on, sharing, an open popout: white disc with a dark glyph, as in FaceTime. */
+[class*="callContainer_"] [class*="centerButton_"]:is([class*="activeLight_"], [class*="white_"], [class*="green_"]),
+[class*="callContainer_"] [class*="attachedCaretButtonContainer_"]:has(:is([class*="activeLight_"], [class*="white_"], [class*="green_"])) {
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #1c1c1e !important;
+}
+[class*="callContainer_"] [class*="attachedCaretButtonContainer_"]:has(:is([class*="activeLight_"], [class*="white_"], [class*="green_"])) [class*="contextMenuNub_"] {
+  color: rgba(28, 28, 30, 0.6) !important;
+}
+[class*="callContainer_"] [class*="centerButton_"]:not([class*="attachedButton_"]):hover {
+  background: var(--vg-fill-3) !important;
+}
+[class*="callContainer_"] [class*="attachedCaretButtonContainer_"] [class*="centerButton_"]:hover {
+  background: transparent !important;
+}
+[class*="callContainer_"] [class*="centerButton_"][class*="disconnect_"] {
+  width: 56px !important;
+  border: 0 !important;
+  background: var(--vg-danger) !important;
+  color: var(--vg-on-danger) !important;
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.3);
+}
+[class*="callContainer_"] [class*="centerButton_"][class*="disconnect_"]:hover {
+  background: color-mix(in srgb, var(--vg-danger) 86%, white) !important;
+}
+[class*="callContainer_"] [class*="centerButton_"][class*="disconnect_"]:active {
+  background: color-mix(in srgb, var(--vg-danger) 85%, black) !important;
+}
+/* Invite, pop out and full screen: round glass buttons the bar's height. */
+[class*="callContainer_"] [class*="edgeControls_"] {
+  align-items: center;
+}
+[class*="callContainer_"] :is([class*="leftTrayIcon_"], [class*="rightTrayIcon_"]) {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: var(--vg-sheen), var(--vg-glass) !important;
+  border: 0.5px solid var(--vg-glass-line) !important;
+  box-shadow: var(--vg-specular), var(--vg-float-shadow);
+  color: var(--vg-text) !important;
+  transition: background-color 0.12s;
+}
+[class*="callContainer_"] :is([class*="leftTrayIcon_"], [class*="rightTrayIcon_"]):hover {
+  background: var(--vg-sheen), color-mix(in srgb, var(--vg-glass) 88%, rgb(var(--vg-ink))) !important;
+}
+[class*="callContainer_"] :is([class*="leftTrayIcon_"], [class*="rightTrayIcon_"]) [class*="controlIcon_"] {
+  color: inherit !important;
+}
+
+/* ==========================================================================
+   CHAT BESIDE THE CALL
+   ========================================================================== */
+/* The text chat opens to the right of the call: a hairline instead of Discord's frame and
+   square corners where the two meet, since both sit on the same window tint. */
+[class*="wrapper_"][class*="sidebarOpen_"] > [class*="callContainer_"] {
+  border-radius: 0 !important;
+  border-inline-end: 0 !important;
+}
+[class*="channelChatWrapper_"] {
+  background: transparent !important;
+  border-inline-start: 0.5px solid var(--vg-line);
+}
+[class*="channelChatWrapper_"] [class*="resizeHandle_"] {
+  background: transparent !important;
+}

@@ -1,0 +1,49 @@
+/**
+ * @name Tahoe Everforest
+ * @description macOS Tahoe glass for Vesktop in Everforest Dark (medium) colours: a floating sidebar over native vibrancy, SF Symbols, liquid glass controls.
+ * @author skopevoj
+ * @version 0.3.0
+ * @source https://github.com/skopevoj/discord-theme
+ */
+
+/* the theme itself, rebuilt from src/ and served by GitHub Pages */
+@import url('https://skopevoj.github.io/discord-theme/build/tahoe.css');
+
+/* Settings. Everything here overrides the defaults in src/tokens.css; delete a line to go back
+   to the default. Vesktop needs "transparent" on and macOS vibrancy set (sidebar recommended). */
+:root {
+    /* colour: Everforest Dark (medium) */
+    --vg-accent: #a7c080; /* links, buttons, switches, menu highlight */
+    --vg-accent-hover: #b7cb97;
+    --vg-accent-text: #a7c080; /* accent used as text (links, mentions) */
+    --vg-accent-soft: rgba(167, 192, 128, 0.2);
+    --vg-danger: #e67e80;
+    --vg-danger-text: #e67e80; /* danger used as text */
+    /* green is the accent, so success takes aqua to stay distinct */
+    --vg-success: #83c092;
+    --vg-warning: #dbbc7f;
+    /* text and symbols on accent, danger and success fills: Everforest bg_dim, white is unreadable on the pastels */
+    --vg-on-accent: #232a2e;
+    --vg-on-danger: #232a2e;
+    --vg-on-success: #232a2e;
+    --vg-tint: 35, 42, 46; /* r, g, b of the dark tint laid over the desktop blur */
+    --vg-window: rgba(var(--vg-tint), 0.7); /* chat, header and member list; higher = darker, less glass */
+    --vg-panel: linear-gradient(rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.045)), rgba(var(--vg-tint), 0.54); /* floating sidebar */
+
+    /* menus, popouts and modals: solid, see src/tokens.css */
+    --vg-glass: rgb(52, 63, 68);
+    --vg-glass-strong: rgb(45, 53, 59);
+    --vg-sheet: rgb(35, 42, 46);
+
+    --vg-text: #d3c6aa;
+    --vg-text-2: #9da9a0;
+    --vg-text-3: #859289;
+
+    /* geometry: inner radii follow the window corner, keep win-radius matched to macOS */
+    --vg-win-radius: 15px; /* macOS window corner */
+    --vg-gap: 5px; /* inset of the floating panels */
+
+    /* text */
+    --vg-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+    --vg-mono: ui-monospace, "SF Mono", Menlo, monospace;
+}

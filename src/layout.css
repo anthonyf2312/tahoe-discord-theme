@@ -35,8 +35,8 @@
   background: var(--vg-panel);
   box-shadow:
     inset 0 0 0 0.5px var(--vg-panel-edge),
-    inset 0 1px 0 rgba(255, 255, 255, 0.07),
-    0 0 0 0.5px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(var(--vg-highlight), 0.07),
+    0 0 0 0.5px var(--vg-panel-outline),
     0 0 0 80px var(--vg-window);
   pointer-events: none;
 }

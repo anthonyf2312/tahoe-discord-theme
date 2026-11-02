@@ -1,0 +1,83 @@
+/* ==========================================================================
+   OPTIONS: the on/off switches from tokens.css, as style queries on the inherited value.
+   :root itself has no container to query, so overrides land on body or deeper.
+   ========================================================================== */
+
+/* Animations off: everything jumps to its end state. Near-zero durations rather than "none",
+   so Discord still gets the animationend/transitionend events it waits for. */
+@container style(--vg-animations: off) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Vibrancy off: an opaque tint under the whole app, so the window and sidebar are solid and
+   work without Vesktop's transparency. The panel and window layers keep their shading over it. */
+@container style(--vg-vibrancy: off) {
+  #app-mount {
+    background: rgb(var(--vg-tint)) !important;
+  }
+}
+
+/* Background image: the app is opaque again, so the floating layers can be real glass; the
+   window tint lies over the image as it does over the desktop. */
+@container style(--vg-background-image: on) {
+  #app-mount {
+    background: var(--vg-background-image-url) center / cover no-repeat, rgb(var(--vg-tint)) !important;
+  }
+  body {
+    --vg-glass: var(--vg-glass-clear);
+    --vg-glass-strong: var(--vg-glass-strong-clear);
+    --vg-sheet: var(--vg-sheet-clear);
+    --vg-glass-blur: blur(30px) saturate(1.6);
+    /* html computed these from the solid values; nested theme scopes recompute on their own. */
+    --background-surface-high: var(--vg-glass-strong) !important;
+    --background-surface-higher: var(--vg-glass-strong) !important;
+    --background-surface-highest: var(--vg-glass-strong) !important;
+    --modal-background: var(--vg-glass-strong) !important;
+  }
+}
+
+/* Panel art off: no Nitro artwork video or avatar decoration behind the user panel. */
+@container style(--vg-panel-art: off) {
+  [class*="panels_"] [class*="videoContainer_"],
+  [class*="panels_"] [class*="avatarDecoration_"] {
+    display: none !important;
+  }
+}
+
+/* Compact: shorter rows. Discord sizes its virtual lists in JS, so the cut stays a few px. */
+@container style(--vg-compact: on) {
+  [class*="sidebarList_"] [class*="containerDefault_"] [class*="link_"] {
+    min-height: 20px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+  }
+  :is([class*="members_"], [class*="privateChannels_"]) [class*="layout_"] {
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+  }
+  [class*="menu_"][role="menu"] [class*="labelContainer_"],
+  [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"] {
+    min-height: 20px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+  }
+}
+
+/* Scroll fade off: lists end in a hard edge instead of dissolving under the bars. */
+@container style(--vg-scroll-fade: off) {
+  [class*="sidebarList_"] [class*="scroller_"],
+  nav[class*="guilds_"] [class*="scroller_"],
+  [class*="messagesWrapper_"] > [class*="scroller_"],
+  [class*="membersWrap_"] > [class*="members_"] {
+    mask-image: none !important;
+  }
+}

@@ -1,3 +1,374 @@
 /* ==========================================================================
    THREADS AND FORUMS: thread side panel, forum channel, posts, tags
    ========================================================================== */
+[class*="messagesWrapper_"] {
+  --spine-default: var(--vg-fill-4);
+}
+
+/* Forum post opened as a channel: the title block, then the opening message and its action row
+   as one light card. The action row sticks to the top once the post scrolls away. */
+[class*="scrollerInner_"] > [class*="container_"] > [class*="iconWrapper_"]:has(+ h3) {
+  color: var(--vg-text-2);
+  background: var(--vg-fill-2) !important;
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.16), inset 0 0 0 0.5px var(--vg-line);
+}
+[class*="scrollerInner_"] > li:has(+ [class*="container_"] > [class*="reactButtons_"]) {
+  margin: 0 10px;
+  padding-top: 4px;
+  background: var(--vg-fill-1);
+  border: 0.5px solid var(--vg-line);
+  border-bottom: 0;
+  border-radius: var(--vg-r-card) var(--vg-r-card) 0 0;
+}
+[class*="scrollerInner_"] > li:has(+ [class*="container_"] > [class*="reactButtons_"]) [class*="message_"] {
+  border-radius: var(--vg-r-card) var(--vg-r-card) 0 0;
+}
+[class*="scrollerInner_"] > [class*="container_"]:has(> [class*="reactButtons_"]) {
+  margin: 0 10px !important;
+  padding: 6px 8px !important;
+  background: var(--vg-fill-1) !important;
+  border: 0.5px solid var(--vg-line) !important;
+  border-top-color: var(--vg-line) !important;
+  border-radius: 0 0 var(--vg-r-card) var(--vg-r-card);
+  box-shadow: none !important;
+}
+/* The thick bar under the card is replaced by the card's own edge; its spacing stays. */
+[class*="scrollerInner_"] > [class*="container_"]:has(> [class*="reactButtons_"]) + [class*="divider_"] {
+  height: 0 !important;
+  margin-top: 12px;
+  background: transparent !important;
+}
+[class*="reactButtons_"] [class*="addReactButton_"] {
+  height: 29px;
+  min-width: 34px;
+  border: 0 !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: var(--vg-fill-2) !important;
+}
+[class*="reactButtons_"] [class*="addReactButton_"]:hover {
+  background: var(--vg-fill-3) !important;
+}
+
+/* Stuck: the row goes clear and its two groups float as glass capsules, like the message
+   hover bar. A transform drops them below the scroll fade without moving the row's own box,
+   so the stuck state Discord toggles doesn't flicker. */
+[class*="scrollerInner_"] > [class*="container_"][class*="header_"]:has(> [class*="reactButtons_"]) {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+[class*="scrollerInner_"] > [class*="container_"]:has(> [class*="reactButtons_"]) > :is([class*="reactButtons_"], [class*="buttons_"]) {
+  padding: 2px;
+  border: 0.5px solid transparent;
+  border-radius: var(--vg-r-pill);
+  transition: transform 0.18s, background-color 0.18s, box-shadow 0.18s;
+}
+[class*="scrollerInner_"] > [class*="container_"][class*="header_"]:has(> [class*="reactButtons_"]) > :is([class*="reactButtons_"], [class*="buttons_"]) {
+  transform: translateY(20px);
+  background: var(--vg-glass-strong);
+  border-color: var(--vg-glass-line);
+  box-shadow: var(--vg-specular), 0 4px 14px rgba(var(--vg-shadow), 0.3);
+}
+/* Soft scroll edge behind the stuck capsules, so the lines passing under them recede. */
+[class*="scrollerInner_"] > [class*="container_"][class*="header_"]:has(> [class*="reactButtons_"])::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 -26px -44px -10px;
+  background: linear-gradient(rgba(var(--vg-tint), 0.55) 40%, rgba(var(--vg-tint), 0));
+  pointer-events: none;
+}
+[class*="scrollerInner_"] > [class*="container_"]:has(> [class*="reactButtons_"]) [class*="reactions_"] > div {
+  margin: 0 !important;
+}
+[class*="scrollerInner_"] > [class*="container_"]:has(> [class*="reactButtons_"]) [class*="buttons_"] button {
+  border: 0 !important;
+}
+
+/* Thread card under a message in the parent channel ("N Messages ›") and the one in a
+   "started a thread" system message: light cards on the glass. */
+[class*="container_"]:has(> [class*="topLine_"]) {
+  padding: 8px 12px !important;
+  background: var(--vg-fill-1) !important;
+  border: 0.5px solid var(--vg-line) !important;
+  border-radius: var(--vg-r-card) !important;
+  transition: background-color 0.12s;
+}
+[class*="container_"]:has(> [class*="topLine_"]):hover {
+  background: var(--vg-fill-2) !important;
+}
+[class*="container_"]:has(> [class*="topLine_"]) [class*="cta_"] {
+  font-weight: 400;
+}
+/* Thread rows in thread lists. */
+[class*="container_"]:has(> [class*="left_"] > [class*="threadNameLine_"]) {
+  background: var(--vg-fill-1) !important;
+  border: 0.5px solid var(--vg-line) !important;
+  border-radius: var(--vg-r-card) !important;
+}
+[class*="container_"]:has(> [class*="left_"] > [class*="threadNameLine_"]):hover {
+  background: var(--vg-fill-2) !important;
+}
+
+/* Threads popout from the header button: a glass sheet with a hairline under its header. */
+[class*="container_"]:has(> [class*="header_"] > [class*="threadIcon_"]) {
+  background: var(--vg-sheen), var(--vg-glass) !important;
+  border: 0.5px solid var(--vg-glass-line);
+  border-radius: var(--vg-r-pop) !important;
+  box-shadow: var(--vg-specular), var(--vg-float-shadow);
+  overflow: hidden;
+}
+[class*="header_"]:has(> [class*="threadIcon_"]) {
+  background: transparent !important;
+  border-bottom: 0.5px solid var(--vg-line) !important;
+}
+[class*="header_"]:has(> [class*="threadIcon_"]) [class*="tab_"] {
+  padding: 0 10px;
+  border-radius: var(--vg-r-pill) !important;
+}
+[class*="header_"]:has(> [class*="threadIcon_"]) [class*="tab_"][class*="active_"] {
+  background: var(--vg-fill-3) !important;
+}
+[class*="header_"]:has(> [class*="threadIcon_"]) [class*="divider_"] {
+  width: 0.5px;
+  background: var(--vg-line) !important;
+}
+
+/* Thread side panel (also a forum post opened beside the list): a floating card inset like the
+   profile and Mod View, radius concentric with the window corner. The notFloating_ node is an
+   empty target; the visible panel is its sibling container. */
+[class*="chatLayerWrapper_"] {
+  box-sizing: border-box;
+  padding: 0 var(--vg-gap) var(--vg-gap) 0 !important;
+  background: transparent !important;
+}
+[class*="chatLayerWrapper_"] > [class*="container_"]:not([class*="chatTarget_"], [class*="floating__"]),
+[class*="page_"] [class*="container_"][class*="floating__"]:not([class*="notFloating_"]) {
+  border: 0 !important;
+  border-radius: var(--vg-panel-radius) !important;
+  overflow: hidden;
+  background: linear-gradient(rgba(var(--vg-highlight), 0.045), rgba(var(--vg-highlight), 0.045)) !important;
+  box-shadow:
+    inset 0 0 0 0.5px var(--vg-panel-edge),
+    inset 0 1px 0 rgba(var(--vg-highlight), 0.07),
+    0 0 0 0.5px var(--vg-panel-outline) !important;
+}
+[class*="page_"] [class*="container_"][class*="floating__"]:not([class*="notFloating_"]) {
+  background: var(--vg-sheet) !important;
+  box-shadow: var(--vg-specular), var(--vg-float-shadow) !important;
+}
+/* Discord leaves 3px between the chat and the docked card; a few more make it about one window
+   gap, so the chat's scrollbar doesn't sit against the card's edge. */
+[class*="chat_"][class*="threadSidebarOpen_"] {
+  margin-right: 3px;
+  border: 0 !important;
+}
+/* The panel's header: no rule under it (the messages fade out instead), like the main header. */
+[class*="chatLayerWrapper_"] section[class*="container_"] {
+  background: transparent !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+}
+/* The resize handle: a grip centred in the gap between the chat and the card, shown on hover. */
+[class*="chatLayerWrapper_"] > [class*="resizeHandle_"] {
+  background: transparent !important;
+}
+[class*="chatLayerWrapper_"][class*="connectedRight_"] > [class*="resizeHandle_"] {
+  transform: translateX(1px);
+}
+[class*="chatLayerWrapper_"] > [class*="resizeHandle_"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 40px;
+  border-radius: var(--vg-r-pill);
+  background: rgba(var(--vg-ink), 0.28);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+[class*="chatLayerWrapper_"] > [class*="resizeHandle_"]:hover::after {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   FORUM POST LIST
+   ========================================================================== */
+/* "Search or create a post": the theme's search capsule, magnifier first. The buttons sit 8px
+   in, so the field's pill ends and theirs stay concentric. Once it opens into the post
+   composer it is a card again. */
+[class*="mainCard_"][class*="header_"]:has(> [class*="collapsed_"]) {
+  border: 0 !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: var(--vg-fill-2) !important;
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.16), inset 0 -0.5px 0 rgba(var(--vg-highlight), 0.05), inset 0 0 0 0.5px rgba(var(--vg-ink), 0.06) !important;
+}
+[class*="mainCard_"][class*="header_"]:not(:has(> [class*="collapsed_"])) {
+  background: var(--vg-fill-1) !important;
+  border: 0.5px solid var(--vg-line) !important;
+  border-radius: var(--vg-r-card) !important;
+}
+[aria-label="Create Post"][class*="collapsed_"] [class*="formContainer_"] {
+  padding: 0 8px 0 16px !important;
+}
+[aria-label="Create Post"][class*="collapsed_"] [class*="prefixElement_"] {
+  color: var(--vg-text-2) !important;
+}
+/* Discord's magnifier is drawn at 26px; scaled about its centre it matches the toolbar's. */
+[aria-label="Create Post"][class*="collapsed_"] [class*="prefixElement_"] [class*="iconLayout_"] {
+  transform: scale(0.72);
+}
+[aria-label="Create Post"][class*="collapsed_"] textarea {
+  font-family: var(--vg-font) !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  line-height: 32px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  color: var(--vg-text) !important;
+}
+[aria-label="Create Post"][class*="collapsed_"] textarea::placeholder {
+  color: var(--vg-text-3) !important;
+}
+[aria-label="Create Post"] button[aria-label="Post Guidelines"] {
+  width: 32px;
+  min-width: 32px;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: var(--vg-fill-2) !important;
+  color: var(--vg-text) !important;
+}
+[aria-label="Create Post"] button[aria-label="Post Guidelines"]:hover {
+  background: var(--vg-fill-3) !important;
+}
+[aria-label="Create Post"] button[type="submit"] {
+  border: 0 !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: var(--vg-accent) !important;
+  color: var(--vg-on-accent) !important;
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.25);
+}
+[aria-label="Create Post"] button[type="submit"]:hover {
+  background: var(--vg-accent-hover) !important;
+}
+[aria-label="Create Post"] button[type="submit"] span {
+  font-weight: 500 !important;
+}
+
+/* Sort & View, the tag filter chips and the "All" overflow: light pills on the glass, regular
+   weight; a pressed tag takes the accent like a selected reaction. */
+[class*="sortDropdown_"],
+[class*="tagsContainer_"] > [class*="tagsButton_"],
+[class*="tagList_"] [class*="pill_"],
+[class*="tagContainer_"] > [class*="pill_"] {
+  border: 0 !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: var(--vg-fill-2) !important;
+  color: var(--vg-text) !important;
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.12), inset 0 0 0 0.5px rgba(var(--vg-ink), 0.04);
+  font-weight: 400 !important;
+  transition: background-color 0.12s;
+}
+:is([class*="sortDropdown_"], [class*="tagsContainer_"] > [class*="tagsButton_"], [class*="tagList_"] [class*="pill_"], [class*="tagContainer_"] > [class*="pill_"]) * {
+  font-weight: 400 !important;
+}
+[class*="sortDropdown_"] span {
+  color: var(--vg-text) !important;
+}
+:is([class*="sortDropdown_"], [class*="tagsContainer_"] > [class*="tagsButton_"], [class*="tagList_"] [class*="pill_"], [class*="tagContainer_"] > [class*="pill_"]):hover {
+  background: var(--vg-fill-3) !important;
+}
+:is([class*="tagList_"], [class*="tagContainer_"]) [class*="pill_"]:is([aria-pressed="true"], [aria-checked="true"], [class*="selected_"]) {
+  background: var(--vg-accent-soft) !important;
+  box-shadow: inset 0 0 0 0.5px rgb(from var(--vg-accent) r g b / 0.55);
+}
+[class*="tagsContainer_"] > [class*="divider_"] {
+  width: 0.5px !important;
+  background: var(--vg-line) !important;
+}
+
+/* Tag picker that drops from "All": the solid glass of the other popovers. */
+[class*="container_"]:has(> [class*="header_"] + [class*="tagContainer_"]) {
+  background: var(--vg-sheen), var(--vg-glass) !important;
+  border: 0.5px solid var(--vg-glass-line) !important;
+  border-radius: var(--vg-r-pop) !important;
+  box-shadow: var(--vg-specular), var(--vg-float-shadow) !important;
+}
+[class*="container_"]:has(> [class*="header_"] + [class*="tagContainer_"]) [class*="separator_"] {
+  height: 0.5px !important;
+  background: var(--vg-line) !important;
+  border: 0 !important;
+}
+
+/* Post cards: light cards on the glass with a hairline edge; hover lifts the fill, the post
+   open beside the list keeps a stronger one. */
+li[class*="card_"] > [class*="mainCard_"] {
+  background: var(--vg-fill-1) !important;
+  border: 0.5px solid var(--vg-line) !important;
+  border-radius: var(--vg-r-card) !important;
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.06) !important;
+  padding-inline: 14px !important;
+  transition: background-color 0.12s;
+}
+li[class*="card_"] > [class*="mainCard_"]:hover {
+  background: var(--vg-fill-2) !important;
+}
+li[class*="card_"] > [class*="mainCard_"][class*="isOpen_"] {
+  background: var(--vg-fill-3) !important;
+  border-color: rgba(var(--vg-ink), 0.14) !important;
+}
+li[class*="card_"] [class*="postTitleText_"] {
+  font-family: var(--vg-font-display);
+  font-size: 17px !important;
+  line-height: 22px !important;
+  font-weight: 600 !important;
+}
+li[class*="card_"] [class*="tags_"] [class*="pill_"] {
+  border: 0 !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: var(--vg-fill-2) !important;
+  color: var(--vg-text-2) !important;
+}
+li[class*="card_"] [class*="tags_"] [class*="pill_"] * {
+  font-weight: 400 !important;
+}
+li[class*="card_"] [class*="message_"] [class*="author_"] {
+  font-weight: 500 !important;
+}
+li[class*="card_"] [class*="messageFocusBlock_"] > div {
+  font-weight: 400 !important;
+  color: var(--vg-text-2) !important;
+}
+li[class*="card_"] [class*="footer_"] {
+  color: var(--vg-text-2);
+}
+li[class*="card_"] [class*="footer_"] [class*="text-sm"] {
+  font-weight: 400 !important;
+}
+li[class*="card_"] [class*="footer_"] > [class*="text-sm/normal"] {
+  color: var(--vg-text-3) !important;
+}
+li[class*="card_"] [class*="newMessageCount_"] {
+  color: var(--vg-accent-text) !important;
+}
+li[class*="card_"] [class*="updateReactionButton_"] {
+  border: 0 !important;
+  background: var(--vg-fill-2) !important;
+}
+li[class*="card_"] [class*="updateReactionButton_"]:hover {
+  background: var(--vg-fill-3) !important;
+}
+li[class*="card_"] [class*="thumbnailContainer_"],
+li[class*="card_"] [class*="thumbnailContainer_"] [class*="imageContainer_"] {
+  border-radius: var(--vg-r-row) !important;
+  overflow: hidden;
+}
+li[class*="card_"] [class*="thumbnailContainer_"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 0.5px var(--vg-line);
+  pointer-events: none;
+}

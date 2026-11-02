@@ -1,3 +1,148 @@
 /* ==========================================================================
    MEDIA: image viewer, carousel, attachments overlay
    ========================================================================== */
+/* Quick Look: the image floats on a dark scrim, with the controls in small glass capsules
+   around it. The scrim is near-opaque because nothing behind the window can be blurred, and
+   takes the window corner so it doesn't spill past the rounded edge. */
+[class*="scrim_"][class*="lightbox_"] {
+  background: rgba(var(--vg-tint), 0.94) !important;
+  border-radius: var(--vg-win-radius);
+}
+
+/* The viewer is a bare grid, not a sheet: the generic modal rule would frame it. */
+div[class*="focusLock_"] > [class*="carouselModal_"] {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible;
+}
+
+/* Image: modest rounding and a soft lift off the scrim. */
+[class*="carouselModal_"] [class*="mediaArea_"] [class*="imageWrapper_"] {
+  border-radius: var(--vg-r-card) !important;
+}
+[class*="carouselModal_"] [class*="mediaArea_"] [class*="imageWrapper_"] img {
+  border-radius: inherit;
+  box-shadow: 0 0 0 0.5px rgba(var(--vg-ink), 0.08), 0 18px 60px rgba(var(--vg-shadow), 0.55);
+}
+
+/* Author: plain title text over the scrim, like a Quick Look window title. */
+[class*="carouselModal_"] [class*="topBar_"] [class*="authorName_"] {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+[class*="carouselModal_"] [class*="topBar_"] [class*="timestamp_"] {
+  color: var(--vg-text-2) !important;
+  font-size: 12px !important;
+}
+
+/* Glass capsules: the toolbar, close, previous/next and the thumbnail strip share one
+   material, the same solid glass as menus. */
+[class*="carouselModal_"] [class*="actionButtons_"],
+[class*="carouselModal_"] [class*="closeButton_"],
+[class*="carouselModal_"] [class*="nav_"][role="button"],
+[class*="carouselModal_"] [class*="gallery_"] {
+  background: var(--vg-sheen), var(--vg-glass) !important;
+  border: 0.5px solid var(--vg-glass-line) !important;
+  box-shadow: var(--vg-specular), var(--vg-float-shadow) !important;
+}
+
+/* Toolbar: 40px capsule, 32px round buttons inset 4px so their curves are concentric. */
+[class*="carouselModal_"] [class*="actionButtons_"] {
+  height: 40px;
+  box-sizing: border-box;
+  align-items: center;
+  padding: 0 3.5px !important;
+  gap: 2px !important;
+  border-radius: var(--vg-r-pill) !important;
+}
+[class*="carouselModal_"] [class*="actionButtons_"] button {
+  width: 32px !important;
+  height: 32px !important;
+  max-height: none !important;
+  min-width: 0 !important;
+  border: 0 !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: transparent !important;
+  color: var(--vg-text) !important;
+}
+[class*="carouselModal_"] [class*="actionButtons_"] button [class*="buttonChildrenWrapper_"] {
+  border-radius: inherit !important;
+}
+[class*="carouselModal_"] [class*="actionButtons_"] button:hover {
+  background: var(--vg-fill-3) !important;
+}
+[class*="carouselModal_"] [class*="actionButtons_"] button:active {
+  background: var(--vg-fill-4) !important;
+}
+
+/* Close, previous and next: round glass buttons the toolbar's height. The symbol rules make
+   their host relative; close has to stay pinned to the top bar's corner. */
+div[class*="focusLock_"] [class*="carouselModal_"] [class*="closeButton_"][role="button"] {
+  position: absolute;
+}
+[class*="carouselModal_"] [class*="closeButton_"],
+[class*="carouselModal_"] [class*="nav_"][role="button"] {
+  box-sizing: border-box;
+  border-radius: var(--vg-r-pill) !important;
+  color: var(--vg-text);
+  transition: background-color 0.15s;
+}
+[class*="carouselModal_"] [class*="closeButton_"] [class*="buttonInner_"],
+[class*="carouselModal_"] [class*="nav_"][role="button"] [class*="buttonInner_"] {
+  border-radius: inherit !important;
+  background: transparent !important;
+}
+[class*="carouselModal_"] [class*="closeButton_"]:hover [class*="buttonInner_"],
+[class*="carouselModal_"] [class*="nav_"][role="button"]:hover [class*="buttonInner_"] {
+  background: var(--vg-fill-2) !important;
+}
+[class*="carouselModal_"] :is([class*="closeButton_"], [class*="nav_"][role="button"]) svg {
+  color: var(--vg-text);
+}
+
+/* Thumbnails: a capsule around the strip; tiles are rounded rects concentric with it. */
+/* The strip's row is shorter than the capsule; nudged down so it clears the image. */
+[class*="carouselModal_"] [class*="galleryContainer_"] {
+  align-self: center;
+  transform: translateY(6px);
+}
+[class*="carouselModal_"] [class*="gallery_"] {
+  scrollbar-width: none;
+}
+[class*="carouselModal_"] [class*="gallery_"]::-webkit-scrollbar {
+  display: none;
+}
+[class*="carouselModal_"] [class*="gallery_"] {
+  height: auto !important;
+  padding: 4px !important;
+  border-radius: var(--vg-r-card) !important;
+  display: flex;
+  gap: 4px;
+}
+[class*="carouselModal_"] [class*="galleryItem_"] {
+  margin: 0 !important;
+  border-radius: calc(var(--vg-r-card) - 4px) !important;
+  background: var(--vg-fill-2) !important;
+}
+[class*="carouselModal_"] [class*="galleryItem_"][class*="inactive_"]::after {
+  background: rgb(var(--vg-tint)) !important;
+  opacity: 0.45;
+}
+[class*="carouselModal_"] [class*="galleryItem_"][class*="inactive_"]:hover::after {
+  opacity: 0.15;
+}
+/* The current tile gets an inset accent ring; drawn on a pseudo so it sits over the image. */
+[class*="carouselModal_"] [class*="galleryItem_"]:not([class*="inactive_"])::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 2px var(--vg-accent), inset 0 0 0 3px rgba(var(--vg-shadow), 0.35);
+  pointer-events: none;
+}
+[class*="carouselModal_"] [class*="galleryItem_"] [class*="imageWrapper_"] {
+  border-radius: inherit !important;
+}

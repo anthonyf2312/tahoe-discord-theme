@@ -1,0 +1,48 @@
+/**
+ * @name Tahoe Tokyo Night
+ * @description macOS Tahoe glass for Vesktop in Tokyo Night colours: a floating sidebar over native vibrancy, SF Symbols, liquid glass controls.
+ * @author skopevoj
+ * @version 0.3.0
+ * @source https://github.com/skopevoj/discord-theme
+ */
+
+/* the theme itself, rebuilt from src/ and served by GitHub Pages */
+@import url('https://skopevoj.github.io/discord-theme/build/tahoe.css');
+
+/* Settings. Everything here overrides the defaults in src/tokens.css; delete a line to go back
+   to the default. Vesktop needs "transparent" on and macOS vibrancy set (sidebar recommended). */
+:root {
+    /* colour: Tokyo Night */
+    --vg-accent: #7aa2f7; /* links, buttons, switches, menu highlight */
+    --vg-accent-hover: #92b3f8;
+    --vg-accent-text: #7aa2f7; /* accent used as text (links, mentions) */
+    --vg-accent-soft: rgba(122, 162, 247, 0.2);
+    --vg-danger: #f7768e;
+    --vg-danger-text: #f7768e; /* danger used as text */
+    --vg-success: #9ece6a;
+    --vg-warning: #e0af68;
+    /* text and symbols on accent, danger and success fills: Tokyo Night bg, white is unreadable on the pastels */
+    --vg-on-accent: #1a1b26;
+    --vg-on-danger: #1a1b26;
+    --vg-on-success: #1a1b26;
+    --vg-tint: 22, 22, 30; /* r, g, b of the dark tint laid over the desktop blur */
+    --vg-window: rgba(var(--vg-tint), 0.64); /* chat, header and member list; higher = darker, less glass */
+    --vg-panel: linear-gradient(rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.045)), rgba(var(--vg-tint), 0.48); /* floating sidebar */
+
+    /* menus, popouts and modals: solid, see src/tokens.css */
+    --vg-glass: rgb(32, 35, 49);
+    --vg-glass-strong: rgb(26, 27, 38);
+    --vg-sheet: rgb(22, 22, 30);
+
+    --vg-text: #c0caf5;
+    --vg-text-2: #9aa5ce;
+    --vg-text-3: #737aa2;
+
+    /* geometry: inner radii follow the window corner, keep win-radius matched to macOS */
+    --vg-win-radius: 15px; /* macOS window corner */
+    --vg-gap: 5px; /* inset of the floating panels */
+
+    /* text */
+    --vg-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+    --vg-mono: ui-monospace, "SF Mono", Menlo, monospace;
+}

@@ -1,3 +1,302 @@
 /* ==========================================================================
-   FORM CONTROLS: radio buttons, colour pickers, sliders in settings
+   FORM CONTROLS: radios, swatches, sliders, pop-ups, fields and segmented tabs in settings
    ========================================================================== */
+
+/* Radio groups: one grouped box like a System Settings list, its rows inset by 4px so their
+   radius is the box's minus the inset. The chosen row gets an accent ring. */
+[role="radiogroup"][class*="group__"] {
+  gap: 2px !important;
+  padding: 4px !important;
+  background: var(--vg-fill-1);
+  border: 0.5px solid var(--vg-line);
+  border-radius: var(--vg-r-card);
+}
+[class*="radioGroupOption__"] {
+  padding: 8px 12px 8px 38px !important;
+  border-radius: calc(var(--vg-r-card) - 4px) !important;
+  transition: background-color 0.15s, box-shadow 0.15s;
+}
+[class*="radioGroupOption__"][data-hovered="true"]:not([data-selected="true"]):not([data-disabled="true"]) {
+  background: var(--vg-fill-1);
+}
+[class*="radioGroupOption__"][data-selected="true"] {
+  background: rgb(from var(--vg-accent) r g b / 0.12);
+  box-shadow: inset 0 0 0 1px rgb(from var(--vg-accent) r g b / 0.75);
+}
+[class*="radioGroupOption__"][data-disabled="true"] {
+  opacity: 0.5;
+}
+
+/* The indicator: a 16px circle (Discord's is 20px), grey well with a faint ring when off,
+   accent fill with a white dot when on. The viewBox is 40 units, so 2.5 units = 1px. */
+[class*="radioGroupOption__"] > svg[class*="radioIndicator_"] {
+  width: 16px !important;
+  height: 16px !important;
+  left: 12px !important;
+  top: 10px !important;
+}
+svg[class*="radioIndicator_"] [class*="outerRadioBase_"] {
+  r: 19.25px;
+  fill: rgba(var(--vg-track), 0.24) !important;
+  stroke: rgba(var(--vg-ink), 0.2) !important;
+  stroke-width: 1.5px !important;
+}
+svg[class*="radioIndicator_"] [class*="outerRadioFill_"] {
+  r: 20px;
+  fill: none !important;
+  stroke: none !important;
+}
+svg[class*="radioIndicator_"] [class*="innerDotRadio_"] {
+  r: 7px;
+}
+[data-selected="true"] > svg[class*="radioIndicator_"] [class*="outerRadioFill_"] {
+  fill: var(--vg-accent) !important;
+}
+[data-selected="true"] > svg[class*="radioIndicator_"] [class*="innerDotRadio_"] {
+  fill: var(--vg-on-accent) !important;
+}
+
+/* Theme and colour swatches: round like the macOS accent colour picker. Discord's corner
+   check badge becomes a ring around the chosen swatch, 2px clear of it. */
+[class*="themeSelectionContainer__"] {
+  --custom-theme-selection-size: 40px !important;
+}
+[class*="themeSelectionContainer__"] > [class*="themeSelection__"] {
+  border-radius: 50% !important;
+  box-shadow: inset 0 0 0 0.5px rgba(var(--vg-ink), 0.22) !important;
+  border: 0 !important;
+}
+:is([class*="themeSelectionContainer__"], [class*="appIconSelectionContainer__"]) > [class*="selectionCircle__"] {
+  inset: -4px !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 50% !important;
+  box-shadow: inset 0 0 0 2px var(--vg-accent) !important;
+  background: transparent !important;
+  pointer-events: none;
+}
+:is([class*="themeSelectionContainer__"], [class*="appIconSelectionContainer__"]) > [class*="selectionCircle__"] > svg {
+  display: none !important;
+}
+/* App icons stay squircles; their ring follows the icon's corner plus the gap. */
+[class*="appIconSelectionContainer__"] > [class*="appIconSelection__"] {
+  border-radius: 11px !important;
+  border: 0 !important;
+  box-shadow: inset 0 0 0 0.5px rgba(var(--vg-ink), 0.18) !important;
+}
+[class*="appIconSelectionContainer__"] > [class*="selectionCircle__"] {
+  border-radius: 15px !important;
+}
+
+/* Pop-up buttons: a compact rounded fill with a top sheen, like an NSPopUpButton. */
+[class*="selectFieldContainer__"] > [class*="selectField__"],
+[aria-haspopup="listbox"] > [class*="wrapper__"][class*="select_"] {
+  min-height: 32px !important;
+  height: auto !important;
+  border-radius: 8px !important;
+  border: 0 !important;
+  background: linear-gradient(rgba(var(--vg-highlight), 0.04), transparent), var(--vg-fill-3) !important;
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.12), 0 0 0 0.5px rgba(var(--vg-shadow), 0.25) !important;
+}
+[class*="selectFieldContainer__"] > [class*="selectField__"]:hover,
+[aria-haspopup="listbox"]:hover > [class*="wrapper__"][class*="select_"] {
+  background: linear-gradient(rgba(var(--vg-highlight), 0.04), transparent), var(--vg-fill-4) !important;
+}
+/* Discord fixes the inner rows at 38px; letting them size to the 32px field keeps the value
+   centred, and multi-value fields can still grow. */
+[class*="selectFieldContainer__"] :is([class*="selectFieldContent__"], [class*="selectButton__"]) {
+  height: auto !important;
+  min-height: 32px !important;
+}
+[class*="selectFieldContainer__"] [class*="inInput__"] {
+  height: auto !important;
+  min-height: 30px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+/* Control text a step under the 16px row labels, as macOS sets controls smaller than prose. */
+:is([class*="selectFieldContainer__"], [aria-haspopup="listbox"] > [class*="select_"]) [class*="text-md/"],
+[class*="selectFieldContainer__"] input {
+  font-size: 14px !important;
+}
+[class*="selectFieldContainer__"] [class*="chevronButton__"],
+[aria-haspopup="listbox"] > [class*="select_"] > [class*="icons_"] {
+  color: var(--vg-text-2) !important;
+}
+
+/* Settings sections: a quieter page heading, and hairline dividers with less air around them. */
+:is([class*="modal_"] [class*="contentBody_"], [class*="standardSidebarView_"]) h2[class*="heading-xl/"] {
+  font-family: var(--vg-font-display) !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  line-height: 28px !important;
+}
+:is([class*="modal_"] [class*="contentBody_"], [class*="standardSidebarView_"]) h2[class*="heading-sm/"][class*="title__"] {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--vg-text-2) !important;
+}
+[class*="modal_"] [class*="contentBody_"] [class*="divider__"] {
+  border-top: 0.5px solid var(--vg-line) !important;
+  height: 0 !important;
+  margin-top: 24px !important;
+  margin-bottom: 24px !important;
+}
+
+/* The sticky live preview (Accessibility) needs the sheet behind it, or the page scrolls
+   visibly through it. */
+[class*="modal_"] [class*="contentBody_"] [class*="sticky__"] {
+  background: var(--vg-sheet) !important;
+}
+
+/* Sliders with marks: macOS puts the tick marks under the track and the labels under the
+   ticks. Discord stacks label, then a long dash through the bar; this moves the bar (and the
+   knob riding on it) to the top of the 48px box and flips each mark into tick-then-label. */
+[class*="slider_"][class*="hasMarks_"]:has([class*="markAbove_"]) [class*="bar_"] {
+  top: 6px !important;
+}
+[class*="slider_"][class*="hasMarks_"]:has([class*="markAbove_"]) [class*="grabber_"] {
+  top: -4px !important;
+}
+[class*="slider_"] [class*="mark_"][class*="markAbove_"] {
+  justify-content: flex-start !important;
+  padding-top: 15px;
+  gap: 4px;
+}
+[class*="slider_"] [class*="markAbove_"] [class*="markDash_"] {
+  order: -1;
+  width: 1px !important;
+  height: 5px !important;
+  margin: 0 !important;
+  border-radius: 0.5px;
+  background: rgba(var(--vg-ink), 0.28) !important;
+}
+[class*="slider_"] [class*="markValue_"] {
+  margin: 0 !important;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  line-height: 13px !important;
+  color: var(--vg-text-3) !important;
+}
+/* Discord tints the default value green; here it is simply the brighter label. */
+[class*="slider_"] [class*="defaultValue_"] [class*="markValue_"] {
+  color: var(--vg-text-2) !important;
+}
+
+/* The pop-up's menu: Discord wraps the listbox in a second filled, bordered box, which drew
+   a frame around the glass menu. Rows keep their 40px: the list is sized in JS from it. */
+[class*="selectDropdown__"] {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: var(--vg-r-menu) !important;
+}
+[class*="selectDropdown__"] > [role="listbox"] {
+  border-radius: var(--vg-r-menu) !important;
+}
+[class*="selectDropdown__"] [role="option"] > [class*="listBoxItemContent__"] {
+  padding: 4px 9px !important;
+}
+[class*="selectDropdown__"] [role="option"] [class*="text-md/"] {
+  font-size: 14px !important;
+  line-height: 18px !important;
+}
+[class*="selectDropdown__"] [class*="selectedIcon__"] svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+[class*="themeSelectionContainer__"] [class*="borderOverlay__"] {
+  border-radius: 50% !important;
+}
+
+/* Text fields: the same 32px rounded fill as the pop-ups, with the soft accent focus ring
+   macOS draws around a focused field. */
+[class*="wrapper__"]:has(> input[data-mana-component="text-input"]) {
+  height: 32px !important;
+  min-height: 32px !important;
+  border-radius: 8px !important;
+  border: 0 !important;
+  background: var(--vg-fill-2) !important;
+  box-shadow: inset 0 0 0 0.5px var(--vg-glass-line) !important;
+  transition: box-shadow 0.15s;
+}
+[class*="wrapper__"]:has(> input[data-mana-component="text-input"]:focus-visible),
+[class*="wrapper__"]:has(> input[data-mana-component="text-input"]:focus) {
+  box-shadow: inset 0 0 0 1px var(--vg-accent), 0 0 0 3px rgb(from var(--vg-accent) r g b / 0.35) !important;
+}
+[class*="wrapper__"] > input[data-mana-component="text-input"] {
+  height: 100% !important;
+  font-size: 14px !important;
+}
+[class*="wrapper__"] > input[data-mana-component="text-input"]::placeholder {
+  color: var(--vg-text-3) !important;
+}
+
+/* Vencord's top tab bars (Themes, Updater...) become a segmented control: a capsule well
+   with the chosen segment raised, instead of underlined text. */
+.vc-settings-tab-bar[role="tablist"] {
+  display: inline-flex !important;
+  gap: 0 !important;
+  padding: 2px !important;
+  margin-bottom: 20px !important;
+  border: 0 !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: var(--vg-fill-2) !important;
+  box-shadow: inset 0 0 0 0.5px var(--vg-line);
+}
+.vc-settings-tab-bar-item[role="tab"] {
+  height: auto !important;
+  margin: 0 !important;
+  padding: 4px 14px !important;
+  border-radius: var(--vg-r-pill) !important;
+  color: var(--vg-text-2) !important;
+  transition: background-color 0.15s, color 0.15s;
+}
+.vc-settings-tab-bar-item[role="tab"]::after {
+  display: none !important;
+}
+.vc-settings-tab-bar-item[role="tab"]:hover:not([aria-selected="true"]) {
+  color: var(--vg-text) !important;
+}
+.vc-settings-tab-bar-item[role="tab"][aria-selected="true"] {
+  background: rgba(var(--vg-ink), 0.2) !important;
+  color: var(--vg-text) !important;
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.18), 0 1px 2px rgba(var(--vg-shadow), 0.25);
+}
+.vc-settings-tab-bar-item[role="tab"] [class*="itemText_"] {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  line-height: 18px !important;
+  color: inherit !important;
+}
+
+/* The mic test meter cuts its pills out of a frame drawn in the page colour, which the theme
+   made transparent; on the solid settings sheet the frame takes the sheet colour again. */
+[class*="modal_"] [class*="contentBody_"] svg[class*="notches__"] {
+  color: var(--vg-sheet) !important;
+}
+
+/* Disclosure buttons ("Show Advanced Voice Settings"): a small round button, not a 48px tile. */
+button[class*="triggerButton__"][aria-expanded] {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  background: var(--vg-fill-2) !important;
+  box-shadow: inset 0 0.5px 0 rgba(var(--vg-highlight), 0.1);
+}
+button[class*="triggerButton__"][aria-expanded]:hover {
+  background: var(--vg-fill-3) !important;
+}
+button[class*="triggerButton__"][aria-expanded] > svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* Device names wrap to a second line that the 32px pop-up cuts mid-word; one line with an
+   ellipsis instead. */
+[aria-haspopup="listbox"] > [class*="select_"] [class*="lineClamp2Plus__"] {
+  display: block !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
