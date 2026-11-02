@@ -11,7 +11,8 @@
 
   // --- who is on screen ------------------------------------------------------------------
   const nameEls = "h3[class*=header_] [class*=username_], [class*=repliedMessage_] [class*=username_], " +
-    "[class*=membersWrap_] [class*=name_][class*=username_], [class*=voiceUser_] [class*=username_]";
+    "[class*=membersWrap_] [class*=name_][class*=username_], [class*=voiceUser_] [class*=username_], " +
+    "li[class*=card_] [class*=author_] [class*=username_]";
   // The name is the first piece of text in the element; anything after it (the hidden
   // "Server Tag: …" and the tag chip) belongs to the server tag and stays.
   const firstText = el => {
@@ -40,7 +41,8 @@
   });
   $$("[class*=membersWrap_] [class*=member_][class*=container_]").forEach(row =>
     note(nameOf($("[class*=name_][class*=username_]", row)), $("img[class*=avatar_]", row)?.src));
-  const pool = [...people.values()].filter(p => p.avatar).sort((a, b) => a.name.localeCompare(b.name));
+  $$("li[class*=card_] [class*=author_] [class*=username_]").forEach(el => note(nameOf(el)));
+  const pool = [...people.values()].filter(p => p.avatar && !/^\[bot\]|bot$/i.test(p.name)).sort((a, b) => a.name.localeCompare(b.name));
   if (pool.length < 3) return "not enough people on screen to shuffle";
 
   // Person i shows the name of i+1 and the avatar of i+2, so neither half of any real pair survives.
@@ -92,31 +94,76 @@
       `<div><span style="font-size:16px;line-height:20px;color:#fff">${e}</span></div><div class="reactionCount${rh}" style="min-width:12px">${c}</div></div></div>`).join("") +
     "</div></div>";
 
-  // The scene covers what is on screen, aligned to the bottom where the newest messages are.
-  const view = $("[class*=messagesWrapper_] > [class*=scroller_]")?.getBoundingClientRect();
-  const items = $$("li[id^='chat-messages-']").filter(li => {
-    const r = li.getBoundingClientRect();
-    return !view || (r.bottom > view.top && r.top < view.bottom);
-  });
-  const offset = scene.messages.length - items.length;
-  // A mention points at whoever wrote the next message that starts a group, the natural addressee.
-  const authorAt = i => items.slice(i + 1).map(li => nameOf($("h3[class*=header_] [class*=username_]", li))).find(Boolean) || pool[0].name;
+  // Each message list on screen (the channel, a thread beside it) is a pane with its own messages.
+  // A pane covers what is visible, aligned to the bottom where the newest messages are.
+  const panes = scene.panes || [{ messages: scene.messages || [], allMessages: scene.allMessages, keepMedia: scene.keepMedia }];
   const filler = scene.filler || ["lol", "makes sense", "same"];
-  items.forEach((li, i) => {
-    const m = scene.messages[i + offset] || { text: filler[i % filler.length] };
-    if (!m.reply) m.reply = (scene.messages[i + offset - 1] || {}).text;
-    const body = $$("[class*=messageContent_]:not([class*=repliedTextContent_])", li).pop();
-    if (body) body.innerHTML = markup(m.text, authorAt(i));
-    const rt = $("[class*=repliedTextContent_]", li);
-    if (rt && m.reply) rt.innerHTML = markup(m.reply, authorAt(i));
-    $$("[class*=embedWrapper_], [class*=embedFull_], article[class*=embed_], [class*=visualMediaItemContainer_]", li).forEach(e => e.remove());
-    const old = $("[class*=reactions_]", li);
-    if (m.reactions && rh) {
-      const html = reactions(m.reactions);
-      if (old) old.outerHTML = html;
-      else ($("[id^='message-accessories-']", li) || li).insertAdjacentHTML("beforeend", html);
-    } else old?.remove();
+  let rewritten = 0;
+  $$("[class*=messagesWrapper_]").forEach((wrap, w) => {
+    const pane = panes[w];
+    if (!pane) return;
+    const view = $(":scope > [class*=scroller_]", wrap)?.getBoundingClientRect();
+    const items = $$("li[id^='chat-messages-']", wrap).filter(li => {
+      const r = li.getBoundingClientRect();
+      return pane.allMessages || !view || (r.bottom > view.top && r.top < view.bottom);
+    });
+    const offset = pane.messages.length - items.length;
+    // A mention points at whoever wrote the next message that starts a group, the natural addressee.
+    const authorAt = i => items.slice(i + 1).map(li => nameOf($("h3[class*=header_] [class*=username_]", li))).find(Boolean) || pool[0].name;
+    items.forEach((li, i) => {
+      const m = pane.messages[i + offset] || { text: filler[i % filler.length] };
+      if (m.reply === undefined) m.reply = (pane.messages[i + offset - 1] || {}).text;
+      const body = $$("[class*=messageContent_]:not([class*=repliedTextContent_])", li).pop();
+      if (body) body.innerHTML = markup(m.text, authorAt(i));
+      const rt = $("[class*=repliedTextContent_]", li);
+      if (rt && m.reply) rt.innerHTML = markup(m.reply, authorAt(i));
+      // Whatever else the message carried (embeds, media, bot components) belongs to the old text,
+      // unless the pane keeps its media (the owner's own posts).
+      if (!pane.keepMedia) $$("[id^='message-accessories-'] > *", li).forEach(e => { if (!e.querySelector("[class*=reactions_], [class*=threadMessageAccessory_]") && !e.matches("[class*=reactions_]")) e.remove(); });
+      // A kept card (bot post) gets its own heading and text in place of the original ones.
+      const md = $$("[class*=isComponentsV2_] [class*=markdownContainer_]", li)[0];
+      if (md && m.card) md.innerHTML = `<h2>${markup(m.card.title)}</h2><span>${markup(m.card.text)}</span>`;
+      const preview = $("[class*=threadMessageAccessoryContent_]", li);
+      if (preview && pane.threadPreview) preview.innerHTML = markup(pane.threadPreview, authorAt(i));
+      const old = $("[class*=reactions_]", li);
+      if (m.reactions && rh) {
+        const html = reactions(m.reactions);
+        if (old) old.outerHTML = html;
+        else ($("[id^='message-accessories-']", li) || li).insertAdjacentHTML("beforeend", html);
+      } else old?.remove();
+      rewritten++;
+    });
+    // Rewritten messages are shorter than the originals, so the list goes back to its newest end.
+    if (pane.allMessages) { const sc = $(":scope > [class*=scroller_]", wrap); if (sc) sc.scrollTop = sc.scrollHeight; }
   });
+
+  // --- forum: post cards and the open post's title -----------------------------------------
+  const titles = new Map();
+  $$("li[class*=card_]").forEach((card, i) => {
+    const post = (scene.posts || [])[i];
+    if (!post) return;
+    const h3 = $("h3", card), t = h3 && firstText(h3);
+    if (t) { titles.set(t.nodeValue.trim(), post.title); t.nodeValue = post.title; }
+    const preview = $("[class*=messageContent_]", card);
+    if (preview) preview.innerHTML = markup(post.preview, pool[0].name);
+    // Attachment thumbnails are other people's screenshots.
+    $$("[class*=bodyMedia_]", card).forEach(e => e.remove());
+  });
+  // The open post's old title also shows in the header, the channel list and the thread panel.
+  if (scene.threadTitle) {
+    const header = $("[class*=chatLayerWrapper_] section h1, [class*=chatLayerWrapper_] section [class*=title_] [class*=defaultColor_]");
+    const old = header && firstText(header)?.nodeValue.trim();
+    if (old) titles.set(old, scene.threadTitle);
+  }
+  if (titles.size) {
+    const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let t; (t = w.nextNode());) {
+      const to = titles.get(t.nodeValue.trim());
+      if (to) { t.nodeValue = to; continue; }
+      // Also inside longer strings, like the input's "Send a message in …" placeholder.
+      for (const [from, into] of titles) if (from.length > 8 && t.nodeValue.includes(from)) t.nodeValue = t.nodeValue.replace(from, into);
+    }
+  }
 
   // --- server list: public servers' icons ---------------------------------------------------
   const current = location.pathname.split("/")[2];
@@ -138,5 +185,5 @@
     el.style.backgroundImage = `url("${next().src}")`; el.textContent = "";
   });
 
-  return `ok: ${n} people shuffled, ${Math.min(items.length, scene.messages.length)} messages rewritten`;
+  return `ok: ${n} people shuffled, ${rewritten} messages rewritten`;
 })()

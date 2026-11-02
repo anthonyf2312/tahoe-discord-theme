@@ -15,6 +15,18 @@ SF Symbols in menus and toolbars, liquid-glass controls and radii concentric wit
 | <img src="docs/screenshots/chat-rose-pine.webp" alt="Rose Pine"><br>Rose Pine | <img src="docs/screenshots/chat-tokyo-night.webp" alt="Tokyo Night"><br>Tokyo Night |
 <!-- screenshots:end -->
 
+## More screens
+
+<!-- screens:start -->
+**Forum with a post open**
+
+![Forum](docs/screenshots/forum-tahoe.webp)
+
+**A thread beside its channel**
+
+![Thread](docs/screenshots/thread-tahoe.webp)
+<!-- screens:end -->
+
 ## Install on a device
 
 1. Vesktop settings: **Vencord > Settings**, turn on *transparent window*, set *macOS vibrancy* to
@@ -39,6 +51,14 @@ Set in the `:root` block of the theme file; every option is `on` or `off`.
 | `--vg-panel-art` | on | off: hides Nitro artwork and avatar decoration in the user panel |
 | `--vg-compact` | off | on: shorter rows in the channel list, member list and menus |
 | `--vg-scroll-fade` | on | off: lists end in a hard edge instead of fading under the bars |
+
+| `--vg-vibrancy: on` | `--vg-vibrancy: off` |
+|---|---|
+| ![vibrancy on](docs/screenshots/option-vibrancy-tahoe-on.webp) | ![vibrancy off](docs/screenshots/option-vibrancy-tahoe-off.webp) |
+
+| `--vg-sf-symbols: on` | `--vg-sf-symbols: off` |
+|---|---|
+| ![SF Symbols on](docs/screenshots/option-sf-tahoe-on.webp) | ![SF Symbols off](docs/screenshots/option-sf-tahoe-off.webp) |
 
 Colours (`--vg-accent`, `--vg-tint`, `--vg-window`, `--vg-panel`…), geometry and fonts are below the
 options in the same block; [`src/tokens.css`](src/tokens.css) lists every token with its default.

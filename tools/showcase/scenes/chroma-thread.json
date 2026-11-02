@@ -1,0 +1,92 @@
+{
+  "_comment": "chroma.pw #sneak-peeks with a thread open beside it. Pane 0 is the channel (the project's own sneak-peek images stay), pane 1 the thread.",
+  "panes": [
+    {
+      "keepMedia": true,
+      "threadPreview": "yep, it's in the next beta 🤞",
+      "messages": [
+        {
+          "text": "sneak peek: Your files 👀 local music with folders, smart filters and a search that actually finds things",
+          "reactions": [
+            [
+              "🔥",
+              42,
+              true
+            ],
+            [
+              "😍",
+              18,
+              false
+            ],
+            [
+              "👀",
+              11,
+              false
+            ]
+          ]
+        },
+        {
+          "text": "and Ambient is almost ready too 🌙",
+          "card": {
+            "title": "Ambient",
+            "text": "Layer rain, a fireplace or a café under whatever you're playing. Every mix saves as its own preset, so focus mode and sleep mode are one tap away."
+          },
+          "reactions": [
+            [
+              "🌙",
+              31,
+              true
+            ],
+            [
+              "🔥",
+              19,
+              false
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "allMessages": true,
+      "messages": [
+        {
+          "text": "this looks so clean, the folder view is exactly what I wanted"
+        },
+        {
+          "text": "does it pick up files from the Files app or only from a computer sync?"
+        },
+        {
+          "text": "both, anything you drop into the Chroma folder shows up on its own"
+        },
+        {
+          "text": "no way, finally 😭",
+          "reactions": [
+            [
+              "😭",
+              6,
+              false
+            ],
+            [
+              "❤️",
+              3,
+              true
+            ]
+          ]
+        },
+        {
+          "text": "is this coming in the next beta?"
+        },
+        {
+          "text": "yep, it's in the next beta 🤞",
+          "reactions": [
+            [
+              "🎉",
+              9,
+              true
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

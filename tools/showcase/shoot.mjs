@@ -1,5 +1,7 @@
 // Screenshots of every flavor for the README, from the running Vesktop (debug port 9222).
 //   node tools/showcase/shoot.mjs [scene.json] [--name chat] [--only Light]
+//   options: --set "--vg-vibrancy: off" (extra settings), --suffix off (file name), --menu (open
+//   a message's context menu), --crop menu (close-up of the open menu), --no-gallery
 // Applies the demo scene first (unless --no-demo), then for each flavor injects its settings,
 // captures the window over a blurred wallpaper (CDP cannot see the native vibrancy), frames it
 // as a macOS window and writes docs/screenshots/<name>-<flavor>.webp plus the README gallery.
@@ -16,6 +18,9 @@ const opt = (k, d) => (args.includes(k) ? args[args.indexOf(k) + 1] : d);
 const scene = args.find(a => a.endsWith(".json")) ?? HERE + "scenes/atlas-programming.json";
 const name = opt("--name", "chat");
 const only = opt("--only");
+const extra = opt("--set", "");
+const suffix = opt("--suffix", "");
+const crop = opt("--crop");
 [OUT, ASSETS, TMP].forEach(d => mkdirSync(d, { recursive: true }));
 
 const run = (cmd, a) => execFileSync(cmd, a, { encoding: "utf8", maxBuffer: 64 << 20 }).trim();
@@ -23,7 +28,14 @@ const cdp = (...a) => run("node", [ROOT + "tools/cdp.mjs", ...a]);
 const magick = (...a) => run("magick", a);
 
 // Generated wallpaper (deep blue with soft glows), so the repo needs no Apple artwork.
-const wall = ASSETS + "wallpaper.jpg";
+// --wallpaper vivid picks a colourful one, which makes the glass easier to see in comparisons.
+const wall = ASSETS + (opt("--wallpaper") === "vivid" ? "wallpaper-vivid.jpg" : "wallpaper.jpg");
+if (wall.endsWith("vivid.jpg") && !existsSync(wall)) magick("-size", "3840x2400", "xc:#1a0b2e",
+  "(", "-size", "2600x2600", "radial-gradient:rgba(255,94,58,0.85)-rgba(255,94,58,0)", ")", "-geometry", "-600-900", "-composite",
+  "(", "-size", "2800x2800", "radial-gradient:rgba(10,132,255,0.8)-rgba(10,132,255,0)", ")", "-geometry", "+1700+700", "-composite",
+  "(", "-size", "2000x2000", "radial-gradient:rgba(191,90,242,0.75)-rgba(191,90,242,0)", ")", "-geometry", "+2300-800", "-composite",
+  "(", "-size", "1800x1800", "radial-gradient:rgba(48,209,88,0.55)-rgba(48,209,88,0)", ")", "-geometry", "+200+1300", "-composite",
+  "-quality", "92", wall);
 if (!existsSync(wall)) magick("-size", "3840x2400", "xc:#050b1f",
   "(", "-size", "2800x2800", "radial-gradient:rgba(37,99,235,0.55)-rgba(37,99,235,0)", ")", "-geometry", "-500-1000", "-composite",
   "(", "-size", "2600x2600", "radial-gradient:rgba(14,116,233,0.38)-rgba(14,116,233,0)", ")", "-geometry", "+1900+800", "-composite",
@@ -52,12 +64,16 @@ const flavors = [["Tahoe", ROOT + "theme/Tahoe.theme.css"],
   .filter(([n]) => !only || n.toLowerCase() === only.toLowerCase());
 
 if (!args.includes("--no-demo")) console.log(run("node", [HERE + "demo.mjs", scene]));
+// The context menu of the newest message, opened the way a right click would.
+if (args.includes("--menu")) cdp("eval", `(() => { const m = [...document.querySelectorAll("li[id^=chat-messages-] [class*=contents_]")].pop();
+  const r = m.getBoundingClientRect(); m.dispatchEvent(new MouseEvent("contextmenu", { bubbles: true, clientX: r.x + 220, clientY: r.y + 10 })); return 1 })()`);
 
 const radius = Math.round(15 * size.dpr), light = 12 * size.dpr / 2;
 const shots = [];
 for (const [flavor, file] of flavors) {
   // Vencord inserts the theme after injected styles, so the flavor needs more specificity to win.
-  const settings = (readFileSync(file, "utf8").match(/:root\s*\{[\s\S]*?\n\}/)?.[0] ?? "").replace(/^:root/, "html:root:root");
+  const settings = (readFileSync(file, "utf8").match(/:root\s*\{[\s\S]*?\n\}/)?.[0] ?? "").replace(/^:root/, "html:root:root")
+    .replace(/\n\}$/, `\n  ${extra}${extra && !extra.trim().endsWith(";") ? ";" : ""}\n}`);
   writeFileSync(TMP + "flavor.css", settings);
   cdp("css", TMP + "flavor.css");
   const raw = TMP + "raw.png";
@@ -69,15 +85,30 @@ for (const [flavor, file] of flavors) {
   magick(raw, ...lights, "(", "+clone", "-alpha", "extract", "-fill", "black", "-colorize", "100",
     "-fill", "white", "-draw", `roundrectangle 0,0 ${W - 1},${H - 1} ${radius},${radius}`, ")",
     "-alpha", "off", "-compose", "copy_opacity", "-composite", win);
-  const slug = flavor.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  const slug = flavor.toLowerCase().replace(/[^a-z0-9]+/g, "-") + (suffix ? "-" + suffix : "");
   const out = `${OUT}${name}-${slug}.webp`;
+  if (crop) {
+    // Close-up: the element with room around it, straight from the capture, no window frame.
+    const sel = crop === "menu" ? "[role=menu]" : crop;
+    const r = JSON.parse(cdp("eval", `JSON.stringify(document.querySelector(${JSON.stringify(sel)})?.getBoundingClientRect())`) || "null");
+    if (!r) throw new Error("nothing to crop: " + sel);
+    const pad = 28, d = size.dpr;
+    const x = Math.max(0, Math.round((r.x - pad) * d)), y = Math.max(0, Math.round((r.y - pad) * d));
+    magick(raw, "-crop", `${Math.round((r.width + pad * 2) * d)}x${Math.round((r.height + pad * 2) * d)}+${x}+${y}`, "+repage",
+      "-quality", "90", out);
+    shots.push([flavor, `docs/screenshots/${name}-${slug}.webp`]);
+    console.log("shot", flavor, suffix);
+    continue;
+  }
   magick(canvas, "(", win, "(", "+clone", "-background", "black", "-shadow", "45x40+0+30", ")", "+swap",
     "-background", "none", "-layers", "merge", "+repage", ")", "-gravity", "center", "-geometry", "+0+0",
     "-compose", "over", "-composite", "-resize", "2400x", "-quality", "88", out);
   shots.push([flavor, `docs/screenshots/${name}-${slug}.webp`]);
-  console.log("shot", flavor);
+  console.log("shot", flavor, suffix);
 }
 cdp("css", "-");
+if (args.includes("--menu")) cdp("key", "Escape");
+if (args.includes("--no-gallery")) { console.log(`${shots.length} screenshots`); process.exit(0); }
 
 // README gallery between the markers: the default flavor large, the others in a grid.
 const readme = ROOT + "README.md";
