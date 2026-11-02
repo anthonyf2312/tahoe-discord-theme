@@ -1,0 +1,61 @@
+/* ==========================================================================
+   TUNABLES
+   ========================================================================== */
+:root {
+  --vg-accent: #0a84ff;
+  --vg-accent-hover: #3b9bff;
+  --vg-accent-text: #4aa3ff;
+  --vg-accent-soft: rgba(10, 132, 255, 0.2);
+  --vg-danger: #ff453a;
+  --vg-success: #30d158;
+  --vg-warning: #ffd60a;
+
+  /* Geometry. Inner radii are the window radius minus the gap, so every curve stays concentric
+     with the macOS window corner. */
+  --vg-win-radius: 15px;
+  --vg-gap: 5px;
+  --vg-panel-radius: calc(var(--vg-win-radius) - var(--vg-gap));
+  --vg-bar: 33px;
+
+  /* The whole window is glass over the native vibrancy, tinted with one dark colour so a grey
+     desktop doesn't wash it out: the content takes the tint densely, the sidebar panel more
+     lightly plus a touch of white, so it still reads as the raised layer. */
+  --vg-tint: 11, 12, 22;
+  --vg-window: rgba(var(--vg-tint), 0.62);
+  --vg-panel: linear-gradient(rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.045)), rgba(var(--vg-tint), 0.46);
+  --vg-panel-edge: rgba(255, 255, 255, 0.11);
+
+  /* Floating layers are solid. Over the transparent window Chromium cannot blur what is
+     behind them (it draws the blurred copy on top of the sharp original), and in the real
+     window even dense translucency let the text behind show through. */
+  --vg-glass: rgb(38, 38, 43);
+  --vg-glass-strong: rgb(33, 33, 38);
+  --vg-sheet: rgb(30, 30, 35);
+  --vg-glass-blur: none;
+  --vg-sheen: linear-gradient(rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0) 48px);
+  --vg-glass-line: rgba(255, 255, 255, 0.13);
+  --vg-specular: inset 0 0.5px 0 rgba(255, 255, 255, 0.24), inset 0 -0.5px 0 rgba(255, 255, 255, 0.05);
+  --vg-float-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.5), 0 14px 44px rgba(0, 0, 0, 0.45);
+
+  --vg-fill-1: rgba(255, 255, 255, 0.04);
+  --vg-fill-2: rgba(255, 255, 255, 0.07);
+  --vg-fill-3: rgba(255, 255, 255, 0.1);
+  --vg-fill-4: rgba(255, 255, 255, 0.15);
+  --vg-line: rgba(255, 255, 255, 0.075);
+  --vg-select: rgba(255, 255, 255, 0.1);
+
+  --vg-text: rgba(255, 255, 255, 0.9);
+  --vg-text-2: rgba(235, 235, 245, 0.58);
+  --vg-text-3: rgba(235, 235, 245, 0.36);
+
+  --vg-r-row: 8px;
+  --vg-r-card: 12px;
+  --vg-r-menu: 13px;
+  --vg-r-pop: 16px;
+  --vg-r-modal: 20px;
+  --vg-r-pill: 999px;
+
+  --vg-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  --vg-font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  --vg-mono: ui-monospace, "SF Mono", Menlo, monospace;
+}

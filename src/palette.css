@@ -1,0 +1,233 @@
+/* ==========================================================================
+   PALETTE: Discord's semantic variables, re-declared on every nested theme scope
+   ========================================================================== */
+:root,
+.theme-dark,
+.theme-midnight,
+.theme-darker,
+.visual-refresh {
+  --app-frame-background: transparent !important;
+  --app-frame-border: transparent !important;
+  --background-base-lowest: transparent !important;
+  --background-base-lower: transparent !important;
+  --background-base-low: transparent !important;
+  --background-gradient-lowest: transparent !important;
+  --background-gradient-lower: transparent !important;
+  --background-gradient-low: transparent !important;
+  --background-gradient-app-frame: transparent !important;
+  --background-gradient-chat: transparent !important;
+  --chat-background: transparent !important;
+  --chat-background-default: transparent !important;
+  --channel-background-default: transparent !important;
+  --panel-bg: transparent !important;
+  --background-accent: var(--vg-fill-3) !important;
+  --background-secondary-alt: var(--vg-fill-1) !important;
+
+  /* Discord paints popouts and dropdowns with these, so they stay solid glass. */
+  --background-surface-high: var(--vg-glass-strong) !important;
+  --background-surface-higher: var(--vg-glass-strong) !important;
+  --background-surface-highest: var(--vg-glass-strong) !important;
+  --bg-surface-raised: var(--vg-fill-2) !important;
+  --card-background-default: var(--vg-fill-1) !important;
+  --card-secondary-bg: var(--vg-fill-2) !important;
+  --card-border-default: var(--vg-line) !important;
+
+  --modal-background: var(--vg-glass-strong) !important;
+  --modal-footer-background: transparent !important;
+  --background-scrim: rgba(0, 0, 0, 0.4) !important;
+
+  --background-mod-muted: var(--vg-fill-1) !important;
+  --background-mod-subtle: var(--vg-fill-2) !important;
+  --background-mod-normal: var(--vg-fill-3) !important;
+  --background-mod-strong: var(--vg-fill-4) !important;
+
+  --interactive-background-default: transparent !important;
+  --interactive-background-hover: var(--vg-fill-1) !important;
+  --interactive-background-active: var(--vg-fill-2) !important;
+  --interactive-background-selected: var(--vg-select) !important;
+  --interactive-text-default: var(--vg-text-2) !important;
+  --interactive-text-hover: var(--vg-text) !important;
+  --interactive-text-active: #fff !important;
+  --interactive-icon-default: var(--vg-text-2) !important;
+  --interactive-icon-hover: var(--vg-text) !important;
+  --interactive-icon-active: #fff !important;
+  --interactive-muted: var(--vg-text-3) !important;
+  --interactive-accent-background-default: var(--vg-accent) !important;
+  --interactive-accent-background-hover: var(--vg-accent-hover) !important;
+  --interactive-accent-background-active: var(--vg-accent) !important;
+  --interactive-accent-background-selected: var(--vg-accent) !important;
+
+  --border-subtle: var(--vg-line) !important;
+  --border-muted: var(--vg-line) !important;
+  --border-normal: var(--vg-glass-line) !important;
+  --border-strong: rgba(255, 255, 255, 0.18) !important;
+  --border-focus: var(--vg-accent) !important;
+  --border-feedback-info: var(--vg-accent) !important;
+  --border-feedback-critical: var(--vg-danger) !important;
+  --border-feedback-positive: var(--vg-success) !important;
+  --border-feedback-warning: var(--vg-warning) !important;
+
+  --text-default: var(--vg-text) !important;
+  --text-strong: #fff !important;
+  --text-muted: var(--vg-text-2) !important;
+  --text-subtle: var(--vg-text-3) !important;
+  --chat-text-muted: var(--vg-text-2) !important;
+  --channels-default: var(--vg-text-2) !important;
+  --channel-icon: var(--vg-text-2) !important;
+  --channel-text-area-placeholder: var(--vg-text-3) !important;
+  --text-brand: var(--vg-accent-text) !important;
+  --text-link: var(--vg-accent-text) !important;
+  --text-feedback-critical: var(--vg-danger) !important;
+  --text-feedback-positive: var(--vg-success) !important;
+  --text-feedback-warning: var(--vg-warning) !important;
+  --text-feedback-info: var(--vg-accent-text) !important;
+  --text-status-online: var(--vg-success) !important;
+  --text-status-dnd: var(--vg-danger) !important;
+  --text-status-idle: var(--vg-warning) !important;
+
+  --icon-default: var(--vg-text-2) !important;
+  --icon-strong: #fff !important;
+  --icon-muted: var(--vg-text-3) !important;
+  --icon-subtle: var(--vg-text-3) !important;
+  --icon-brand: var(--vg-accent) !important;
+  --icon-link: var(--vg-accent-text) !important;
+  --icon-feedback-critical: var(--vg-danger) !important;
+  --icon-feedback-positive: var(--vg-success) !important;
+  --icon-feedback-warning: var(--vg-warning) !important;
+  --icon-feedback-info: var(--vg-accent) !important;
+  --icon-status-online: var(--vg-success) !important;
+  --icon-status-dnd: var(--vg-danger) !important;
+  --icon-status-idle: var(--vg-warning) !important;
+
+  --background-brand: var(--vg-accent) !important;
+  --control-brand-foreground: var(--vg-accent-text) !important;
+  --control-brand-foreground-new: var(--vg-accent-text) !important;
+  --mention-background: var(--vg-accent-soft) !important;
+  --mention-foreground: var(--vg-accent-text) !important;
+  --background-feedback-notification: var(--vg-danger) !important;
+  --status-danger: var(--vg-danger) !important;
+  --status-positive: var(--vg-success) !important;
+  --status-online: var(--vg-success) !important;
+  --status-warning: var(--vg-warning) !important;
+  --status-positive-background: var(--vg-success) !important;
+  --status-warning-background: var(--vg-warning) !important;
+  --background-feedback-info: rgba(10, 132, 255, 0.14) !important;
+  --background-feedback-critical: rgba(255, 69, 58, 0.14) !important;
+  --background-feedback-positive: rgba(48, 209, 88, 0.14) !important;
+  --background-feedback-warning: rgba(255, 214, 10, 0.14) !important;
+
+  --control-primary-background-default: var(--vg-accent) !important;
+  --control-primary-background-hover: var(--vg-accent-hover) !important;
+  --control-primary-background-active: #0a74e0 !important;
+  --control-primary-border-default: transparent !important;
+  --control-primary-border-hover: transparent !important;
+  --control-primary-border-active: transparent !important;
+  --control-primary-text-default: #fff !important;
+  --control-primary-text-hover: #fff !important;
+  --control-primary-text-active: #fff !important;
+  --control-secondary-background-default: var(--vg-fill-3) !important;
+  --control-secondary-background-hover: var(--vg-fill-4) !important;
+  --control-secondary-background-active: rgba(255, 255, 255, 0.2) !important;
+  --control-secondary-border-default: transparent !important;
+  --control-secondary-border-hover: transparent !important;
+  --control-secondary-border-active: transparent !important;
+  --control-secondary-text-default: var(--vg-text) !important;
+  --control-secondary-text-hover: #fff !important;
+  --control-secondary-text-active: #fff !important;
+  --control-expressive-background-default: var(--vg-fill-3) !important;
+  --control-expressive-background-hover: var(--vg-fill-4) !important;
+  --control-expressive-background-active: rgba(255, 255, 255, 0.2) !important;
+  --control-expressive-text-default: var(--vg-text) !important;
+  --control-expressive-text-hover: #fff !important;
+  --control-expressive-text-active: #fff !important;
+  --control-critical-primary-background-default: var(--vg-danger) !important;
+  --control-critical-primary-background-hover: #ff6961 !important;
+  --control-critical-primary-background-active: #e03a30 !important;
+  --control-critical-primary-border-default: transparent !important;
+  --control-critical-primary-border-hover: transparent !important;
+  --control-critical-primary-border-active: transparent !important;
+  --control-critical-primary-text-default: #fff !important;
+  --control-critical-primary-text-hover: #fff !important;
+  --control-critical-primary-text-active: #fff !important;
+  --control-critical-secondary-background-default: rgba(255, 69, 58, 0.16) !important;
+  --control-critical-secondary-background-hover: rgba(255, 69, 58, 0.26) !important;
+  --control-critical-secondary-background-active: rgba(255, 69, 58, 0.34) !important;
+  --control-critical-secondary-border-default: transparent !important;
+  --control-critical-secondary-border-hover: transparent !important;
+  --control-critical-secondary-border-active: transparent !important;
+  --control-critical-secondary-text-default: #ff6961 !important;
+  --control-critical-secondary-text-hover: #ff8a84 !important;
+  --control-critical-secondary-text-active: #ff8a84 !important;
+  --control-icon-only-background-hover: var(--vg-fill-2) !important;
+  --control-icon-only-background-active: var(--vg-fill-3) !important;
+  --control-overlay-primary-background-default: var(--vg-fill-3) !important;
+  --control-overlay-secondary-background-default: var(--vg-fill-2) !important;
+  --button-border-radius: var(--vg-r-pill) !important;
+  --button-border-radius-lg: var(--vg-r-pill) !important;
+
+  --input-background-default: var(--vg-fill-2) !important;
+  --input-border-default: transparent !important;
+  --input-border-hover: transparent !important;
+  --input-border-active: var(--vg-accent) !important;
+  --input-text-default: var(--vg-text) !important;
+  --input-placeholder-text-default: var(--vg-text-3) !important;
+  --channeltextarea-background: transparent !important;
+  --custom-input-border-radius: 9px !important;
+
+  --message-background-hover: rgba(255, 255, 255, 0.025) !important;
+  --message-highlight-background-default: rgba(10, 132, 255, 0.1) !important;
+  --message-highlight-background-hover: rgba(10, 132, 255, 0.14) !important;
+  --message-mentioned-background-default: rgba(255, 214, 10, 0.07) !important;
+  --message-mentioned-background-hover: rgba(255, 214, 10, 0.1) !important;
+  --background-code: rgba(0, 0, 0, 0.28) !important;
+
+  --user-profile-toolbar-background: var(--vg-fill-2) !important;
+  --user-profile-overlay-background: var(--vg-fill-2) !important;
+  --user-profile-overlay-background-hover: var(--vg-fill-3) !important;
+  --user-profile-background-hover: var(--vg-fill-2) !important;
+  --user-profile-border: var(--vg-line) !important;
+  --user-profile-note-background-focus: rgba(0, 0, 0, 0.2) !important;
+
+  /* Brand scale: Discord derives most "blurple" pieces from these. */
+  --brand-100-hsl: 211 100% 94% !important;
+  --brand-130-hsl: 211 100% 92% !important;
+  --brand-160-hsl: 211 100% 90% !important;
+  --brand-200-hsl: 211 100% 86% !important;
+  --brand-230-hsl: 211 100% 82% !important;
+  --brand-260-hsl: 211 100% 78% !important;
+  --brand-300-hsl: 211 100% 72% !important;
+  --brand-330-hsl: 211 100% 68% !important;
+  --brand-345-hsl: 211 100% 65% !important;
+  --brand-360-hsl: 211 100% 63% !important;
+  --brand-400-hsl: 211 100% 58% !important;
+  --brand-430-hsl: 211 100% 55% !important;
+  --brand-460-hsl: 211 100% 53% !important;
+  --brand-500-hsl: 211 100% 52% !important;
+  --brand-530-hsl: 211 100% 48% !important;
+  --brand-560-hsl: 211 100% 44% !important;
+  --brand-600-hsl: 211 100% 40% !important;
+  --brand-630-hsl: 211 100% 36% !important;
+  --brand-660-hsl: 211 100% 32% !important;
+  --brand-700-hsl: 211 100% 28% !important;
+  --blurple-20-hsl: 211 100% 80% !important;
+  --blurple-26-hsl: 211 100% 70% !important;
+  --blurple-30-hsl: 211 100% 66% !important;
+  --blurple-36-hsl: 211 100% 63% !important;
+  --blurple-40-hsl: 211 100% 58% !important;
+  --blurple-45-hsl: 211 100% 54% !important;
+  --blurple-50-hsl: 211 100% 52% !important;
+  --blurple-55-hsl: 211 100% 48% !important;
+  --blurple-60-hsl: 211 100% 44% !important;
+
+  --font-primary: var(--vg-font) !important;
+  --font-display: var(--vg-font-display) !important;
+  --font-headline: var(--vg-font-display) !important;
+  --font-code: var(--vg-mono) !important;
+
+  --scrollbar-thin-thumb: rgba(255, 255, 255, 0.2) !important;
+  --scrollbar-thin-track: transparent !important;
+  --scrollbar-auto-thumb: rgba(255, 255, 255, 0.2) !important;
+  --scrollbar-auto-track: transparent !important;
+  --scrollbar-auto-scrollbar-color-thumb: rgba(255, 255, 255, 0.2) !important;
+  --scrollbar-auto-scrollbar-color-track: transparent !important;
+}

@@ -1,0 +1,51 @@
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+html,
+body,
+#app-mount,
+[class*="appMount_"],
+[class*="bg__"] {
+  background: transparent !important;
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: var(--vg-font) !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+code,
+pre,
+[class*="codeBlock"],
+[class*="hljs"] {
+  font-family: var(--vg-mono) !important;
+}
+
+::selection {
+  background: rgba(10, 132, 255, 0.45);
+}
+
+/* Thin overlay scrollbars. */
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: transparent !important;
+  border: 0 !important;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.18) !important;
+  border: 3px solid transparent !important;
+  background-clip: padding-box !important;
+  border-radius: 999px !important;
+  min-height: 40px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.32) !important;
+}

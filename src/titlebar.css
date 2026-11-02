@@ -1,0 +1,14 @@
+/* ==========================================================================
+   TITLEBAR
+   "bar_" also matches classes like "hasSidebar_", so every rule is anchored to the base.
+   ========================================================================== */
+/* macOS draws native traffic lights; Discord's own window buttons would be a second set. */
+[class*="base_"] > [class*="bar_"] [class*="winButtons_"] {
+  display: none !important;
+}
+[class*="base_"] > [class*="bar_"] [class*="title_"] {
+  opacity: 0;
+}
+[class*="base_"] > [class*="bar_"] [class*="trailing_"] [class*="clickable_"] {
+  border-radius: var(--vg-r-pill) !important;
+}

@@ -1,0 +1,295 @@
+/* ==========================================================================
+   FLOATING LAYERS: liquid glass
+   ========================================================================== */
+[class*="menu_"][role="menu"],
+[class*="popout_"][role="dialog"],
+[class*="layerContainer_"] [role="dialog"] > [class*="container_"],
+[class*="layer_"] [role="listbox"],
+[class*="autocomplete_"],
+[class*="contentWrapper_"][class*="drawer"],
+[class*="drawerSizingWrapper_"] > [class*="contentWrapper_"],
+[class*="messagesPopoutWrap_"],
+[class*="recentMentionsPopout_"],
+[class*="searchResultsWrap_"],
+[class*="tooltip_"]:not([class*="tooltipPointer"]) {
+  background: var(--vg-sheen), var(--vg-glass) !important;
+  backdrop-filter: var(--vg-glass-blur) !important;
+  border: 0.5px solid var(--vg-glass-line) !important;
+  box-shadow: var(--vg-specular), var(--vg-float-shadow) !important;
+}
+
+/* Context menus, sized like macOS: 5px inset, compact 13px rows, item radius = menu radius
+   minus the inset. Discord reserves a scrollbar gutter on the right, which made every
+   highlight and separator sit off-centre. */
+[class*="menu_"][role="menu"] {
+  border-radius: var(--vg-r-menu) !important;
+  padding: 5px !important;
+}
+[class*="menu_"][role="menu"] [class*="scroller_"] {
+  padding: 0 !important;
+  scrollbar-gutter: auto !important;
+}
+[class*="menu_"][role="menu"] [class*="scroller_"]::-webkit-scrollbar {
+  width: 0 !important;
+}
+[class*="menu_"][role="menu"] [class*="item_"] {
+  border-radius: calc(var(--vg-r-menu) - 5px) !important;
+  margin: 0 !important;
+}
+[class*="menu_"][role="menu"] [class*="labelContainer_"] {
+  min-height: 24px !important;
+  padding: 3px 9px !important;
+  font-size: 13.5px !important;
+  font-weight: 400 !important;
+}
+[class*="menu_"][role="menu"] [class*="labelContainer_"] * {
+  font-weight: 400 !important;
+}
+/* macOS keeps one icon column per menu, so labels line up whether or not a row has an icon.
+   These menus get SF Symbols from the generated block; Discord's own icon slot is dropped. */
+:root {
+  --vg-menu-icon-x: 19px;
+}
+:is(#message, #message-actions, #channel-context, #guild-context, #user-context, #guild-header-popout) [class*="labelContainer_"] {
+  position: relative;
+  padding-left: 36px !important;
+}
+:is(#message, #message-actions, #channel-context, #guild-context, #user-context, #guild-header-popout) [class*="iconContainerLeft_"] {
+  display: none !important;
+}
+/* Menu symbols take the label colour like on macOS: white, red on destructive rows. */
+[role="menu"] [class*="labelContainer_"]::before {
+  color: var(--vg-text);
+}
+[role="menu"] [class*="colorDanger_"]::before {
+  color: #ff6961;
+}
+[role="menu"] [class*="focused_"]::before {
+  color: #fff;
+}
+[class*="menu_"][role="menu"] [class*="subtext_"] {
+  font-size: 12px !important;
+  color: var(--vg-text-2) !important;
+}
+[class*="menu_"][role="menu"] [class*="iconContainer_"],
+[class*="menu_"][role="menu"] [class*="iconContainer_"] svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+[class*="menu_"][role="menu"] [class*="iconContainer_"] {
+  color: var(--vg-text-2);
+}
+[class*="menu_"][role="menu"] [class*="item_"][class*="focused_"] {
+  background: var(--vg-accent) !important;
+  color: #fff !important;
+}
+[class*="menu_"][role="menu"] [class*="item_"][class*="focused_"] *,
+[class*="menu_"][role="menu"] [class*="item_"][class*="focused_"] [class*="iconContainer_"] {
+  color: #fff !important;
+}
+[class*="menu_"][role="menu"] [class*="colorDanger_"] {
+  color: #ff6961 !important;
+}
+[class*="menu_"][role="menu"] [class*="item_"][class*="colorDanger_"][class*="focused_"] {
+  background: var(--vg-danger) !important;
+}
+[class*="menu_"][role="menu"] [role="separator"],
+[class*="menu_"][role="menu"] [class*="separator_"] {
+  border: 0 !important;
+  height: 1px !important;
+  background: rgba(255, 255, 255, 0.09) !important;
+  margin: 5px 9px !important;
+}
+/* Quick reactions: round tapback-style buttons instead of square tiles. */
+[class*="menu_"][role="menu"] [class*="customItem_"] [class*="button_"] {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  background: var(--vg-fill-2) !important;
+}
+[class*="menu_"][role="menu"] [class*="customItem_"] [class*="button_"]:hover {
+  background: var(--vg-fill-4) !important;
+}
+[class*="menu_"][role="menu"] [class*="scroller_"] > [class*="wrapper_"]:first-child {
+  padding: 4px 6px 2px !important;
+  justify-content: space-between;
+}
+
+/* Sliders (volume, settings): thin macOS track and a plain white knob. */
+[class*="slider_"] [class*="bar_"] {
+  height: 4px !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: rgba(255, 255, 255, 0.16) !important;
+}
+[class*="slider_"] [class*="barFill_"] {
+  background: var(--vg-accent) !important;
+}
+[class*="slider_"] [class*="grabber_"] {
+  background: #fff !important;
+  border: 0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 0 0 0.5px rgba(0, 0, 0, 0.15) !important;
+}
+
+[class*="popout_"][role="dialog"],
+[class*="layerContainer_"] [role="dialog"] > [class*="container_"],
+[class*="layer_"] [role="listbox"],
+[class*="autocomplete_"],
+[class*="contentWrapper_"][class*="drawer"],
+[class*="drawerSizingWrapper_"] > [class*="contentWrapper_"],
+[class*="messagesPopoutWrap_"],
+[class*="recentMentionsPopout_"],
+[class*="searchResultsWrap_"],
+[class*="tooltip_"]:not([class*="tooltipPointer"]) {
+  background: var(--vg-glass) !important;
+  backdrop-filter: var(--vg-glass-blur) !important;
+  border: 0.5px solid var(--vg-glass-line) !important;
+  box-shadow: var(--vg-specular), var(--vg-float-shadow) !important;
+}
+
+[class*="menu_"][role="menu"] {
+  border-radius: var(--vg-r-menu) !important;
+  padding: 5px !important;
+}
+[class*="menu_"][role="menu"] [class*="scroller_"] {
+  padding: 0 !important;
+}
+/* Item radius = menu radius minus its padding. */
+[class*="menu_"][role="menu"] [class*="item_"] {
+  border-radius: calc(var(--vg-r-menu) - 5px) !important;
+  margin: 0 !important;
+}
+[class*="menu_"][role="menu"] [class*="item_"][class*="focused_"] {
+  background: var(--vg-accent) !important;
+  color: #fff !important;
+}
+[class*="menu_"][role="menu"] [class*="item_"][class*="focused_"] * {
+  color: #fff !important;
+}
+[class*="menu_"][role="menu"] [class*="item_"][class*="colorDanger_"][class*="focused_"] {
+  background: var(--vg-danger) !important;
+}
+[class*="menu_"][role="menu"] [role="separator"],
+[class*="menu_"][role="menu"] [class*="separator_"] {
+  border-color: var(--vg-line) !important;
+  background: var(--vg-line) !important;
+  margin: 4px 8px !important;
+}
+
+[class*="popout_"][role="dialog"],
+[class*="layerContainer_"] [role="dialog"] > [class*="container_"],
+[class*="layer_"] [role="listbox"],
+[class*="autocomplete_"],
+[class*="contentWrapper_"][class*="drawer"],
+[class*="drawerSizingWrapper_"] > [class*="contentWrapper_"],
+[class*="messagesPopoutWrap_"],
+[class*="searchResultsWrap_"] {
+  border-radius: var(--vg-r-pop) !important;
+  overflow: hidden;
+}
+
+[class*="tooltip_"]:not([class*="tooltipPointer"]) {
+  border-radius: 9px !important;
+  background: var(--vg-glass-strong) !important;
+}
+[class*="tooltipPointer"] {
+  display: none !important;
+}
+
+/* User profile popout: one rounded glass sheet; Discord's inner layer and banner follow the
+   outer radius (minus its 1px border) instead of their own 4px / 8px corners. */
+[class*="outer_"][class*="user-profile-popout"] {
+  border-radius: var(--vg-r-pop) !important;
+  overflow: hidden;
+  border: 0.5px solid var(--vg-glass-line) !important;
+  box-shadow: var(--vg-specular), var(--vg-float-shadow) !important;
+}
+[class*="outer_"][class*="user-profile-popout"]:not([class*="custom-theme"]) {
+  background: var(--vg-glass-strong) !important;
+  backdrop-filter: var(--vg-glass-blur);
+}
+[class*="outer_"][class*="user-profile-popout"]:not([class*="custom-theme"]) > [class*="inner_"] {
+  background: transparent !important;
+}
+[class*="outer_"][class*="user-profile-popout"] > [class*="inner_"],
+[class*="user-profile-modal"] [class*="inner_"] {
+  border-radius: calc(var(--vg-r-pop) - 1px) !important;
+}
+[class*="user-profile-popout"] [class*="banner_"] {
+  border-radius: calc(var(--vg-r-pop) - 1px) calc(var(--vg-r-pop) - 1px) 0 0 !important;
+}
+[class*="inlineContainer_"] {
+  border-radius: 22px !important;
+}
+
+/* Expression picker (emoji, GIFs, stickers): the drawer is the glass sheet, its children stay clear. */
+[class*="drawerSizingWrapper_"] [class*="emojiPicker_"],
+[class*="drawerSizingWrapper_"] [class*="wrapper_"] {
+  background: transparent !important;
+}
+[class*="drawerSizingWrapper_"] [class*="searchBar_"],
+[class*="drawerSizingWrapper_"] [class*="searchBar_"] input {
+  border-radius: var(--vg-r-pill) !important;
+}
+[class*="drawerSizingWrapper_"] [class*="navButton_"] {
+  border-radius: var(--vg-r-pill) !important;
+}
+[class*="drawerSizingWrapper_"] [class*="navButtonActive_"] {
+  background: var(--vg-fill-3) !important;
+}
+
+/* Modals are glass sheets. Settings gets a Tahoe settings-window layout: the sidebar floats
+   inside the sheet, its radius the sheet's minus the inset. */
+[class*="outerContainer_"] > [class*="container_"],
+[class*="container_"][class*="modal_"] {
+  background: var(--vg-sheet) !important;
+  backdrop-filter: none;
+  border: 0.5px solid var(--vg-glass-line) !important;
+  border-radius: var(--vg-r-modal) !important;
+  box-shadow: var(--vg-specular), 0 30px 80px rgba(0, 0, 0, 0.5) !important;
+  overflow: hidden;
+}
+[class*="modal_"] [class*="modalContentInner_"] > [class*="container_"] > aside[class*="sidebar_"] {
+  margin: 8px 0 8px 8px;
+  height: auto !important;
+  border-radius: calc(var(--vg-r-modal) - 8px);
+  background: var(--vg-fill-1) !important;
+  box-shadow: inset 0 0 0 0.5px var(--vg-panel-edge), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+[class*="modal_"] [class*="contentHeader_"] {
+  background: transparent !important;
+  border-bottom: 0.5px solid var(--vg-line) !important;
+}
+[class*="modal_"] aside[class*="sidebar_"] nav [class*="item_"] {
+  border-radius: var(--vg-r-row) !important;
+}
+[class*="scrim_"] {
+  background: rgba(0, 0, 0, 0.32) !important;
+}
+
+/* Other modals and sheets. */
+[class*="modal_"][class*="root_"],
+[class*="root_"][role="dialog"]:not([class*="layer"]),
+div[class*="focusLock_"] > [class*="root_"] {
+  background: var(--vg-glass-strong) !important;
+  backdrop-filter: var(--vg-glass-blur);
+  border: 0.5px solid var(--vg-glass-line) !important;
+  border-radius: var(--vg-r-modal) !important;
+  box-shadow: var(--vg-specular), var(--vg-float-shadow) !important;
+  overflow: hidden;
+}
+
+/* Quick switcher lives inside a modal sheet, so it stays clear itself. */
+[class*="quickswitcher_"] {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+[class*="quickswitcher_"] input {
+  background: var(--vg-fill-2) !important;
+  border-radius: 14px !important;
+}
+[class*="quickswitcher_"] [class*="result_"] {
+  border-radius: var(--vg-r-row) !important;
+}

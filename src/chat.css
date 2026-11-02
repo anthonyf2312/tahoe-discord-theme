@@ -1,0 +1,194 @@
+/* ==========================================================================
+   MESSAGES
+   ========================================================================== */
+[class*="chat_"],
+[class*="chatContent_"],
+[class*="messagesWrapper_"],
+[class*="chat_"] > [class*="content_"] {
+  background: transparent !important;
+}
+[class*="chatGradient_"] {
+  display: none !important;
+}
+/* Scroll-edge fades, same as under the user panel: messages dissolve under the header and
+   above the input, the member list at both ends. The mask sits on the scroller box, so the
+   edges stay put while the content moves. */
+[class*="messagesWrapper_"] > [class*="scroller_"] {
+  mask-image: linear-gradient(to bottom, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+}
+[class*="membersWrap_"] > [class*="members_"] {
+  mask-image: linear-gradient(to bottom, transparent 0, #000 22px, #000 calc(100% - 48px), transparent 100%);
+}
+
+/* Inside messages the "surface" colours are cards on the glass, not floating layers, so they
+   get a light fill (component containers, polls, forwarded content). */
+[class*="messagesWrapper_"] {
+  --background-surface-high: var(--vg-fill-1) !important;
+  --background-surface-higher: var(--vg-fill-2) !important;
+  --background-surface-highest: var(--vg-fill-3) !important;
+}
+[class*="isComponentsV2_"] > [class*="container_"] {
+  background: var(--vg-fill-1) !important;
+  border: 0.5px solid var(--vg-line) !important;
+  border-radius: var(--vg-r-card) !important;
+}
+[class*="embedFull_"],
+article[class*="embed_"] {
+  background: var(--vg-fill-1) !important;
+  border: 0.5px solid var(--vg-line) !important;
+  border-radius: var(--vg-r-card) !important;
+}
+[class*="embedFull_"] {
+  border-left: 3px solid var(--vg-line) !important;
+}
+[class*="embedFull_"][style*="border-color"] {
+  border-left-width: 3px !important;
+}
+[class*="imageWrapper_"],
+[class*="imageContainer_"],
+[class*="mosaicItem_"],
+[class*="embedMedia_"],
+[class*="oneByOneGrid_"],
+[class*="visualMediaItemContainer_"] {
+  border-radius: 10px !important;
+}
+[class*="fileAttachment_"],
+[class*="wrapperAudio_"],
+[class*="attachment_"][class*="container_"] {
+  background: var(--vg-fill-1) !important;
+  border: 0.5px solid var(--vg-line) !important;
+  border-radius: var(--vg-r-card) !important;
+}
+
+[class*="reaction_"] {
+  background: var(--vg-fill-2) !important;
+  border: 0.5px solid transparent !important;
+  border-radius: var(--vg-r-pill) !important;
+}
+[class*="reaction_"]:hover {
+  background: var(--vg-fill-3) !important;
+}
+[class*="reaction_"][class*="reactionMe_"] {
+  background: var(--vg-accent-soft) !important;
+  border-color: rgba(10, 132, 255, 0.55) !important;
+}
+
+[class*="markup_"] code.inline,
+[class*="markup_"] code:not(pre code) {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 0 !important;
+  border-radius: 5px !important;
+}
+[class*="markup_"] pre code,
+[class*="codeContainer_"] code {
+  background: rgba(0, 0, 0, 0.28) !important;
+  border: 0.5px solid var(--vg-line) !important;
+  border-radius: 10px !important;
+}
+
+/* Dividers. Discord hides the line behind the date with an opaque chat-coloured label, which
+   is transparent here, so the line ran through the text. Dates become iMessage-style chips
+   without a line; the unread divider keeps its red line and gets a solid chip over it. */
+[class*="divider_"][class*="hasContent_"]:not([class*="isUnread_"]) {
+  border-top-color: transparent !important;
+}
+[class*="divider_"][class*="hasContent_"] > [class*="content_"] {
+  padding: 2px 10px !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: var(--vg-fill-2);
+  font-weight: 600;
+}
+[class*="divider_"][class*="isUnread_"] {
+  --divider-color: var(--vg-danger) !important;
+  border-color: var(--vg-danger) !important;
+}
+[class*="divider_"][class*="isUnread_"] > [class*="content_"] {
+  background: rgb(42, 24, 26);
+  box-shadow: inset 0 0 0 0.5px rgba(255, 69, 58, 0.5);
+}
+/* "NEW" tag: the same chip as the unread date, instead of an arrow-shaped label. Without a
+   date it moves to the middle of the line, where the date would sit. */
+[class*="divider_"] [class*="unreadPill_"] {
+  height: auto !important;
+  padding: 2px 10px !important;
+  border-radius: var(--vg-r-pill) !important;
+  background: rgb(42, 24, 26) !important;
+  box-shadow: inset 0 0 0 0.5px rgba(255, 69, 58, 0.5);
+  color: #ff6961 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  line-height: 16px !important;
+  text-transform: capitalize !important;
+  letter-spacing: 0 !important;
+}
+[class*="divider_"][class*="isUnread_"]:not([class*="hasContent_"]) [class*="unreadPill_"] {
+  left: 50% !important;
+  right: auto !important;
+  transform: translate(-50%, -50%) !important;
+  top: 0 !important;
+}
+[class*="divider_"] [class*="unreadPillCap_"] {
+  display: none !important;
+}
+[class*="newMessagesBar_"],
+[class*="jumpToPresentBar_"] {
+  background: var(--vg-glass-strong) !important;
+  backdrop-filter: var(--vg-glass-blur);
+  border: 0.5px solid var(--vg-glass-line) !important;
+  border-radius: var(--vg-r-pill) !important;
+  box-shadow: var(--vg-specular), 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Hover actions on a message: a small glass capsule. */
+[class*="message_"] [class*="buttonContainer_"] [class*="buttons_"] > div,
+[class*="hoverBarButton_"] {
+  border-radius: var(--vg-r-pill);
+}
+[class*="message_"] [class*="buttonContainer_"] [class*="buttons_"] > div:first-child {
+  background: var(--vg-glass-strong) !important;
+  backdrop-filter: var(--vg-glass-blur);
+  border: 0.5px solid var(--vg-glass-line) !important;
+  box-shadow: var(--vg-specular), 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+  padding: 2px !important;
+}
+/* Each button's hover highlight is a pill inset 2px, so at the bar's ends it follows the
+   capsule's curve instead of showing Discord's square-ish corner. */
+[class*="message_"] [class*="buttonContainer_"] [class*="buttons_"] > div:first-child [role="button"],
+[class*="message_"] [class*="buttonContainer_"] [class*="buttons_"] > div:first-child [class*="button_"] {
+  border-radius: var(--vg-r-pill) !important;
+}
+
+/* ==========================================================================
+   MESSAGE INPUT: floating liquid glass capsule
+   ========================================================================== */
+form[class*="form_"] {
+  background: transparent !important;
+}
+/* Discord frames the text area with its own 8px border; the capsule inside is the only edge. */
+[class*="channelTextArea_"] {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 22px !important;
+}
+[class*="channelTextArea_"] > [class*="scrollableContainer_"] {
+  background: var(--vg-fill-2) !important;
+  backdrop-filter: var(--vg-glass-blur);
+  border: 0.5px solid var(--vg-glass-line) !important;
+  border-radius: 22px !important;
+  box-shadow: var(--vg-specular), 0 6px 24px rgba(0, 0, 0, 0.22) !important;
+}
+[class*="channelTextArea_"] [class*="inner_"],
+[class*="channelTextArea_"] [class*="attachWrapper_"],
+[class*="channelTextArea_"] [class*="buttons_"] {
+  background: transparent !important;
+}
+[class*="channelTextArea_"] [class*="attachButton_"],
+[class*="channelTextArea_"] [class*="buttons_"] [class*="button_"] {
+  border-radius: var(--vg-r-pill) !important;
+}
+/* Reply / typing bars that dock on top of the input. */
+[class*="channelTextArea_"] [class*="attachedBars_"],
+[class*="stackedBars_"] {
+  background: var(--vg-fill-1) !important;
+  border-radius: 22px 22px 0 0 !important;
+}

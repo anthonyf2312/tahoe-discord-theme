@@ -1,0 +1,119 @@
+/* ==========================================================================
+   MEMBERS + PROFILE SIDEBAR
+   ========================================================================== */
+[class*="membersWrap_"],
+[class*="membersWrap_"] > [class*="members_"],
+[class*="members_"] > [class*="content_"] {
+  background: transparent !important;
+}
+[class*="membersWrap_"] {
+  border-left: 0.5px solid var(--vg-line) !important;
+}
+/* Activity cards sit on the window glass, so they get a light fill rather than the solid
+   surface colour Discord gives them. */
+[class*="membersWrap_"] [class*="usesCardRows_"],
+[class*="membersWrap_"] [class*="container_"][class*="openOnHover_"] {
+  background: var(--vg-fill-1) !important;
+  border: 0.5px solid var(--vg-line) !important;
+  border-radius: var(--vg-r-card) !important;
+}
+[class*="membersWrap_"] [class*="usesCardRows_"]:hover {
+  background: var(--vg-fill-2) !important;
+}
+[class*="members_"] [class*="member_"] {
+  border-radius: var(--vg-r-row) !important;
+}
+[class*="members_"] [class*="member_"] > div,
+[class*="members_"] [class*="memberInner_"] {
+  border-radius: var(--vg-r-row) !important;
+}
+
+/* DM / thread side profile: a floating card concentric with the window's right corners. */
+[class*="page_"] [class*="guildSidebar_"] {
+  padding: 0 var(--vg-gap) var(--vg-gap) 0 !important;
+  background: transparent !important;
+}
+[class*="page_"] [class*="guildSidebar_"] [class*="sidebarContainer_"] {
+  border: 0 !important;
+}
+[class*="page_"] [class*="guildSidebar_"] [class*="outer_"],
+[class*="page_"] [class*="guildSidebar_"] [class*="outer_"] > [class*="inner_"],
+[class*="userPanelOuter_"],
+[class*="profilePanel_"] {
+  border-radius: var(--vg-panel-radius) !important;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 0.5px var(--vg-glass-line) !important;
+}
+
+/* Cards inside the side profile / Mod View. The outer ones touch the panel corners, so their
+   radius is the panel's minus the inset; lists further in are inset-grouped like macOS. */
+[class*="guildSidebar_"] [class*="inner_"] > [class*="innerContainer_"] {
+  padding: 6px !important;
+  gap: 6px;
+}
+[class*="guildSidebar_"] [class*="inner_"] > [class*="innerContainer_"] > [class*="container_"],
+[class*="guildSidebar_"] [class*="inner_"] > [class*="innerContainer_"] > div > div > [class*="container_"] {
+  border-radius: calc(var(--vg-panel-radius) - 6px) !important;
+  overflow: hidden;
+}
+[class*="guildSidebar_"] [class*="inner_"] > [class*="innerContainer_"] > div > div > [class*="container_"] {
+  background: rgba(22, 22, 26, 0.82) !important;
+  box-shadow: inset 0 0 0 0.5px var(--vg-line);
+}
+[class*="guildSidebar_"] [class*="panelSection_"] > [class*="container_"],
+[class*="guildSidebar_"] [class*="modInfoItemContainer_"] {
+  background: var(--vg-fill-1) !important;
+  border: 0.5px solid var(--vg-line) !important;
+  border-radius: var(--vg-r-card) !important;
+  overflow: hidden;
+}
+[class*="guildSidebar_"] [class*="panelSection_"] [class*="role_"],
+[class*="guildSidebar_"] [class*="modInfoItemContainer_"] > * > * {
+  border-radius: var(--vg-r-pill) !important;
+}
+[class*="guildSidebar_"] [class*="bottomRowAction_"] {
+  border-radius: calc(var(--vg-panel-radius) - 6px) !important;
+}
+
+/* ==========================================================================
+   FRIENDS / HOME
+   ========================================================================== */
+[class*="searchBar_"] [class*="wrapper_"][class*="container_"] {
+  border-radius: var(--vg-r-pill) !important;
+}
+[class*="peopleListItem_"] {
+  border-radius: var(--vg-r-row) !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  border-top-color: transparent !important;
+}
+[class*="peopleListItem_"]:hover {
+  background: var(--vg-fill-1) !important;
+}
+[class*="tabBar_"] [class*="item_"] {
+  border-radius: var(--vg-r-pill) !important;
+}
+[class*="tabBar_"] [class*="item_"][class*="selected_"] {
+  background: var(--vg-fill-3) !important;
+}
+/* Underlined tab bars (inbox, popouts) become pill segments, so the underline goes. */
+[class*="tabBar_"][class*="top_"] [class*="item_"] {
+  border-bottom-color: transparent !important;
+  margin-bottom: 4px;
+}
+[class*="headerTabs_"] {
+  padding: 0 12px;
+}
+[class*="nowPlayingColumn_"],
+[class*="nowPlayingColumn_"] > aside {
+  background: transparent !important;
+  border-left: 0.5px solid var(--vg-line) !important;
+}
+[class*="nowPlayingColumn_"] [class*="itemCard_"],
+[class*="activeNow"] [class*="card_"] {
+  background: var(--vg-fill-1) !important;
+  border: 0.5px solid var(--vg-line) !important;
+  border-radius: var(--vg-r-card) !important;
+}

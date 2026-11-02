@@ -1,0 +1,68 @@
+/* ==========================================================================
+   WINDOW LAYOUT
+   The sidebar panel floats over the blurred desktop; everything around it is the window
+   background. Both the sidebar and the page reach up behind the titlebar, so the native
+   traffic lights sit inside the panel like in Tahoe.
+   ========================================================================== */
+[class*="base_"] > [class*="bar_"] {
+  z-index: 3;
+  background: transparent !important;
+}
+
+/* Visible overflow lets the panel reach behind the titlebar; min-height keeps the flex
+   item from growing to its content once it is no longer a scroll container. */
+[class*="base_"] > [class*="content_"],
+[class*="base_"] > [class*="content_"] > * {
+  min-height: 0 !important;
+}
+[class*="base_"] > [class*="content_"] > [class*="sidebar_"] {
+  overflow: visible !important;
+  clip-path: inset(calc(-1 * var(--vg-bar)) 0 0 0);
+  isolation: isolate;
+  padding: 0 var(--vg-gap) var(--vg-gap) var(--vg-gap);
+}
+/* The panel paints the window colour around itself with a wide shadow, which leaves the
+   panel itself clear without needing a cut-out. */
+[class*="base_"] > [class*="content_"] > [class*="sidebar_"]::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: calc(var(--vg-gap) - var(--vg-bar));
+  left: var(--vg-gap);
+  right: var(--vg-gap);
+  bottom: var(--vg-gap);
+  border-radius: var(--vg-panel-radius);
+  background: var(--vg-panel);
+  box-shadow:
+    inset 0 0 0 0.5px var(--vg-panel-edge),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 0 0 0.5px rgba(0, 0, 0, 0.45),
+    0 0 0 80px var(--vg-window);
+  pointer-events: none;
+}
+
+[class*="base_"] > [class*="content_"] > [class*="page_"] {
+  overflow: visible !important;
+  clip-path: inset(calc(-1 * var(--vg-bar)) 0 0 0);
+  isolation: isolate;
+  border: 0 !important;
+}
+[class*="base_"] > [class*="content_"] > [class*="page_"]::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: calc(-1 * var(--vg-bar)) 0 0 0;
+  background: var(--vg-window);
+  pointer-events: none;
+}
+
+nav[class*="guilds_"],
+[class*="sidebarList_"] {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+[class*="sidebarList_"] > nav,
+[class*="sidebarList_"] [class*="scroller_"] {
+  background: transparent !important;
+}
