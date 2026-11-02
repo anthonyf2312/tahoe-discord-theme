@@ -3213,7 +3213,7 @@ section[class*="panels_"] [class*="actionButtons_"] button[aria-pressed="true"]:
   color: var(--vg-danger-text) !important;
 }
 /* LIVE: Apple's red capsule in sentence case. */
-[class*="voiceUser_"] [class*="liveIcon_"] {
+[class*="voiceUser_"] [class*="liveIndicator_"] {
   height: 16px;
   padding: 0 6px !important;
   border-radius: var(--vg-r-pill) !important;
@@ -3361,8 +3361,7 @@ section[class*="panels_"] [class*="actionButtons_"] button[aria-pressed="true"]:
 }
 
 /* Screen-share and video LIVE tags: red capsules. */
-[class*="callContainer_"] [class*="liveIndicator_"] > *,
-[class*="callContainer_"] [class*="liveIcon_"] {
+[class*="callContainer_"] [class*="liveIndicator_"] > * {
   border-radius: var(--vg-r-pill) !important;
   background: var(--vg-danger) !important;
   color: var(--vg-on-danger) !important;
