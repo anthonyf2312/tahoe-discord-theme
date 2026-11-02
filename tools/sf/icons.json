@@ -158,6 +158,28 @@
         "[aria-label=\"Inbox\"]": "tray",
         "[aria-label=\"Help\"]": "questionmark.circle"
       }
+    },
+    {
+      "box": 25,
+      "anchor": "left",
+      "x": "19px",
+      "hide": "> svg[class*=\"itemIcon_\"]",
+      "scope": "[class*=\"layer_\"] [role=\"listbox\"] [role=\"option\"] > [class*=\"item_\"]{item}",
+      "items": {
+        ":has(> svg path[d^=\"M12 10a4 4\"])": "person",
+        ":has(> svg path[d^=\"M10.99 3.16A1\"])": "number",
+        ":has(> svg path[d^=\"M10.57 4.01a6.97\"])": "paperclip",
+        ":has(> svg path[d^=\"M16.44 6.96c\"])": "at",
+        ":has(> svg path[d^=\"M22 5a1 1 0 0 1-1 1h-8\"])": "slider.horizontal.3",
+        ":has(> svg path[d^=\"M15.62 17.03a9\"])": "magnifyingglass"
+      }
+    },
+    {
+      "box": 24,
+      "scope": "[class*=\"layer_\"] [role=\"listbox\"] {item}",
+      "items": {
+        "[class*=\"clearSearchHistory_\"]": "trash"
+      }
     }
   ]
 }

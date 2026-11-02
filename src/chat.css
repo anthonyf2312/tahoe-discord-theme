@@ -164,13 +164,16 @@ article[class*="embed_"] {
 form[class*="form_"] {
   background: transparent !important;
 }
-/* Discord frames the text area with its own 8px border; the capsule inside is the only edge. */
-[class*="channelTextArea_"] {
+/* The capsule is only for the chat input (and the inline one in profile popouts). Other editors,
+   like the channel topic in settings, carry a formatting toolbar on top and keep Discord's shape. */
+:is([class*="channelBottomBarArea_"], [class*="inlineContainer_"]) [class*="channelTextArea_"],
+[class*="channelTextArea_"][class*="inlineContainer_"] {
   background: transparent !important;
   border: 0 !important;
   border-radius: 22px !important;
 }
-[class*="channelTextArea_"] > [class*="scrollableContainer_"] {
+:is([class*="channelBottomBarArea_"], [class*="inlineContainer_"]) [class*="channelTextArea_"] > [class*="scrollableContainer_"],
+[class*="channelTextArea_"][class*="inlineContainer_"] > [class*="scrollableContainer_"] {
   background: var(--vg-fill-2) !important;
   backdrop-filter: var(--vg-glass-blur);
   border: 0.5px solid var(--vg-glass-line) !important;

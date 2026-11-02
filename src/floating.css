@@ -115,6 +115,70 @@
   justify-content: space-between;
 }
 
+/* Option lists that pop out of a field (search filters and history): the same macOS menu
+   as the context menus, 5px inset, compact rows, an icon column and a blue highlight. */
+[class*="layer_"] [role="listbox"] {
+  border-radius: var(--vg-r-menu) !important;
+  padding: 5px !important;
+  scrollbar-gutter: auto !important;
+}
+[class*="layer_"] [role="listbox"]::-webkit-scrollbar {
+  width: 0 !important;
+}
+[class*="layer_"] [role="listbox"] [class*="groupHeader_"] {
+  padding: 6px 9px 3px !important;
+}
+[class*="layer_"] [role="listbox"] [class*="groupHeader_"] > [class*="text-xs"] {
+  font-size: 11px !important;
+  color: var(--vg-text-3) !important;
+}
+[class*="layer_"] [role="listbox"] [role="option"] {
+  border-radius: calc(var(--vg-r-menu) - 5px) !important;
+}
+[class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"] {
+  position: relative;
+  min-height: 24px;
+  padding: 3px 9px !important;
+  gap: 8px;
+}
+[class*="layer_"] [role="listbox"] [role="option"] [class*="text-sm"] {
+  font-size: 13.5px !important;
+  font-weight: 400 !important;
+}
+[class*="layer_"] [role="listbox"] [class*="filterSublabelTextContainer_"],
+[class*="layer_"] [role="listbox"] [class*="filterSublabelTextContainer_"] *,
+[class*="layer_"] [role="listbox"] [role="option"] [class*="text-sm"] + [class*="text-sm"] {
+  font-size: 12px !important;
+  color: var(--vg-text-2) !important;
+}
+/* Discord gives the row itself a transparent text colour, so the symbols get theirs explicitly. */
+[class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]::before {
+  color: var(--vg-text);
+}
+[class*="layer_"] [role="listbox"] [class*="clearSearchHistory_"]::after {
+  color: var(--vg-text-2);
+}
+[class*="layer_"] [role="listbox"] [role="option"]:hover,
+[class*="layer_"] [role="listbox"] [role="option"][aria-selected="true"] {
+  background: var(--vg-accent) !important;
+}
+[class*="layer_"] [role="listbox"] [role="option"]:hover *,
+[class*="layer_"] [role="listbox"] [role="option"][aria-selected="true"] * {
+  color: #fff !important;
+}
+[class*="layer_"] [role="listbox"] > [class*="divider_"] {
+  margin: 5px 9px !important;
+  background: rgba(255, 255, 255, 0.09) !important;
+}
+/* "from: user" chips in the history read as one capsule. */
+[class*="layer_"] [role="listbox"] [class*="filterPill_"] {
+  border-radius: var(--vg-r-pill) 0 0 var(--vg-r-pill) !important;
+  font-weight: 500 !important;
+}
+[class*="layer_"] [role="listbox"] [class*="answerPill_"] {
+  border-radius: 0 var(--vg-r-pill) var(--vg-r-pill) 0 !important;
+}
+
 /* Sliders (volume, settings): thin macOS track and a plain white knob. */
 [class*="slider_"] [class*="bar_"] {
   height: 4px !important;
@@ -242,7 +306,7 @@
 [class*="outerContainer_"] > [class*="container_"],
 [class*="container_"][class*="modal_"] {
   background: var(--vg-sheet) !important;
-  backdrop-filter: none;
+  backdrop-filter: var(--vg-glass-blur);
   border: 0.5px solid var(--vg-glass-line) !important;
   border-radius: var(--vg-r-modal) !important;
   box-shadow: var(--vg-specular), 0 30px 80px rgba(0, 0, 0, 0.5) !important;
@@ -264,6 +328,31 @@
 }
 [class*="scrim_"] {
   background: rgba(0, 0, 0, 0.32) !important;
+}
+
+/* Settings pages (the settings sheet and the full-window server/channel settings) sit on the
+   window glass, so their cards use the light fills too; "surface" stays solid only for
+   floating layers. A card's inner folder is part of the same card, split by a hairline. */
+[class*="standardSidebarView_"],
+[class*="modal_"] [class*="contentBody_"] {
+  --background-surface-high: var(--vg-fill-1) !important;
+  --background-surface-higher: var(--vg-fill-2) !important;
+  --background-surface-highest: var(--vg-fill-3) !important;
+}
+[class*="settingCard_"] {
+  background: var(--vg-fill-1) !important;
+  border: 0.5px solid var(--vg-line) !important;
+  border-radius: var(--vg-r-card) !important;
+  overflow: hidden;
+}
+[class*="settingCard_"] [class*="cardFolder_"] {
+  background: transparent !important;
+  border-top: 0.5px solid var(--vg-line) !important;
+  border-radius: 0 !important;
+}
+[class*="standardSidebarView_"] [class*="card_"][class*="cardPrimary_"] {
+  border: 0.5px solid var(--vg-line) !important;
+  border-radius: var(--vg-r-card) !important;
 }
 
 /* Other modals and sheets. */

@@ -11,4 +11,12 @@
 @import "people.css";
 @import "floating.css";
 @import "controls.css";
+@import "serverlist.css";
+@import "composer.css";
+@import "media.css";
+@import "threads.css";
+@import "forms.css";
+@import "notices.css";
+@import "store.css";
+@import "calls.css";
 @import "icons.css";

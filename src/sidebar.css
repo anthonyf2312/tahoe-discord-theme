@@ -157,30 +157,69 @@ nav[class*="guilds_"] [class*="scroller_"] {
   mask-image: linear-gradient(to bottom, #000 calc(100% - 96px), transparent calc(100% - 40px));
 }
 
-/* Mute / deafen: button and chevron form one capsule, tinted red while muted. */
+/* Mic, headphones and settings sit in one glass capsule, like the header toolbar. Each control
+   is a pill inset 2px, so hover and the red muted state stay concentric with the capsule. */
+[class*="panels_"] [class*="buttons_"] {
+  gap: 2px !important;
+  padding: 2px !important;
+  border-radius: var(--vg-r-pill);
+  background: var(--vg-fill-2);
+  box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.16), inset 0 -0.5px 0 rgba(255, 255, 255, 0.05);
+}
+[class*="panels_"] [class*="buttons_"] > button,
+[class*="panels_"] [class*="audioButtonParent_"] {
+  height: 30px !important;
+  margin: 0 !important;
+  border-radius: var(--vg-r-pill) !important;
+  color: var(--vg-text) !important;
+  transition: background-color 0.12s;
+}
+[class*="panels_"] [class*="buttons_"] > button {
+  width: 32px !important;
+}
+[class*="panels_"] [class*="buttons_"] > button:hover,
+[class*="panels_"] [class*="audioButtonParent_"]:hover {
+  background: var(--vg-fill-3) !important;
+}
 [class*="panels_"] [class*="audioButtonParent_"] {
   display: flex;
   gap: 0;
-  border-radius: var(--vg-r-pill) !important;
   overflow: hidden;
 }
-[class*="panels_"] [class*="audioButtonParent_"]:hover {
-  background: var(--vg-fill-2);
-}
 [class*="panels_"] [class*="audioButtonParent_"] > button {
+  height: 30px !important;
   background: transparent !important;
   margin: 0 !important;
+  color: var(--vg-text) !important;
 }
 [class*="panels_"] [class*="audioButtonWithMenu_"] {
+  width: 32px !important;
   border-radius: var(--vg-r-pill) 0 0 var(--vg-r-pill) !important;
 }
 [class*="panels_"] [class*="buttonChevron_"] {
-  border-radius: 0 var(--vg-r-pill) var(--vg-r-pill) 0 !important;
-  width: 20px !important;
+  width: 18px !important;
   padding-right: 4px !important;
+  border-radius: 0 var(--vg-r-pill) var(--vg-r-pill) 0 !important;
+  color: var(--vg-text-2) !important;
+}
+/* Discord's own glow behind a muted button would sit outside the capsule. */
+[class*="panels_"] [class*="audioButtonParent_"]::before,
+[class*="panels_"] [class*="audioButtonParent_"]::after {
+  display: none !important;
 }
 [class*="panels_"] [class*="audioButtonParent_"]:has(> [class*="plateMuted_"]) {
-  background: rgba(255, 69, 58, 0.16);
+  background: rgba(255, 69, 58, 0.22) !important;
+}
+[class*="panels_"] [class*="audioButtonParent_"]:has(> [class*="plateMuted_"]):hover {
+  background: rgba(255, 69, 58, 0.3) !important;
+}
+[class*="panels_"] [class*="audioButtonParent_"] > [class*="plateMuted_"] {
+  color: #ff6961 !important;
+}
+/* The profile's panel artwork fades in from the right instead of ending in a hard edge. */
+[class*="panels_"] [class*="videoContainer_"] {
+  opacity: 0.55;
+  mask-image: linear-gradient(to right, transparent 35%, #000 85%);
 }
 [class*="panels_"] [class*="accountPopoutButtonWrapper"] {
   border-radius: var(--vg-r-row) !important;

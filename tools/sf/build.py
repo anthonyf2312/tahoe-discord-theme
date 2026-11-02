@@ -45,9 +45,13 @@ for g in cfg["groups"]:
         after = ",\n".join(f"{s}::after" for s in sels)
         out.append(f"{sel} {{\n  position: relative;\n}}")
         if g.get("anchor") == "left":
-            # Menu rows: the theme hides Discord's icon slot and reserves a column at the left.
+            # Rows with an icon column: the symbol is drawn at the column's centre. "hide" names
+            # Discord's own icon inside the row when the theme doesn't drop it elsewhere.
+            if g.get("hide"):
+                hidden = ",\n".join(f"{s} {g['hide']}" for s in sels)
+                out.append(f"{hidden} {{\n  opacity: 0 !important;\n}}")
             before = ",\n".join(f"{s}::before" for s in sels)
-            out.append(f"{before} {{\n  content: \"\";\n  position: absolute;\n  left: var(--vg-menu-icon-x);\n  top: 50%;\n"
+            out.append(f"{before} {{\n  content: \"\";\n  position: absolute;\n  left: {g.get('x', 'var(--vg-menu-icon-x)')};\n  top: 50%;\n"
                        f"  width: {g['box']}px;\n  height: {g['box']}px;\n  transform: translate(-50%, -50%);\n"
                        f"  background-color: currentColor;\n  -webkit-mask: var({var(sym)}) center / contain no-repeat;\n"
                        f"  pointer-events: none;\n}}")

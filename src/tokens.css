@@ -26,8 +26,8 @@
   --vg-panel-edge: rgba(255, 255, 255, 0.11);
 
   /* Floating layers are solid. Over the transparent window Chromium cannot blur what is
-     behind them (it draws the blurred copy on top of the sharp original), and in the real
-     window even dense translucency let the text behind show through. */
+     behind them (it draws the blurred copy on top of the sharp original), so any translucency
+     just lets the text behind show through. */
   --vg-glass: rgb(38, 38, 43);
   --vg-glass-strong: rgb(33, 33, 38);
   --vg-sheet: rgb(30, 30, 35);
