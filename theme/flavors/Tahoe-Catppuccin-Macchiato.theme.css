@@ -3,11 +3,11 @@
  * @description macOS Tahoe glass for Vesktop in Catppuccin Macchiato colours: a floating sidebar over native vibrancy, SF Symbols, liquid glass controls.
  * @author skopevoj
  * @version 0.3.0
- * @source https://github.com/skopevoj/discord-theme
+ * @source https://github.com/skopevoj/tahoe-discord-theme
  */
 
 /* the theme itself, rebuilt from src/ and served by GitHub Pages */
-@import url('https://skopevoj.github.io/discord-theme/build/tahoe.css');
+@import url('https://skopevoj.github.io/tahoe-discord-theme/build/tahoe.css');
 
 /* Settings. Everything here overrides the defaults in src/tokens.css; delete a line to go back
    to the default. Vesktop needs "transparent" on and macOS vibrancy set (sidebar recommended). */
