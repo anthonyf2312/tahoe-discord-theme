@@ -3,3 +3,4 @@ shots/
 build/Tahoe.local.theme.css
 .cache/
 __pycache__/
+tools/showcase/data/

@@ -3,6 +3,18 @@
 A Vencord theme for Vesktop on macOS: a floating glass sidebar over the native window vibrancy,
 SF Symbols in menus and toolbars, liquid-glass controls and radii concentric with the window corner.
 
+<!-- screenshots:start -->
+![Tahoe](docs/screenshots/chat-tahoe.webp)
+
+| | |
+|---|---|
+| <img src="docs/screenshots/chat-catppuccin-macchiato.webp" alt="Catppuccin Macchiato"><br>Catppuccin Macchiato | <img src="docs/screenshots/chat-catppuccin-mocha.webp" alt="Catppuccin Mocha"><br>Catppuccin Mocha |
+| <img src="docs/screenshots/chat-everforest.webp" alt="Everforest"><br>Everforest | <img src="docs/screenshots/chat-graphite.webp" alt="Graphite"><br>Graphite |
+| <img src="docs/screenshots/chat-gruvbox-dark.webp" alt="Gruvbox Dark"><br>Gruvbox Dark | <img src="docs/screenshots/chat-light.webp" alt="Light"><br>Light |
+| <img src="docs/screenshots/chat-midnight.webp" alt="Midnight"><br>Midnight | <img src="docs/screenshots/chat-nord.webp" alt="Nord"><br>Nord |
+| <img src="docs/screenshots/chat-rose-pine.webp" alt="Rose Pine"><br>Rose Pine | <img src="docs/screenshots/chat-tokyo-night.webp" alt="Tokyo Night"><br>Tokyo Night |
+<!-- screenshots:end -->
+
 ## Install on a device
 
 1. Vesktop settings: **Vencord > Settings**, turn on *transparent window*, set *macOS vibrancy* to

@@ -1,0 +1,17 @@
+{
+  "_comment": "Message texts for the visible messages of AtlasOS #programming, top to bottom. Authors stay as they are (identities shuffled by demo.js); `reply` is the text shown in the reply preview, `reactions` replace the real ones. Inline markup: `code`, @mention, #channel.",
+  "messages": [
+    { "text": "anyone know why my powershell script broke after the latest playbook update? `Set-ItemProperty` on the defender keys just throws access denied now" },
+    { "text": "same here, it started with 0.4.1. pretty sure it's the new tamper protection", "reactions": [["👍", 4, false], ["😭", 2, false]] },
+    { "text": "admin isn't enough for those keys anymore, you have to run it as TrustedInstaller", "reply": "same here, it started with 0.4.1. pretty sure it's the new tamper protection" },
+    { "text": "the toolbox has it under Advanced → Run as TrustedInstaller" },
+    { "text": "that fixed it, thanks 🙏 should probably be in the docs though", "reply": "the toolbox has it under Advanced → Run as TrustedInstaller", "reactions": [["✅", 3, true]] },
+    { "text": "it is, nobody reads them 😅 docs.atlasos.net/troubleshooting/powershell" },
+    { "text": "fair enough lol", "reply": "it is, nobody reads them 😅 docs.atlasos.net/troubleshooting/powershell" },
+    { "text": "if you're scripting removals, check `Get-AppxPackage` first, the playbook already strips most of that", "reply": "that fixed it, thanks 🙏 should probably be in the docs though" },
+    { "text": "@{mention} any chance of a `--dry-run` flag for the playbook? would make testing in a VM way easier", "reply": "if you're scripting removals, check `Get-AppxPackage` first, the playbook already strips most of that", "reactions": [["👀", 5, false], ["💯", 2, true]] },
+    { "text": "already on the roadmap for 0.5, it ships with the new installer" },
+    { "text": "nice", "reply": "already on the roadmap for 0.5, it ships with the new installer" },
+    { "text": "finally no more rebuilding my VM every single time" }
+  ]
+}
