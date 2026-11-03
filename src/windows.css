@@ -1,0 +1,72 @@
+/* ==========================================================================
+   WINDOWS: what Discord on Windows with Equicord needs on top of the macOS original's design,
+   kept in one module so the others stay close to it. The glass under the window is Equicord's
+   Background Material (Acrylic or Mica) instead of macOS vibrancy.
+   ========================================================================== */
+:root {
+  /* Windows 11 rounds the window to 8px, too tight to inset concentric panels in, so the panels
+     take Fluent's 8px layer radius instead of the window radius minus the gap. */
+  --vg-win-radius: 8px;
+  --vg-panel-radius: 8px;
+  /* The close button's hover fill, Windows 11's caption red rather than the danger colour. */
+  --vg-close: #c42b1c;
+  /* SF Pro when it is installed, else Windows 11's Segoe UI Variable, Segoe UI on Windows 10. */
+  --vg-font: "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+  --vg-font-display: "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+  --vg-mono: "SF Mono", "Cascadia Mono", "Cascadia Code", Consolas, monospace;
+}
+
+/* The panels reach up behind the titlebar by its height, which Discord sets on Windows and
+   which differs from the macOS original's. */
+[class*="base_"] > [class*="content_"] {
+  --vg-bar: var(--custom-app-top-bar-height, 33px);
+}
+
+/* Windows draws no caption buttons on Discord's frameless window, so Discord's minimise,
+   maximise and close are the only ones, and the theme hides them for macOS. They come back as
+   flat Windows 11 caption buttons: full bar height, flush with the top right corner, a quiet
+   fill on hover and the caption red on close. */
+:root:not(.platform-osx) [class*="base_"] > [class*="bar_"] [class*="winButtons_"] {
+  display: flex !important;
+  align-self: stretch;
+  height: auto !important;
+}
+[class*="base_"] > [class*="bar_"] [class*="winButtons_"]::before {
+  background: var(--vg-line) !important;
+}
+[class*="base_"] > [class*="bar_"] [class*="winButton_"] {
+  width: 46px !important;
+  height: 100% !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--vg-text-2) !important;
+  transition: background-color 0.1s, color 0.1s;
+}
+[class*="base_"] > [class*="bar_"] [class*="winButton_"]:hover {
+  background: var(--vg-fill-2) !important;
+  color: var(--vg-text-strong) !important;
+}
+[class*="base_"] > [class*="bar_"] [class*="winButton_"]:active {
+  background: var(--vg-fill-1) !important;
+}
+[class*="base_"] > [class*="bar_"] [class*="winButtonClose_"]:hover {
+  background: var(--vg-close) !important;
+  color: #fff !important;
+}
+[class*="base_"] > [class*="bar_"] [class*="winButtonClose_"]:active {
+  background: rgb(from var(--vg-close) r g b / 0.9) !important;
+}
+
+/* The window buttons sit in the group the theme makes inbox and help's capsule. With them in it,
+   the group spans the bar's height without the capsule, and inbox and help are plain round
+   buttons beside them. */
+:root:not(.platform-osx) [class*="base_"] > [class*="bar_"] [class*="trailing_"]:has(> [class*="winButtons_"]) {
+  align-self: stretch;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+:root:not(.platform-osx) [class*="base_"] > [class*="bar_"] [class*="trailing_"] [class*="clickable_"]:hover {
+  background: var(--vg-fill-3) !important;
+}

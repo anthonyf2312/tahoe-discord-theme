@@ -17,32 +17,50 @@ textarea[class*="textArea_"] {
   border-radius: 9px !important;
 }
 
-/* Switches, Discord's and Vencord's: system-blue track, grey when off, plain white knob. */
-label[class*="container_"]:has(> span > input:checked) > [class*="switchIndicator_"],
-.vc-switch-container.vc-switch-checked {
-  background: var(--vg-accent) !important;
-  border-color: transparent !important;
-}
-label[class*="container_"]:has(> span > input:not(:checked)) > [class*="switchIndicator_"],
-.vc-switch-container:not(.vc-switch-checked) {
+/* Switches, Discord's, Vencord's and Equicord's: system-blue track, grey when off, plain white
+   knob. Vencord's track is its container div; Equicord's is an indicator inside a label.
+   Discord's switch only shows its state on the input, so the label's :has() raises a flag that
+   a style query reads: a :has() above the styled element would make every DOM change in the app
+   restyle whole lists, which is what made scrolling stutter. */
+label[class*="container_"] > [class*="switchIndicator_"],
+div.vc-switch-container:not(.vc-switch-checked),
+.vc-switch-container:not(.vc-switch-checked) > .vc-switch-indicator {
   background: rgba(var(--vg-track), 0.36) !important;
   border-color: transparent !important;
 }
+label[class*="container_"]:has(> span > input:checked) {
+  --vg-is-switch-on: 1;
+}
+@container style(--vg-is-switch-on: 1) {
+  label[class*="container_"] > [class*="switchIndicator_"] {
+    background: var(--vg-accent) !important;
+    border-color: transparent !important;
+  }
+}
+div.vc-switch-container.vc-switch-checked,
+.vc-switch-checked > .vc-switch-indicator {
+  background: var(--vg-accent) !important;
+  border-color: transparent !important;
+}
 [class*="switchIndicator_"],
-.vc-switch-container {
+div.vc-switch-container,
+.vc-switch-indicator {
   border-radius: var(--vg-r-pill) !important;
 }
 /* macOS knobs carry no glyph. */
 .vc-switch-slider > svg,
+.vc-switch-thumb > svg,
 [class*="switchIndicator_"] [class*="thumb_"] path {
   display: none !important;
 }
 .vc-switch-slider rect,
+.vc-switch-thumb rect,
 [class*="switchIndicator_"] [class*="thumb_"] rect,
 [class*="switchIndicator_"] [class*="thumb_"] {
   filter: drop-shadow(0 1px 1.5px rgba(var(--vg-shadow), 0.3));
 }
-/* Apple's knob fills the track height, Discord's leaves a wide margin. */
+/* Apple's knob fills the track height, Discord's and Equicord's leave a wide margin. */
+.vc-switch-thumb rect,
 [class*="switchIndicator_"] [class*="thumb_"] rect {
   transform: scale(1.25);
   transform-origin: center;
@@ -51,7 +69,8 @@ label[class*="container_"]:has(> span > input:not(:checked)) > [class*="switchIn
 
 .vc-card-base,
 [class*="vc-card"],
-.vc-plugin-card {
+.vc-plugin-card,
+.vc-addon-card {
   background: var(--vg-fill-1) !important;
   border: 0.5px solid var(--vg-line) !important;
   border-radius: var(--vg-r-card) !important;

@@ -1,4 +1,4 @@
-/* Entry point: the modules in cascade order. build.py follows these imports to produce
+/* Entry point: the modules in cascade order. build.mjs follows these imports to produce
    build/tahoe.css, the single file the theme imports from GitHub Pages. */
 @import "tokens.css";
 @import "palette.css";
@@ -21,3 +21,4 @@
 @import "calls.css";
 @import "options.css";
 @import "icons.css";
+@import "windows.css";

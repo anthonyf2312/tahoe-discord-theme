@@ -12,12 +12,16 @@
 }
 /* Scroll-edge fades, same as under the user panel: messages dissolve under the header and
    above the input, the member list at both ends. The mask sits on the scroller box, so the
-   edges stay put while the content moves. */
+   edges stay put while the content moves. Every scroller mask states its size: Discord's
+   Windows build of Chromium mis-sizes one left at the default, which hid the whole message
+   list, and 100% 100% is what the default means anyway. */
 [class*="messagesWrapper_"] > [class*="scroller_"] {
   mask-image: linear-gradient(to bottom, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+  mask-size: 100% 100%;
 }
 [class*="membersWrap_"] > [class*="members_"] {
   mask-image: linear-gradient(to bottom, transparent 0, #000 22px, #000 calc(100% - 48px), transparent 100%);
+  mask-size: 100% 100%;
 }
 
 /* Inside messages the "surface" colours are cards on the glass, not floating layers, so they

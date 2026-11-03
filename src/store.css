@@ -16,9 +16,19 @@
     --vg-store-scrolled: 1;
   }
 }
+/* The app directory has no class of its own: it is the section holding an overlay header bar.
+   That :has() only flags the section, and the rules for the page's parts ask for the flag with
+   a style query (see controls.css). The store-page flag covers all three pages. */
+section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) {
+  --vg-is-app-directory: 1;
+  --vg-is-store-page: 1;
+}
+[class*="applicationStore_"],
+[class*="page_"] > [class*="shop_"] {
+  --vg-is-store-page: 1;
+}
 [class*="applicationStore_"] [class*="mainPageScroller_"],
-[class*="page_"] > [class*="shop_"] [class*="shop_"][class*="scrollerBase_"],
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="scroller_"][class*="scrollerBase_"] {
+[class*="page_"] > [class*="shop_"] [class*="shop_"][class*="scrollerBase_"] {
   --vg-store-fade-top: 0px;
   animation: vg-store-scrolled linear both;
   animation-timeline: scroll(self);
@@ -28,15 +38,31 @@ section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [clas
     #000 calc(var(--vg-store-fade-top) + 28px),
     #000 calc(100% - 28px),
     transparent 100%);
+  mask-size: 100% 100%; /* see chat.css */
 }
-/* App directory: the header floats over the scroller, so content fades out beneath it. */
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="scroller_"][class*="scrollerBase_"] {
-  --vg-store-fade-top: 44px;
+/* App directory: the same fade, starting under the header that floats over the scroller. */
+@container style(--vg-is-app-directory: 1) {
+  section[class*="container_"] [class*="scroller_"][class*="scrollerBase_"] {
+    --vg-store-fade-top: 44px;
+    animation: vg-store-scrolled linear both;
+    animation-timeline: scroll(self);
+    animation-range: 0 48px;
+    mask-image: linear-gradient(to bottom,
+      rgb(0 0 0 / calc(1 - var(--vg-store-scrolled))) var(--vg-store-fade-top),
+      #000 calc(var(--vg-store-fade-top) + 28px),
+      #000 calc(100% - 28px),
+      transparent 100%);
+    mask-size: 100% 100%;
+  }
 }
 @container style(--vg-scroll-fade: off) {
   [class*="applicationStore_"] [class*="mainPageScroller_"],
-  [class*="page_"] > [class*="shop_"] [class*="shop_"][class*="scrollerBase_"],
-  section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="scroller_"][class*="scrollerBase_"] {
+  [class*="page_"] > [class*="shop_"] [class*="shop_"][class*="scrollerBase_"] {
+    mask-image: none !important;
+  }
+}
+@container style(--vg-scroll-fade: off) and style(--vg-is-app-directory: 1) {
+  section[class*="container_"] [class*="scroller_"][class*="scrollerBase_"] {
     mask-image: none !important;
   }
 }
@@ -44,40 +70,54 @@ section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [clas
 /* Buttons laid over marketing art ("Take me there", "Unlock Reward") are the primary action:
    accent pills. The palette fills their background but leaves Discord's black label. Set on
    the button, as the cards re-declare the theme variables on their own theme-dark class. */
-:is([class*="applicationStore_"], [class*="page_"] > [class*="shop_"], section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"])) button[class*="overlay-primary_"] {
-  --control-overlay-primary-background-default: var(--vg-accent) !important;
-  --control-overlay-primary-background-hover: var(--vg-accent-hover) !important;
-  --control-overlay-primary-background-active: var(--vg-accent) !important;
-  --control-overlay-primary-border-default: transparent !important;
-  --control-overlay-primary-border-hover: transparent !important;
-  --control-overlay-primary-border-active: transparent !important;
-  --control-overlay-primary-text-default: var(--vg-on-accent) !important;
-  --control-overlay-primary-text-hover: var(--vg-on-accent) !important;
-  --control-overlay-primary-text-active: var(--vg-on-accent) !important;
-  --control-overlay-primary-icon-default: var(--vg-on-accent) !important;
-  --control-overlay-primary-icon-hover: var(--vg-on-accent) !important;
-  --control-overlay-primary-icon-active: var(--vg-on-accent) !important;
+@container style(--vg-is-store-page: 1) {
+  button[class*="overlay-primary_"] {
+    --control-overlay-primary-background-default: var(--vg-accent) !important;
+    --control-overlay-primary-background-hover: var(--vg-accent-hover) !important;
+    --control-overlay-primary-background-active: var(--vg-accent) !important;
+    --control-overlay-primary-border-default: transparent !important;
+    --control-overlay-primary-border-hover: transparent !important;
+    --control-overlay-primary-border-active: transparent !important;
+    --control-overlay-primary-text-default: var(--vg-on-accent) !important;
+    --control-overlay-primary-text-hover: var(--vg-on-accent) !important;
+    --control-overlay-primary-text-active: var(--vg-on-accent) !important;
+    --control-overlay-primary-icon-default: var(--vg-on-accent) !important;
+    --control-overlay-primary-icon-hover: var(--vg-on-accent) !important;
+    --control-overlay-primary-icon-active: var(--vg-on-accent) !important;
+  }
 }
 
 /* Shared: section headings in SF instead of Discord's italic display caps. */
-[class*="applicationStore_"] :is(h1, h2)[class*="nitro-"],
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) h2[class*="display-lg"] {
+[class*="applicationStore_"] :is(h1, h2)[class*="nitro-"] {
   font-family: var(--vg-font-display) !important;
   font-style: normal !important;
   text-transform: none !important;
   letter-spacing: -0.01em !important;
 }
 [class*="applicationStore_"] h2[class*="nitro-"],
-[class*="page_"] > [class*="shop_"] h2[class*="heading-lg"],
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) h3[class*="sectionTitle_"] {
+[class*="page_"] > [class*="shop_"] h2[class*="heading-lg"] {
   font-family: var(--vg-font-display) !important;
   font-size: 22px !important;
   font-weight: 600 !important;
   line-height: 28px !important;
 }
-[class*="applicationStore_"] h1[class*="nitro-"],
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) h2[class*="display-lg"] {
+[class*="applicationStore_"] h1[class*="nitro-"] {
   font-weight: 700 !important;
+}
+@container style(--vg-is-app-directory: 1) {
+  section[class*="container_"] h2[class*="display-lg"] {
+    font-family: var(--vg-font-display) !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    text-transform: none !important;
+    letter-spacing: -0.01em !important;
+  }
+  section[class*="container_"] h3[class*="sectionTitle_"] {
+    font-family: var(--vg-font-display) !important;
+    font-size: 22px !important;
+    font-weight: 600 !important;
+    line-height: 28px !important;
+  }
 }
 
 /* ==========================================================================
@@ -241,57 +281,68 @@ section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) h2[cl
    ========================================================================== */
 /* The hero glow sits on black in Discord; without it the glow lies on the window glass,
    framed as a rounded banner below the floating header instead of a full-bleed band. */
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="gradientBackground_"] {
-  width: auto !important;
-  height: auto !important;
-  place-self: stretch;
-  margin: 57px 28px 8px;
-  border-radius: var(--vg-r-pop);
-  overflow: hidden;
-  box-shadow: inset 0 0 0 0.5px var(--vg-glass-line);
+@container style(--vg-is-app-directory: 1) {
+  section[class*="container_"] [class*="gradientBackground_"] {
+    width: auto !important;
+    height: auto !important;
+    place-self: stretch;
+    margin: 57px 28px 8px;
+    border-radius: var(--vg-r-pop);
+    overflow: hidden;
+    box-shadow: inset 0 0 0 0.5px var(--vg-glass-line);
+  }
+  /* The headline keeps 32px of air inside the banner, which now starts 28px in. */
+  section[class*="container_"] [class*="gradientBackground_"] ~ [class*="content_"] [class*="textContainer_"] {
+    padding-left: 47px !important;
+  }
+  section[class*="container_"] [class*="gradientBackground_"] > [class*="gradient_"] {
+    height: 100% !important;
+    background-color: transparent !important;
+  }
+  section[class*="container_"] [class*="card_"][class*="clickable_"] {
+    border: 0 !important;
+    border-radius: var(--vg-r-card) !important;
+    background: var(--vg-fill-1) !important;
+    box-shadow: inset 0 0 0 0.5px var(--vg-line) !important;
+    overflow: hidden;
+  }
+  section[class*="container_"] [class*="card_"][class*="clickable_"]:hover {
+    background: var(--vg-fill-2) !important;
+  }
+  /* Underlined category tabs become pill segments. */
+  section[class*="container_"] [class*="tabs_"][class*="top_"] {
+    align-items: center;
+    gap: 4px;
+  }
+  section[class*="container_"] [class*="tabs_"] > [class*="tab_"][class*="item_"] {
+    height: 28px !important;
+    margin: 0 !important;
+    padding: 0 12px !important;
+    display: flex;
+    align-items: center;
+    border: 0 !important;
+    border-radius: var(--vg-r-pill) !important;
+    transition: background-color 0.15s;
+  }
+  section[class*="container_"] [class*="tabs_"] > [class*="tab_"][class*="item_"]::after {
+    display: none !important;
+  }
+  section[class*="container_"] [class*="tabs_"] > [class*="tab_"][class*="item_"]:hover {
+    background: var(--vg-fill-2) !important;
+  }
+  section[class*="container_"] [class*="tabs_"] > [class*="tab_"][class*="selected_"] {
+    background: var(--vg-fill-3) !important;
+  }
 }
-/* The headline keeps 32px of air inside the banner, which now starts 28px in. */
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="gradientBackground_"] ~ [class*="content_"] [class*="textContainer_"],
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="content_"]:has(~ [class*="gradientBackground_"]) [class*="textContainer_"] {
-  padding-left: 47px !important;
+/* The headline box may also come before the banner; that one is flagged, as the general sibling
+   combinator only looks forward. */
+section[class*="container_"] [class*="content_"]:has(~ [class*="gradientBackground_"]) {
+  --vg-is-before-art: 1;
 }
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="gradientBackground_"] > [class*="gradient_"] {
-  height: 100% !important;
-  background-color: transparent !important;
-}
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="card_"][class*="clickable_"] {
-  border: 0 !important;
-  border-radius: var(--vg-r-card) !important;
-  background: var(--vg-fill-1) !important;
-  box-shadow: inset 0 0 0 0.5px var(--vg-line) !important;
-  overflow: hidden;
-}
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="card_"][class*="clickable_"]:hover {
-  background: var(--vg-fill-2) !important;
-}
-/* Underlined category tabs become pill segments. */
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="tabs_"][class*="top_"] {
-  align-items: center;
-  gap: 4px;
-}
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="tabs_"] > [class*="tab_"][class*="item_"] {
-  height: 28px !important;
-  margin: 0 !important;
-  padding: 0 12px !important;
-  display: flex;
-  align-items: center;
-  border: 0 !important;
-  border-radius: var(--vg-r-pill) !important;
-  transition: background-color 0.15s;
-}
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="tabs_"] > [class*="tab_"][class*="item_"]::after {
-  display: none !important;
-}
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="tabs_"] > [class*="tab_"][class*="item_"]:hover {
-  background: var(--vg-fill-2) !important;
-}
-section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [class*="tabs_"] > [class*="tab_"][class*="selected_"] {
-  background: var(--vg-fill-3) !important;
+@container style(--vg-is-app-directory: 1) and style(--vg-is-before-art: 1) {
+  section[class*="container_"] [class*="content_"] [class*="textContainer_"] {
+    padding-left: 47px !important;
+  }
 }
 
 /* Carousels (Nitro favourites, shop shelves): the row dissolves on the side that has more
@@ -301,6 +352,9 @@ section[class*="container_"]:has([class*="headerBar_"][class*="overlay_"]) [clas
 }
 :is([class*="applicationStore_"], [class*="page_"] > [class*="shop_"]) [class*="actions_"] + [class*="children_"][class*="scrollLeft_"] {
   mask-image: linear-gradient(to left, #000 calc(100% - 64px), transparent);
+}
+:is([class*="applicationStore_"], [class*="page_"] > [class*="shop_"]) [class*="actions_"] + [class*="children_"] {
+  mask-size: 100% 100%; /* see chat.css */
 }
 :is([class*="applicationStore_"], [class*="page_"] > [class*="shop_"]) [class*="actions_"] + [class*="children_"][class*="scrollBoth_"] {
   mask-image: linear-gradient(to right, transparent, #000 64px, #000 calc(100% - 64px), transparent);

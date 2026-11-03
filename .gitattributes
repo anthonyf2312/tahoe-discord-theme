@@ -1,0 +1,6 @@
+# Text is stored with LF (the bundle is built with LF); PowerShell scripts keep Windows endings.
+* text=auto eol=lf
+*.ps1 text eol=crlf
+*.webp binary
+*.png binary
+*.jpg binary

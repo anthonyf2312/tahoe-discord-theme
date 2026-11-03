@@ -151,12 +151,18 @@ svg[class*="radioIndicator_"] [class*="innerDotRadio_"] {
 
 /* Sliders with marks: macOS puts the tick marks under the track and the labels under the
    ticks. Discord stacks label, then a long dash through the bar; this moves the bar (and the
-   knob riding on it) to the top of the 48px box and flips each mark into tick-then-label. */
-[class*="slider_"][class*="hasMarks_"]:has([class*="markAbove_"]) [class*="bar_"] {
-  top: 6px !important;
+   knob riding on it) to the top of the 48px box and flips each mark into tick-then-label.
+   The :has() only flags the slider; a style query moves its parts (see controls.css). */
+[class*="slider_"][class*="hasMarks_"]:has([class*="markAbove_"]) {
+  --vg-is-marks-above: 1;
 }
-[class*="slider_"][class*="hasMarks_"]:has([class*="markAbove_"]) [class*="grabber_"] {
-  top: -4px !important;
+@container style(--vg-is-marks-above: 1) {
+  [class*="slider_"][class*="hasMarks_"] [class*="bar_"] {
+    top: 6px !important;
+  }
+  [class*="slider_"][class*="hasMarks_"] [class*="grabber_"] {
+    top: -4px !important;
+  }
 }
 [class*="slider_"] [class*="mark_"][class*="markAbove_"] {
   justify-content: flex-start !important;

@@ -1,23 +1,24 @@
 /**
  * @name Tahoe
- * @description macOS Tahoe glass for Vesktop: a floating sidebar over native vibrancy, SF Symbols, liquid glass controls.
- * @author skopevoj
- * @version 0.3.0
- * @source https://github.com/skopevoj/tahoe-discord-theme
+ * @description macOS Tahoe glass for Discord on Windows with Equicord: a floating sidebar over Acrylic or Mica, SF Symbols, liquid glass controls.
+ * @author skopevoj, Windows port by anthonyf2312
+ * @version 0.3.0-win.1
+ * @source https://github.com/anthonyf2312/tahoe-discord-theme
  */
 
 /* the theme itself, rebuilt from src/ and served by GitHub Pages */
-@import url('https://skopevoj.github.io/tahoe-discord-theme/build/tahoe.css');
+@import url('https://anthonyf2312.github.io/tahoe-discord-theme/build/tahoe.css');
 
-/* Settings. Everything here overrides the defaults in src/tokens.css; delete a line to go back
-   to the default. Vesktop needs "transparent" on and macOS vibrancy set (sidebar recommended). */
+/* Settings. Everything here overrides the defaults in src/tokens.css and src/windows.css; delete
+   a line to go back to the default. Equicord needs Background Material on Acrylic (or Mica) and
+   Window Transparency off; with Background Material "None", set --vg-vibrancy to off. */
 :root {
     /* options: on or off */
     --vg-animations: on; /* off: no transitions or motion, things jump to their end state */
     --vg-sf-symbols: on; /* off: Discord's own icons instead of SF Symbols */
-    --vg-vibrancy: on; /* off: solid window and sidebar, no desktop showing through */
+    --vg-vibrancy: on; /* off: solid window and sidebar, for Background Material "None" */
     --vg-background-image: off; /* on: the image below as the window background, menus turn to glass */
-    --vg-background-image-url: none; /* url("https://..."), from a host Vencord lets load images */
+    --vg-background-image-url: none; /* url("https://..."), from a host Equicord lets load images (imgur, github.io...) */
     --vg-panel-art: on; /* off: hides Nitro artwork and avatar decoration in the user panel */
     --vg-compact: off; /* on: shorter rows in the channel list, member list and menus */
     --vg-scroll-fade: on; /* off: lists end in a hard edge instead of fading under the bars */
@@ -31,11 +32,12 @@
     --vg-window: rgba(var(--vg-tint), 0.62); /* chat, header and member list; higher = darker, less glass */
     --vg-panel: linear-gradient(rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.045)), rgba(var(--vg-tint), 0.46); /* floating sidebar */
 
-    /* geometry: inner radii follow the window corner, keep win-radius matched to macOS */
-    --vg-win-radius: 15px; /* macOS window corner */
+    /* geometry */
+    --vg-win-radius: 8px; /* Windows 11 window corner; 0px with "Disable Rounded Window Corners" */
+    --vg-panel-radius: 8px; /* the floating sidebar and side panels */
     --vg-gap: 5px; /* inset of the floating panels */
 
-    /* text */
-    --vg-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
-    --vg-mono: ui-monospace, "SF Mono", Menlo, monospace;
+    /* text: SF Pro when it is installed, else Segoe UI Variable */
+    --vg-font: "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+    --vg-mono: "SF Mono", "Cascadia Mono", "Cascadia Code", Consolas, monospace;
 }

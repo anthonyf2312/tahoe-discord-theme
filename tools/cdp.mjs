@@ -1,5 +1,6 @@
-// Drives the running Vesktop over CDP: screenshots, live CSS, JS eval.
-// Vesktop must run with --remote-debugging-port=9222.
+// Drives the running Discord over CDP: screenshots, live CSS, JS eval. Start Discord with the
+// debug port (quit it from the tray first), from PowerShell:
+//   & "$env:LOCALAPPDATA\Discord\Update.exe" --processStart Discord.exe --process-start-args "--remote-debugging-port=9222 --remote-debugging-address=127.0.0.1"
 import { readFileSync, writeFileSync } from "node:fs";
 
 const PORT = process.env.CDP_PORT ?? 9222;
@@ -39,7 +40,7 @@ switch (cmd) {
       if (!b) throw new Error(`no element for ${sel}`);
       clip = { ...b, scale: 1 };
     }
-    // CDP can't see the native macOS vibrancy, so transparent areas get a stand-in
+    // CDP can't see the window's Acrylic or Mica, so transparent areas get a stand-in
     // blurred-wallpaper gradient just for the capture (BACKDROP=none to skip).
     const backdrop = process.env.BACKDROP ?? "radial-gradient(at 15% 20%,#5b6e8f,transparent 55%),radial-gradient(at 80% 85%,#6b5641,transparent 55%),linear-gradient(150deg,#3f4a5c,#4a4036 60%,#2f3a33)";
     if (backdrop !== "none") await evaluate(`(() => { const s = document.createElement("style"); s.id = "__dev_backdrop";

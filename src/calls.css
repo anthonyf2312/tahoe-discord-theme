@@ -458,11 +458,15 @@ section[class*="panels_"] [class*="actionButtons_"] button[aria-pressed="true"]:
 /* Camera on, sharing, an open popout: white disc with a dark glyph, as in FaceTime. */
 [class*="callContainer_"] [class*="centerButton_"]:is([class*="activeLight_"], [class*="white_"], [class*="green_"]),
 [class*="callContainer_"] [class*="attachedCaretButtonContainer_"]:has(:is([class*="activeLight_"], [class*="white_"], [class*="green_"])) {
+  --vg-is-lit: 1;
   background: rgba(255, 255, 255, 0.92) !important;
   color: #1c1c1e !important;
 }
-[class*="callContainer_"] [class*="attachedCaretButtonContainer_"]:has(:is([class*="activeLight_"], [class*="white_"], [class*="green_"])) [class*="contextMenuNub_"] {
-  color: rgba(28, 28, 30, 0.6) !important;
+/* The flag stands in for a :has() above the caret (see controls.css). */
+@container style(--vg-is-lit: 1) {
+  [class*="callContainer_"] [class*="attachedCaretButtonContainer_"] [class*="contextMenuNub_"] {
+    color: rgba(28, 28, 30, 0.6) !important;
+  }
 }
 [class*="callContainer_"] [class*="centerButton_"]:not([class*="attachedButton_"]):hover {
   background: var(--vg-fill-3) !important;

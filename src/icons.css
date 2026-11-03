@@ -1596,10 +1596,13 @@
   }
   [class*="toolbar_"] [aria-label="Notification Settings"]:not(:has(path[d^="M1.3 21.3"])) {
     position: relative;
+    --vg-sf-swap: 1;
   }
-  [class*="toolbar_"] [aria-label="Notification Settings"]:not(:has(path[d^="M1.3 21.3"])) svg,
-  [class*="toolbar_"] [aria-label="Notification Settings"]:not(:has(path[d^="M1.3 21.3"])) [class*="lottieIcon_"] {
-    opacity: 0 !important;
+  @container style(--vg-sf-swap: 1) {
+    [class*="toolbar_"] [aria-label="Notification Settings"] svg,
+    [class*="toolbar_"] [aria-label="Notification Settings"] [class*="lottieIcon_"] {
+      opacity: 0 !important;
+    }
   }
   [class*="toolbar_"] [aria-label="Notification Settings"]:not(:has(path[d^="M1.3 21.3"]))::after {
     content: "";
@@ -1615,10 +1618,13 @@
   }
   [class*="toolbar_"] [aria-label="Notification Settings"]:has(path[d^="M1.3 21.3"]) {
     position: relative;
+    --vg-sf-swap: 1;
   }
-  [class*="toolbar_"] [aria-label="Notification Settings"]:has(path[d^="M1.3 21.3"]) svg,
-  [class*="toolbar_"] [aria-label="Notification Settings"]:has(path[d^="M1.3 21.3"]) [class*="lottieIcon_"] {
-    opacity: 0 !important;
+  @container style(--vg-sf-swap: 1) {
+    [class*="toolbar_"] [aria-label="Notification Settings"] svg,
+    [class*="toolbar_"] [aria-label="Notification Settings"] [class*="lottieIcon_"] {
+      opacity: 0 !important;
+    }
   }
   [class*="toolbar_"] [aria-label="Notification Settings"]:has(path[d^="M1.3 21.3"])::after {
     content: "";
@@ -2155,9 +2161,12 @@
   }
   [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M12 10a4 4"]) {
     position: relative;
+    --vg-sf-swap: 1;
   }
-  [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M12 10a4 4"]) > svg[class*="itemIcon_"] {
-    opacity: 0 !important;
+  @container style(--vg-sf-swap: 1) {
+    [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"] > svg[class*="itemIcon_"] {
+      opacity: 0 !important;
+    }
   }
   [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M12 10a4 4"])::before {
     content: "";
@@ -2173,9 +2182,12 @@
   }
   [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M10.99 3.16A1"]) {
     position: relative;
+    --vg-sf-swap: 1;
   }
-  [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M10.99 3.16A1"]) > svg[class*="itemIcon_"] {
-    opacity: 0 !important;
+  @container style(--vg-sf-swap: 1) {
+    [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"] > svg[class*="itemIcon_"] {
+      opacity: 0 !important;
+    }
   }
   [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M10.99 3.16A1"])::before {
     content: "";
@@ -2191,9 +2203,12 @@
   }
   [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M10.57 4.01a6.97"]) {
     position: relative;
+    --vg-sf-swap: 1;
   }
-  [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M10.57 4.01a6.97"]) > svg[class*="itemIcon_"] {
-    opacity: 0 !important;
+  @container style(--vg-sf-swap: 1) {
+    [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"] > svg[class*="itemIcon_"] {
+      opacity: 0 !important;
+    }
   }
   [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M10.57 4.01a6.97"])::before {
     content: "";
@@ -2209,9 +2224,12 @@
   }
   [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M16.44 6.96c"]) {
     position: relative;
+    --vg-sf-swap: 1;
   }
-  [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M16.44 6.96c"]) > svg[class*="itemIcon_"] {
-    opacity: 0 !important;
+  @container style(--vg-sf-swap: 1) {
+    [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"] > svg[class*="itemIcon_"] {
+      opacity: 0 !important;
+    }
   }
   [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M16.44 6.96c"])::before {
     content: "";
@@ -2227,9 +2245,12 @@
   }
   [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M22 5a1 1 0 0 1-1 1h-8"]) {
     position: relative;
+    --vg-sf-swap: 1;
   }
-  [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M22 5a1 1 0 0 1-1 1h-8"]) > svg[class*="itemIcon_"] {
-    opacity: 0 !important;
+  @container style(--vg-sf-swap: 1) {
+    [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"] > svg[class*="itemIcon_"] {
+      opacity: 0 !important;
+    }
   }
   [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M22 5a1 1 0 0 1-1 1h-8"])::before {
     content: "";
@@ -2245,9 +2266,12 @@
   }
   [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M15.62 17.03a9"]) {
     position: relative;
+    --vg-sf-swap: 1;
   }
-  [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M15.62 17.03a9"]) > svg[class*="itemIcon_"] {
-    opacity: 0 !important;
+  @container style(--vg-sf-swap: 1) {
+    [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"] > svg[class*="itemIcon_"] {
+      opacity: 0 !important;
+    }
   }
   [class*="layer_"] [role="listbox"] [role="option"] > [class*="item_"]:has(> svg path[d^="M15.62 17.03a9"])::before {
     content: "";
@@ -2609,10 +2633,13 @@
   }
   [class*="scrollerInner_"] > [class*="container_"] [class*="iconWrapper_"]:has(> svg > path[d^="M12 2.81a1 1 0 0 1 0-1.41"]) {
     position: relative;
+    --vg-sf-swap: 1;
   }
-  [class*="scrollerInner_"] > [class*="container_"] [class*="iconWrapper_"]:has(> svg > path[d^="M12 2.81a1 1 0 0 1 0-1.41"]) svg,
-  [class*="scrollerInner_"] > [class*="container_"] [class*="iconWrapper_"]:has(> svg > path[d^="M12 2.81a1 1 0 0 1 0-1.41"]) [class*="lottieIcon_"] {
-    opacity: 0 !important;
+  @container style(--vg-sf-swap: 1) {
+    [class*="scrollerInner_"] > [class*="container_"] [class*="iconWrapper_"] svg,
+    [class*="scrollerInner_"] > [class*="container_"] [class*="iconWrapper_"] [class*="lottieIcon_"] {
+      opacity: 0 !important;
+    }
   }
   [class*="scrollerInner_"] > [class*="container_"] [class*="iconWrapper_"]:has(> svg > path[d^="M12 2.81a1 1 0 0 1 0-1.41"])::after {
     content: "";

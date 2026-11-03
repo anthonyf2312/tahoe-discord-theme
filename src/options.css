@@ -19,7 +19,8 @@
 }
 
 /* Vibrancy off: an opaque tint under the whole app, so the window and sidebar are solid and
-   work without Vesktop's transparency. The panel and window layers keep their shading over it. */
+   work without Equicord's Background Material. The panel and window layers keep their shading
+   over it. */
 @container style(--vg-vibrancy: off) {
   #app-mount {
     background: rgb(var(--vg-tint)) !important;
